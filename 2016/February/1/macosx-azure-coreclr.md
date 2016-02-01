@@ -52,7 +52,11 @@ You've got some new tools at your fingertips now. Lets crank up Terminal to take
 ```
 dnvm       
 ```
-For those familiar with node and other platforms, dnvm is unsurprising, its a version manager for assigning the current session with a dotnet runtime. dnvm list will show your your currently managed runtimes.
+For those familiar with node and other platforms, dnvm (DotNet Version Manager) is unsurprising, its a version manager for assigning the current session with a dotnet runtime. dnvm list will show your your currently managed runtimes.
+```
+dnvm install latest -u -r coreclr -a x64 -OS darwin
+```
+This will pull the latest unstable version of the coreclr runtime for 64 bit darwin architectures (leave out the -u if you want the stable version)
 
 ```
 ls ~/.dnx/packages
@@ -61,13 +65,12 @@ Gives a listing of what was recently installed for dotnet to run.
 ```
 dnu
 ```
-
-Dnu is the utility used to manage nuget packages. most commonly you'll use dnu restore to fetch dependencies. Similar to npm (in fact it will invoke npm/bower as required). It is also used to build your application.
+Dnu (Dot Net Utility) is the utility used to manage nuget packages. most commonly you'll use dnu restore to fetch dependencies. Similar to npm (in fact it will invoke npm/bower as required). It is also used to build your application.
 
 ```
 dnx
 ```
-Dnx is effectively the runtime itself, you can run a project.json
+Dnx (DotNet eXecution environment) is effectively the runtime itself, you can run a project.json
 with it, debug, set configurations etc.
 
 > NOTE: At time of writing the newer dotnet CLI was currently not able to 'just work' so at some point I'll have to update this post to use it instead of the rc1 toolkit
@@ -83,7 +86,7 @@ This step will make some assumptions:
 
 The github aspect is relatively interchangeable with other source control SaaS providers out there - I'll let you figure that part out.
 
-So lets crank up Terminal and make a project. Type in the following lines to get started...
+So lets crank up Terminal and make a project. Type in the following lines to get started... (or use VS Code to create a similar structure)
 
 ```
 mkdir myApp && cd myApp
@@ -94,8 +97,61 @@ touch project.json
 touch Program.cs
 
 ```
+myApp
+|_ project.json
+|_ Program.cs
 
-For those familiar with Microsoft technologies, the most pleasing aspect of this boilerplate is the sheer *minimalism* going on here. You will only need 2 files: a project.json file (for dependencies), and a source file.
+##### Project.json
+
+```
+{
+  "version": "1.0.0-*",
+  "description": "MyApp",
+  "authors": [ "jburger" ],
+  "tags": [ "test" ],
+  "compilationOptions": {
+    "emitEntryPoint": true
+  },
+
+  "dependencies": {
+  },
+
+  "frameworks": {
+    "dnxcore50": {
+      "dependencies": {
+        "System.Console": "4.0-*"
+      }
+    }
+  }
+}
+```
+##### Program.cs
+```
+using System;
+
+namespace MyApp
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            Console.WriteLine("Hello World!");
+        }
+    }
+}
+```
+
+Now we are ready to restore, build and run. You can do this from the command line with the following:
+
+```
+dnu restore
+>
+dnx run
+>
+Hello World!
+```
+dnu restore should have restored the System.Console package for you and dnx run builds and executes the local project.json file. Congrats! You have just run a console .NET application on the Darwin Core CLR!
+
 
 Now is a good time to commit & push your initial state, should you want to work on it later (assuming you have set up your github repo). I'd recommend setting up a 'develop' branch and pushing to it. We'll use your master branch to deploy from.
 
@@ -106,9 +162,14 @@ git push origin develop
 ```
 
 #### Turning hello world into a web application
+Web applications don't need to be any more complicated than a console application that listens on a predefined port number. So lets make this happen.
+
 #### Creating the web application on Azure
 #### Git based 'continuous deployment'
 #### Setting up authentication providers
 #### Role based authorizations
 #### Logging
 #### Wrapping up
+
+###### links to follow up on
+- dnx documentation http://docs.asp.net/en/latest/dnx/
