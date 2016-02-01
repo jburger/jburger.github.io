@@ -92,37 +92,23 @@ git init .
 
 touch project.json
 touch Program.cs
-touch run
->> Created new C# project in /Users/jim/myapp.
+
 ```
 
-Lets break down the above incantation:
-
-> mkdir myApp && cd myApp -- create and change into the myApp directiveFactory
-
-> dotnet new -- ran a scaffolding command to create some source code for you
-
-> dotnet restore -- fetched a bunch of dependencies to run your application
-
-> dotnet run -- build & ran your app
-
-
-
-For those familiar with Microsoft technologies, the most pleasing aspect of this boilerplate is the sheer *minimalism* going on here. You will get 3 files: a project.json file (for dependencies), a source file, and your nuget.config XML** file for managing package feed locations.
+For those familiar with Microsoft technologies, the most pleasing aspect of this boilerplate is the sheer *minimalism* going on here. You will only need 2 files: a project.json file (for dependencies), and a source file.
 
 Now is a good time to commit & push your initial state, should you want to work on it later (assuming you have set up your github repo). I'd recommend setting up a 'develop' branch and pushing to it. We'll use your master branch to deploy from.
-
-> If you don't know what I'm tak
 
 ```
 git add .
 git commit -m 'initialized my project'
 git push origin develop
 ```
-#### Connecting to Azure web application
 
-In order
-
-We'll need to turn this into a web application. These days, a web server doesn't need to be much more complicated than a console app.
-
-> ** Here's hoping they eventually ditch the XML for json
+#### Turning hello world into a web application
+#### Creating the web application on Azure
+#### Git based 'continuous deployment'
+#### Setting up authentication providers
+#### Role based authorizations
+#### Logging
+#### Wrapping up
