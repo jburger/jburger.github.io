@@ -4,7 +4,9 @@ title: About
 permalink: /about/
 ---
 
-Welcome to the blog of Jim Burger! Hopefully you gain something, however small, from reading my blog.
+Welcome to my blog. Hopefully you gain something, however small, from reading this and other posts here. If you find something that you f
+
+
 
 I've been learning about computing since I was a kid, and the one thing I keep coming back to is that programming can be both simple and complex.
 
