@@ -34,9 +34,9 @@ author: Jim Burger
   //in an action, far far away...
   public IActionResult Get()
   {
-    var vader = new Parent('Anakin');
-    var luke = new Child() { Parent = vader, Name = 'Luke' };
-    var leia = new Child() { Parent = vader, Name = 'Leia' };
+    var vader = new Parent("Anakin");
+    var luke = new Child() { Parent = vader, Name = "Luke" };
+    var leia = new Child() { Parent = vader, Name = "Leia" };
      vader.Children.AddRange(new[] { luke, leia });
      return Json(luke);
   }
