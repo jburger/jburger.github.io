@@ -4,9 +4,7 @@ title: About
 permalink: /about/
 ---
 
-Welcome to my blog. Hopefully you gain something, however small, from reading this and other posts here. If you find something that you f
-
-
+Welcome to my blog. Hopefully you gain something, however small, from reading this and other posts here. If you find something that you enjoy, disagree or downright dislike, then I'd encourage you to start a discussion either via comments or directly at [disqus](https://theburge.disqus.com).
 
 I've been learning about computing since I was a kid, and the one thing I keep coming back to is that programming can be both simple and complex.
 
