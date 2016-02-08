@@ -6,20 +6,9 @@ type: post
 published: true
 status: publish
 categories:
-- .NET
-- Software Development
+- Languages
 tags:
 - FSharp
-meta:
-  _publicize_pending: '1'
-  original_post_id: '827013'
-  _wp_old_slug: '827013'
-author:
-  login: Jim Burger
-  email: the-burge@outlook.com
-  display_name: Jim Burger
-  first_name: ''
-  last_name: ''
 ---
 <p>In a <a href="http://rogeralsing.com/2009/12/27/i-still-dont-get-f/">short rant</a>, Roger declares that he doesn't "get" F#. There is no business case, no ROI, what can't I do in C# that is in F#. Etc.</p>
 <blockquote><p>I think that Microsoft are trying to sell F# to us as something new and awesome, but I’m having serious problems seeing the benefits over C#.</p></blockquote>
@@ -28,35 +17,43 @@ author:
 <p>Heres a newsflash, <strong>not everybody is writing e-commerce applications.</strong></p>
 <p>The thing is, people who earn a living in these  alternative problem spaces typically use functional languages like Erlang, OCaml, Clojure, Scheme, Common Lisp and so on. The market (apparently) <em>is there,</em> and while some of them still love to use vim, many would like a decent IDE - and at the moment, that IDE is called Eclipse. What Microsoft is aiming for is to take a chunk out of the almost exclusive monopoly that the Java platform has on this segment of the developer population. <em>We don't have to get it</em>, any more than they don't have to get Visual Basic.</p>
 <p>But back to Rogers rant, apparently, this is how these guys and gals should do currying, something they are used to in most functional languages:</p>
-<p>[sourcecode language="csharp"]</p>
-<p>string Foo(int a,bool b)<br />
-{<br />
- //do stuff<br />
-}</p>
-<p>void UseCurry()<br />
-{<br />
-Func curriedFooWithTrue = a =&gt; Foo(a,true);</p>
-<p>//invoke curried function.<br />
-var res = curriedFooWithTrue(123);<br />
-}</p>
-<p>[/sourcecode]</p>
+
+```csharp
+string Foo(int a,bool b)
+{
+   //do stuff
+}
+void UseCurry()
+{
+    Func curriedFooWithTrue = a => Foo(a,true);
+    //invoke curried function.
+    var res = curriedFooWithTrue(123);
+}
+```
+
+
 <p>This apparently, is pipelining:</p>
-<p>[sourcecode language="csharp"]</p>
-<p>var listOfInts = new List {1,2,3,4,5,6};<br />
-Func&lt;int,int&gt; squared = x =&gt; x*x;<br />
-var squaredListOfInts = listOfInts.Select(x =&gt; squared).ToList();</p>
-<p>[/sourcecode]</p>
+
+``` csharp
+var listOfInts = new List {1,2,3,4,5,6};
+Func<int,int> squared = x => x*x;
+var squaredListOfInts = listOfInts.Select(x => squared).ToList();
+```
+
+</p>
 <p>While sure, C# can do that - <strong>why would you?</strong> As soon as we want to use pipelining and currying <em>to increase the expressiveness of our code,</em> not just to use it for the sake of using it, we can start to write some fantastic internal DSLs.</p>
-<p>[sourcecode language="fsharp"]</p>
-<p>let should test actual =<br />
-  test actual</p>
-<p>let equal expected actual =<br />
-  if expected &lt;&gt; actual then<br />
-    failwith &quot;Expected values to be equal&quot;</p>
-<p>//usage<br />
-let sayHello name = &quot;Hello &quot; + name<br />
-  sayHello &quot;Roger&quot; |&gt; should equal &quot;Hello Roger&quot;</p>
-<p>[/sourcecode]</p>
+
+```fsharp
+let should test actual =
+  test actual
+let equal expected actual =
+  if expected <> actual then
+    failwith "Expected values to be equal"
+//usage
+let sayHello name = "Hello " + name
+  sayHello "Roger" |> should equal "Hello Roger"
+```
+
 <p>Note that is a generic solution. The F# compiler also figured out that the generic function equal, will only work if its arguments are actually equatable. The generic type inference, complete with <a href="http://msdn.microsoft.com/en-us/library/dd233203%28VS.100%29.aspx">generic constraints far more powerful than in C#</a><em><a href="http://msdn.microsoft.com/en-us/library/dd233203%28VS.100%29.aspx"> </a>is just sublime</em>. Pipelining works in two directions, not just left to right.</p>
 <p>So to continue, apparently <a href="http://msdn.microsoft.com/en-us/library/dd268536%28VS.100%29.aspx">tuples </a>are like meh..</p>
 <p>...but F# uses them for things like grouping:</p>
@@ -99,3 +96,5 @@ let sayHello name = &quot;Hello &quot; + name<br />
 </ul>
 <p>I'm sure the blogosphere would be a light saying things like, "wow!", "cool!" and "look at all the new edge case programming problems we can solve in under two lines of code!". Some of us would like, do we need all that? Just like when Linq and Lambdas came to town.</p>
 <p>To sum up, yes <em>there is </em>a business case for F#, just not in the classic sense. Will you write your next LOB app in it? That would probably be masochistic, and I would recommend against it. Will it make you money? Jury's still out, there are <a href="http://www.intellifactory.com/">successes</a> that indicate it can be done.</p>
+
+UPDATE: Fast forward to 2016 and I think it is now clear that F# **is** a viable language, great for all kinds of applications -  and even for [LOB SAAS applications](http://fsharpshow.com/3-jet-revolutionizing-ecommerce-using-fsharp/). 

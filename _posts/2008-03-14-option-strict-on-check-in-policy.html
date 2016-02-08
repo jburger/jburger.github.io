@@ -7,36 +7,25 @@ published: true
 status: publish
 categories:
 - .NET
-- Software Development
 tags:
 - Check In Policies
 - Coding
 - Source control
 - TFS
 - VB9
-meta:
-  _publicize_pending: '1'
-  _wp_old_slug: '827216'
-  original_post_id: '827216'
-author:
-  login: Jim Burger
-  email: the-burge@outlook.com
-  display_name: Jim Burger
-  first_name: ''
-  last_name: ''
-excerpt: ' I hope to clarify how one might go about implementing a check in policy
-  which ensures that Option Strict is turned on for VB projects.'
 ---
 <p><span style="color:#0000ff;">NOTE ** This is a repost from my old blog, it may or may not be relevant any more, I'm posting it to keep it alive for people who may have been struggling to find it from </span><a href="http://blog.codeassassin.com/2008/04/09/custom-tfs-check-in-policy-responsiveness/"><span style="color:#800080;">other links</span></a><span style="color:#0000ff;"> on the web </span>**</p>
 <p>Today I hope to clarify how one might go about implementing a check in policy which ensures that Option Strict is turned on for VB projects.</p>
 <p>Rather than rehashing a perfectly good walk through, I suggest you read <a href="http://web.archive.org/web/20080531022519/http://msdn2.microsoft.com/en-us/library/bb668980.aspx">this article from MSDN</a> to get the basics of Check In Policy creation.</p>
 <p>Once we have our check in policy project and have derived a class from Microsoft.TeamFoundation.VersionControl.Client.PolicyBase it is time to start overriding the behaviour of the base rule.</p>
-<p>[sourcecode language="vb"]<br />
-Imports Microsoft.TeamFoundation.VersionControl.Client</p>
-<p>&lt;Serializable()&gt; _<br />
-Public Class OptionStrictPolicy<br />
-    Inherits PolicyBase<br />
-[/sourcecode]</p>
+
+```vb
+Imports Microsoft.TeamFoundation.VersionControl.Client
+<Serializable()> _
+Public Class OptionStrictPolicy
+    Inherits PolicyBase
+```
+
 <p>Once we are over that little hurdle we want to:</p>
 <ul>
 <li> Get the set of pending changes that have been selected by the user to check in</li>
