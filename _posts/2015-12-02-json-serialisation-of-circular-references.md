@@ -85,18 +85,20 @@ return Json(luke, settings);
 public class Parent
 {
   public string Name { get; }
-  public List&lt;string&gt; Children { get; } = new List&lt;string&gt;();
+  public List<string> Children { get; } = new List<string>();
   public Parent(string name)
   {
     Name = name;
   }
 }
- public class Child
+
+public class Child
 {
   public string Name { get; set; }
   public Parent Parent { get; set; }
 }
- var parent = new Parent('Padme');
+
+var parent = new Parent("Padme");
 parent.Children.Add(luke.Name, leia.Name);
 ```
 
