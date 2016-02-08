@@ -1,0 +1,52 @@
+---
+layout: post
+title: Software changes
+date: 2009-02-05 07:48:51.000000000 +10:30
+type: post
+published: true
+status: publish
+categories:
+- Software Development
+tags:
+- Architecture
+- Change management
+meta:
+  _publicize_pending: '1'
+  original_post_id: '826830'
+  _wp_old_slug: '826830'
+author:
+  login: Jim Burger
+  email: the-burge@outlook.com
+  display_name: Jim Burger
+  first_name: ''
+  last_name: ''
+---
+<p>How you react and prepare for change is very important; it can make or break a project. Allow for changes that wont come and you’ve written too much code. Forget to allow for other types of change and your application becomes either brittle or unwieldy in the face of change.</p>
+<p>Software change <a href="http://www.comp.lancs.ac.uk/computing/resources/IanS/SE7/ElectronicSupplements/SWChange.pdf">has been divided into 3 flavours in the past:</a></p>
+<h2>Re-architecture</h2>
+<p>Re-architecture is a more ruthless variety of change that involves changing the very foundations of the software to cope with new requirements. A classic move would be from a single tier application to an n-tier design in order to allow for multiple users.</p>
+<h2>Re-engineering</h2>
+<p>Re-engineering is essentially refactoring; the process of re-writing software to make it easier to understand, without adding new functionality. Its the type of change</p>
+<p>developers love, but project managers hate, and architects put up with. Simplification, removal of duplication, consistency etc. All the good stuff.</p>
+<h2>Software Maintenance</h2>
+<p>Maintenance is the act of reacting to a change in software requirements, however the fundamental software structure is not changed. This is the change we tend to deal with the most as developers, requirements are forever changing from the end user, to the very platforms we work on. I’m mainly picking on this kind of change, however I’m going to split hairs even further.</p>
+<h2>2 Kinds of Requirements Change</h2>
+<p>There are possibly more, but I’m thinking of two types in particular:</p>
+<ul>
+<li>Changes that are unilateral</li>
+<li>Changes that… aren’t</li>
+</ul>
+<p>What I mean is this. <strong>If you cannot avoid changing something in all layers of your software in order to accommodate a new or updated requirement, then you have a unilateral change.</strong> An example would be in a typical line of business application.</p>
+<p>The product owner would like you to add support for a second telephone number. The software currently supports one. No matter how many layers you have, you will likely need to change all of them to support this change. <strong>Having a PersonDTOFactoryServiceManagerProvider class might get in the way of a good time here.</strong></p>
+<p>In this same application, the user now informs you that the business rules for the concept of “Deferred” has changed. This is a localizable change – handled properly. Good apps will have this sort of logic tucked away in its own layer, and will not need to be replicated in either the UI or the DB. <strong>Badly written, tightly coupled apps will have you writing code in UI event handlers and SQL change scripts.</strong></p>
+<p>Localizable changes happen daily and they cost developers time by the bucket load. I expect them to occur and I lovingly call reacting to these changes as ‘my job’. Unilateral changes on the other hand, tend to come en masse with deadlines attached. <strong>They can be mistakenly given too much weight in the design process as a result.</strong> It’s these changes that can cause a developer to contract a phobia of layers. Personally, I expect these changes to occur almost as often as the former, however I like to call these changes ‘version next’ where at all possible.</p>
+<h2>Defence</h2>
+<p><strong>The real issue is defending oneself from change and how much defence to put up, and how much that defence costs you. </strong>The method of protecting yourself from unilateral change, is to minimize the amount of layers you have to deal with when unilateral changes occur. Defending yourself against localizable changes, is often done by increasing the number of layer in your application, mainly to improve the chances of changes only effecting one layer at a time.</p>
+<p>“Layer” is a difficult term, and I use it in the sense that they talk to one another via an interface. They do not depend on one another in order to perform their function. Think ‘abstraction layer’.</p>
+<h2>Conflict</h2>
+<p>The tension between these two types of change could be seen as a manifestation of <a href="http://en.wikipedia.org/wiki/Conway's_Law">Conway’s Law</a>. I also believe that this tension is why n-tier applications tend towards a <a href="http://en.wikipedia.org/wiki/Multitier_architecture">layer count of 3 and above</a>. Adding layers can be the simplest way to turn what appears to be a horrible sweeping change. For instance you can use the <a href="http://en.wikipedia.org/wiki/Multitier_architecture#Comparison_with_the_MVC_architecture">MVC pattern</a> to separate the UI from the DAL. The danger now is that you now have more work to do when a change comes along that will effect the endpoints of your application. If the user demands that second address, then the PersonView, the PersonController, the PersonModel, the PersonService, the AddressRepository, the AddressAdapter and the Address and Person Table will need to be changed. Oh I wish we had only 2 layers again.</p>
+<p>However, the moment that the Address needs to be formatted differently, depending on which view the user is using, you will thank yourself for having that PersonController there.</p>
+<h2>Conclusion</h2>
+<p>It is clear to me that, both types of maintenance changes occur and both need to be allowed for. Dismissing one type over the other is a mistake. Favouring less layers to account for the 50 columns you know the user is going to add is as foolish as over engineering a solution to protect oneself from imaginary gremlins.</p>
+<p>Another point is that there are already so many layers in an application, and that can be seen from two perspectives: that one more layer wont hurt, or that one more will be the straw that breaks the camels back. Its up to you.</p>
+<p>However, a pragmatist will employ rigorous application of <a href="http://en.wikipedia.org/wiki/YAGNI">YAGNI</a>. Don’t create more layers until you absolutely need them, but do not shy away from creating layers when change is on the horizon. <a href="http://www.codinghorror.com/blog/archives/000705.html">Leaving design decisions as late as possible</a> will ensure you learn to Say No to frivolous layers of abstraction. <a href="http://en.wikipedia.org/wiki/Test-driven_development">TDD</a> (When Used Correctly™), <a href="http://en.wikipedia.org/wiki/Single_responsibility_principle">SRP</a> and <a href="http://en.wikipedia.org/wiki/Inversion_of_Control">IOC</a>, will guide the developer to produce code that will cope better with change without over engineering it. Oh, and you’ll be able to join the <a href="http://en.wikipedia.org/wiki/Three-letter_abbreviation">TLA</a> club too.</p>

@@ -1,0 +1,119 @@
+---
+layout: post
+title: Getting Started With WCF over SSL
+date: 2011-12-05 09:25:31.000000000 +10:30
+type: post
+published: true
+status: publish
+categories: []
+tags: []
+meta:
+  _edit_last: '11285636'
+  _oembed_e948c69d1e20e12b75ad12ff2c9ee5ec: '{{unknown}}'
+  _oembed_e560101c3e819b1f65f55f9b570a4a65: '{{unknown}}'
+  _oembed_27cdaaaa44a2611b25bcc9a5710601e8: '{{unknown}}'
+  _oembed_b25464bd8f770a248cef6ea6d3b68194: '{{unknown}}'
+  _oembed_408d24235c6ef1dc75da921a85e09e31: '{{unknown}}'
+  _oembed_4f1273a199a0e7a0881317bdcc86d6a3: '{{unknown}}'
+  twitter_cards_summary_img_size: a:6:{i:0;i:579;i:1;i:390;i:2;i:3;i:3;s:24:"width="579"
+    height="390"";s:4:"bits";i:8;s:4:"mime";s:9:"image/png";}
+author:
+  login: Jim Burger
+  email: the-burge@outlook.com
+  display_name: Jim Burger
+  first_name: ''
+  last_name: ''
+---
+<h2>AIMS:</h2>
+<p>· To create an IIS Application that is accessed over SSL.</p>
+<p>· Use the Wcf Test Client to connect and verify the service is running</p>
+<h2>YOU WILL NEED:</h2>
+<p>· SELFSSL7.exe available here: <a href="http://www.iisinformation.com/2010/05/self-signing-ssl-for-iis7-selfssl7/">http://www.iisinformation.com/2010/05/self-signing-ssl-for-iis7-selfssl7/</a></p>
+<p>· IIS instance installed locally</p>
+<p>· Sufficient access to install certificates in root certificate authority store</p>
+<h2>STEPS</h2>
+<h2>Self Signed Certificate Installation</h2>
+<p>1. Install SELFSSL7 to a convenient location</p>
+<p>2. Open IIS7 management console as administrator</p>
+<p>3. Open your ‘Default Web Site’ and create an application called TestSSL</p>
+<p>a. use a physical path like C:inetpubwwwrootsecure</p>
+<p>b. accept the other defaults and hit OK</p>
+<p>4. Open a command line tool (e.g. powershell) as administrator</p>
+<p>5. Run SelfSSL7.exe with the following command:</p>
+<p style="padding-left:30px;">selfssl7 /V 9999 /I /T /Q</p>
+<p>This command will create a 1024 bit strength certificate that is valid for 9999 days, bound to the “Default Web Site” website on all unassigned IP addresses for port 443, added to the local users “Trusted Certificates” list, named &lt;YOUR_PC_NAME&gt;. It will also override any binding on port 443.</p>
+<p><strong>One of the important things to remember about Self Signed certificates and WCF is that if the name on the certificate doesn’t match the name of the internet domain it is assigned to, then certificate validation <em>will fail</em>.</strong></p>
+<h2>SSL application creation</h2>
+<p>1. Reopen the IIS7 management console and inspect the Secure web site SSL Settings</p>
+<p>2. Tick the Require SSL option and hit Apply</p>
+<p><a href="http://maintenancecoder.files.wordpress.com/2011/12/image001.png"><img class="alignnone size-full wp-image-826840" title="image001" src="{{ site.baseurl }}/assets/image001.png" alt="" width="579" height="390" /></a></p>
+<p>3. Open the Bindings for the ‘Default Web Site’ site, ensure there is a https binding.</p>
+<p><a href="http://maintenancecoder.files.wordpress.com/2011/12/image002.png"><img class="alignnone size-full wp-image-826841" title="image002" src="{{ site.baseurl }}/assets/image002.png" alt="" width="600" height="232" /></a></p>
+<p>4. Edit the https binding and ensure that its using the YOUR_PC_NAME certificate</p>
+<p><a href="http://maintenancecoder.files.wordpress.com/2011/12/image003.png"><img class="alignnone size-full wp-image-826842" title="image003" src="{{ site.baseurl }}/assets/image003.png" alt="" width="515" height="282" /></a></p>
+<h2>Test WCF Service creation</h2>
+<p>1. Open Visual Studio 2010 and create a new WCF Service Application<br />
+<a href="http://maintenancecoder.files.wordpress.com/2011/12/image004.jpg"><img class="alignnone size-full wp-image-826843" title="image004" src="{{ site.baseurl }}/assets/image004.jpg" alt="" width="544" height="373" /></a></p>
+<p>2. Open the web.config</p>
+<p>Replace the system.serviceModel element with the following markup:</p>
+<p>[sourcecode language="xml"]<br />
+&lt;system.serviceModel&gt;</p>
+<p>  &lt;services&gt;</p>
+<p>    &lt;service name=&quot;WcfService1.Service1&quot; behaviorConfiguration=&quot;https&quot;&gt;</p>
+<p>      TestSSL/Service1.svc&quot; bindingConfiguration=&quot;TransportSecurity&quot; binding=&quot;wsHttpBinding&quot; contract=&quot;WcfService1.IService1&quot;/&gt;</p>
+<p>      &lt;endpoint address=&quot;mex&quot; binding=&quot;mexHttpsBinding&quot; name=&quot;Metadata&quot; contract=&quot;IMetadataExchange&quot;/&gt;</p>
+<p>    &lt;/service&gt;</p>
+<p>  &lt;/services&gt;</p>
+<p>  &lt;bindings&gt;</p>
+<p>    &lt;wsHttpBinding&gt;</p>
+<p>      &lt;binding name=&quot;TransportSecurity&quot;&gt;</p>
+<p>        &lt;security mode=&quot;Transport&quot;&gt;</p>
+<p>          &lt;transport clientCredentialType=&quot;None&quot; /&gt;</p>
+<p>        &lt;/security&gt;</p>
+<p>      &lt;/binding&gt;</p>
+<p>    &lt;/wsHttpBinding&gt;</p>
+<p>  &lt;/bindings&gt;</p>
+<p>  &lt;behaviors&gt;</p>
+<p>    &lt;serviceBehaviors&gt;</p>
+<p>      &lt;behavior name=&quot;https&quot;&gt;</p>
+<p>        &lt;serviceMetadata httpsGetEnabled=&quot;true&quot;/&gt;</p>
+<p>        &lt;serviceDebug includeExceptionDetailInFaults=&quot;true&quot;/&gt;</p>
+<p>      &lt;/behavior&gt;</p>
+<p>    &lt;/serviceBehaviors&gt;</p>
+<p>  &lt;/behaviors&gt;</p>
+<p>  &lt;serviceHostingEnvironment multipleSiteBindingsEnabled=&quot;false&quot; /&gt;</p>
+<p>&lt;/system.serviceModel&gt;</p>
+<p>[/sourcecode]</p>
+<p>This markup achieves several things, reading from top to bottom:</p>
+<p>· It sets up two service endpoints: one foir https access and another for accessing metadata about the service, over SSL. Note the contracts used and the use of a QN (Qualified Name) to describe the service contract.</p>
+<p>· It modifies the standard ‘wsHttpBinding’ to include transport level security using SSL certificates at the server only. This implies that the client must trust the server certificate. Labelled ‘TransportSecurity’</p>
+<p>· Creates a service behaviour called ‘https’ and enables publishing of metadata (for service discovery) and debugging information.</p>
+<p>· Finally it forces the use of absolute URLs by disabling the ‘multipleSiteBindingsEnabled’ attribute</p>
+<p>· Note the service endpoint is configured to use the modified binding and behaviour through the use of the ‘bindingConfiguration’ &amp; the ‘behaviourConfiguration’ attributes, respectively.</p>
+<p>3. Open the project properties and goto the ‘Package/Publish Web’ tab</p>
+<p><a href="http://maintenancecoder.files.wordpress.com/2011/12/image005.jpg"><img class="alignnone size-full wp-image-826844" title="image005" src="{{ site.baseurl }}/assets/image005.jpg" alt="" width="539" height="298" /></a></p>
+<p>4. Change the IIS Web site/application name to ‘Secure/TestSSL’</p>
+<p><a href="http://maintenancecoder.files.wordpress.com/2011/12/image006.jpg"><img class="alignnone size-full wp-image-826845" title="image006" src="{{ site.baseurl }}/assets/image006.jpg" alt="" width="546" height="228" /></a></p>
+<p>5. Save the properties</p>
+<p>6. Right click the project in the Solution Explorer and choose ‘Build Deployment Package’. Wait for the package to be created</p>
+<p>7. Right click the project again, this time selecting the Publish... menu item. You’ll see this window:<br />
+<a href="http://maintenancecoder.files.wordpress.com/2011/12/image007.png"><img class="alignnone size-full wp-image-826846" title="image007" src="{{ site.baseurl }}/assets/image007.png" alt="" width="423" height="633" /></a></p>
+<p>8. Rename the profile to ‘FileSystem’, and change the publish method to ‘filesystem’.<br />
+Set the target location to the physical location of your web application, and set it to delete all existing files:<br />
+<a href="http://maintenancecoder.files.wordpress.com/2011/12/image008.png"><img class="alignnone size-full wp-image-826847" title="image008" src="{{ site.baseurl }}/assets/image008.png" alt="" width="435" height="396" /></a></p>
+<p>Hit publish and wait for it to succeed. *NOTE* You may need to edit permissions for folders created under c:inetpubwwwroot</p>
+<p>9. Double check your deployment by browsing to the physical location of your TestSSL site. You should see something like this:<br />
+<a href="http://maintenancecoder.files.wordpress.com/2011/12/image009.png"><img class="alignnone size-full wp-image-826848" title="image009" src="{{ site.baseurl }}/assets/image009.png" alt="" width="454" height="191" /></a></p>
+<p>10. Check the service is up and running: goto <a href="https:/testssl/service1.svc">https:///testssl/service1.svc</a></p>
+<p>If you see a certificate warning in your browser or something like this:</p>
+<p><a href="http://maintenancecoder.files.wordpress.com/2011/12/image010.png"><img class="alignnone size-full wp-image-826849" title="image010" src="{{ site.baseurl }}/assets/image010.png" alt="" width="396" height="318" /></a></p>
+<p>View the certificate and double check the certificate name matches the URL you’ve assigned the website...they must match. E.g. for a website on <a href="https://it-05/">https://it-05/</a> to work, you must name your certificate ‘it-05’</p>
+<h2>Using the WCF Test Client to Check your work</h2>
+<p>1. Generally the test client exists at the following location on 64 bit machines,<br />
+c:\program files (x86)\microsoft visual studio 10.0\common7\IDE\wcftestclient.exe</p>
+<p>2. Find it and run it</p>
+<p>3. Add an endpoint address (the address of your service)</p>
+<p><a href="http://maintenancecoder.files.wordpress.com/2011/12/image011.png"><img class="alignnone size-full wp-image-826850" title="image011" src="{{ site.baseurl }}/assets/image011.png" alt="" width="600" height="377" /></a></p>
+<p>4. If everything went well, you should see a listing of the service operations on your service.</p>
+<p><a href="http://maintenancecoder.files.wordpress.com/2011/12/image012.png"><img class="alignnone size-full wp-image-826851" title="image012" src="{{ site.baseurl }}/assets/image012.png" alt="" width="600" height="380" /></a></p>
+<p>This email may contain confidential information, which also may be legally privileged. Only the intended recipient(s) may access, use, distribute or copy this email. If this email is received in error, please inform the sender by return email and delete the original. If there are doubts about the validity of this message, please contact the sender by telephone. It is the recipients responsibility to check the email and any attached files for viruses.</p>

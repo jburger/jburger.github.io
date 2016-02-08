@@ -1,0 +1,72 @@
+---
+layout: post
+title: A -match made in :heaven
+date: 2010-01-06 00:33:15.000000000 +10:30
+type: post
+published: true
+status: publish
+categories:
+- .NET
+- Software Development
+tags:
+- Powershell
+- vim
+meta:
+  _publicize_pending: '1'
+  original_post_id: '826879'
+  _wp_old_slug: '826879'
+author:
+  login: Jim Burger
+  email: the-burge@outlook.com
+  display_name: Jim Burger
+  first_name: ''
+  last_name: ''
+excerpt: One of the reasons vim is so popular with the *nix crowd is that it integrates
+  with text based shells so completely. Historically, on windows this meant you could
+  only take advantage of good old dos.
+---
+<p>Today I'm bringing together two of my favourite things. Powershell, and vim.</p>
+<p>Don't get me wrong, the <a href="http://technet.microsoft.com/en-us/library/dd315244.aspx">new ISE</a> is fancy. It's <strong>the tool</strong> if you intend to learn how to use powershell, or if you want to debug a hairy script. But you can't code in another programming language and use powershell's awesome feature set from <em>within</em> the ISE. This is something vim is great at; shell integration.</p>
+<p>As a bit of a Linux fan I was more than happy to turf the age-old dos shell from vim on windows anyway. Replacing it with shiny powershell v2 goodness is a breeze. Just add the following to your _vimrc.</p>
+<p>[sourcecode language="bash"]<br />
+set shell=powershell.exe<br />
+set shellcmdflag=-Command<br />
+set shellpipe=|<br />
+set shellredir=&gt;<br />
+[/sourcecode]</p>
+<p>Now we're all set to perform some vim/powershell tricks...</p>
+<p>[sourcecode language="powershell"]<br />
+# go fetch the lines in a text file that match expr and insert the line into the current buffer<br />
+:r ! gc ~someApp.log | where { $_ -match  'expr' }</p>
+<p># change the readonly flag of the current file<br />
+:silent ! set-itemProperty %:p IsReadOnly $false</p>
+<p># select properties on clr objects and dump as csv into the buffer<br />
+:r ! ps | select Name, Path | convertTo-csv</p>
+<p># read a csv file and output the only 'name' column into the buffer<br />
+:r ! import-csv test.csv | select name<br />
+[/sourcecode]</p>
+<p>And if you haven't already done so, rig up syntax highlighting, indentation and filetype detection for ps1 files themselves, thanks to <a href="http://www.peterprovost.org/">Peter Provost</a>:</p>
+<ul>
+<li><a href="http://www.vim.org/scripts/script.php?script_id=1327">Syntax highlighting</a></li>
+<li><a href="http://www.vim.org/scripts/script.php?script_id=1815">Indentation defaults</a></li>
+<li><a href="http://www.vim.org/scripts/script.php?script_id=1816">Filetype detection</a></li>
+</ul>
+<p>To mimic the ISE auto completion we can turn on some newer vim features. Vim has built-in keyword completion for a <a href="http://vimdoc.sourceforge.net/htmldoc/version7.html#new-omni-completion">variety of languages</a>. It also has a clever fallback; it can parse syntax highlighting files for language keywords and other important words. To do this, without disturbing other built-in language completion, the following addition to the vimrc works well:</p>
+<p>[sourcecode language="bash"]</p>
+<p>filetype plugin on<br />
+if has(&quot;autocmd&quot;) &amp;&amp; exists(&quot;+omnifunc&quot;)<br />
+	autocmd Filetype *<br />
+		    	if &amp;omnifunc == &quot;&quot; |<br />
+		    		setlocal omnifunc=syntaxcomplete#Complete |<br />
+		    	endif<br />
+endif<br />
+[/sourcecode]</p>
+<p>While this is nice, the powershell syntax highlighting file is written too cleverly for omni completion to be truly useful. A quick and dirty hack is to include all the standard cmdlets names in the highlighting file. Perhaps I'll get my head around the vim scripting required to produce ps1complete some other rainy day. For now, we can just  bring in the entire set of cmdlet names into syntax/ps1.vim:</p>
+<p>[sourcecode language="powershell"]</p>
+<p>:r ! get-command | where { $_.CommandType -eq 'Cmdlet' } | Select Name</p>
+<p>[/sourcecode]</p>
+<p>(I'll leave it as an exercise for the reader to optimize the powershell required to only bring in the distinct words from the list of cmdlet names as a space delimited string)</p>
+<p>[sourcecode language="bash"]<br />
+syn keyword ps1Cmdlet Add-Content Add-History...... #etc<br />
+[/sourcecode]</p>
+<p>If your learning powershell, its still best to use the ISE, this tweak is only useful if you know what you're looking for. For those comfortable with powershell and vim, this can allow you to stay in your favourite editor longer, before requiring the ISE.</p>

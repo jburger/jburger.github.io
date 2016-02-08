@@ -1,0 +1,143 @@
+---
+layout: post
+title: Generating Word Documents Part 3 - Mail Merge without Word
+date: 2010-11-05 18:59:14.000000000 +10:30
+type: post
+published: true
+status: publish
+categories:
+- .NET
+- Software Development
+tags:
+- CSharp
+- OpenXml
+- Word
+meta:
+  _oembed_e53f598c392aa63c477f45d84a614d90: '{{unknown}}'
+  _publicize_pending: '1'
+  original_post_id: '827297'
+  _wp_old_slug: '827297'
+author:
+  login: Jim Burger
+  email: the-burge@outlook.com
+  display_name: Jim Burger
+  first_name: ''
+  last_name: ''
+---
+<p>In <a href="http://cultivatingcode.com/2010/07/08/generating-docs-with-open-xml/">previous</a> <a href="http://cultivatingcode.com/2010/10/13/generating-word-documents-p2/">installments</a> I covered the use of XML databinding. This time around I thought I'd concentrate purely on manipulating content controls. It should be noted that, technically, Custom XML parts days are<a href="http://www.zdnet.com/blog/microsoft/custom-xml-the-key-to-patent-suit-over-microsoft-word/3712"> numbered</a>, and I want to show how to side step this potential problem.</p>
+<p>In this instalment, we'll begin to form an infrastructure around Content Controls that we can use for all kinds of handy tricks. It will include:</p>
+<ul>
+<li>A notion of a 'DocumentModel' - data to drive our document</li>
+<li>The DocumentBuilder class - this class is responsible for constructing the document at large</li>
+<li>Replacing Content Controls with Content without XML data binding</li>
+<li>Use of AltChunk tags to compose templates together</li>
+</ul>
+<p>At the end of this post we will use these four concepts to build a simple mail merge engine that will take some data from and turn it into a print run of letters. It will not require Word installed to run, (only to read the output), nor will it use any Custom XML.</p>
+<h2><span style="font-weight:normal;font-size:13px;">If you want to skip the chat, and go straight to the code - here tis... <a href="http://code.google.com/p/word-merge/">http://code.google.com/p/word-merge/</a></span></h2>
+<p>So we've looked at the Content Control from a high level, but what is it exactly? Well, quite simply it is a cluster of XML inside a WordML document. Specifically, Content Controls are  tags. In turn they have a properties tag, and a content tag.</p>
+<p>Unfortunately, there is no simple Content Control object provided for in the Open XML SDK. In order to make working with Content Controls easy - we need to roll our own.</p>
+<h2>Introducing the ContentControl Abstraction</h2>
+<p>We want to get at content controls quickly and easily, and to do that it would be nice to address them by their tag or title (I chose tag) as we set them in Word. It would also be nice to say "Hey word document, gimme all your content controls!". As it turns out, that requires a bit of code. Content controls are represented by many different types in the Open XML API depending on their placement in the DOM. Luckily, all of these types derive from a base called OpenXmlCompositeElement:</p>
+<p>&nbsp;</p>
+<p>[caption id="attachment_827302" align="aligncenter" width="273" caption="All Content Controls derive from OpenXmlCompositeElement"]<a href="http://cultivatingcode.files.wordpress.com/2010/11/object_browser.png"><img class="size-full wp-image-827302" title="object_browser" src="{{ site.baseurl }}/assets/object_browser.png" alt="" width="273" height="161" /></a>[/caption]</p>
+<p>&nbsp;</p>
+<p>Of course, there are other composite elements used in a word document, the distinguishing feature of content controls is that their first element is a set of properties; Tag, Title, et al. We can leverage this fact to provide a useful abstraction.</p>
+<p>﻿<a href="http://cultivatingcode.files.wordpress.com/2010/11/contentcontrolinfo.png"><img class="aligncenter size-full wp-image-827303" title="ContentControlInfo" src="{{ site.baseurl }}/assets/contentcontrolinfo.png" alt="" width="449" height="284" /></a></p>
+<h2>Building a document</h2>
+<p>Building a single data driven document is pretty easy, as long as we follow some conventions. I use what roughly equates to an MVC pattern to begin with. For each type of document I want to build, I have a triad of elements; a Word document forms the Template, a class that represents all the data that will go into the template (I call it a ViewModel so I can hang with the cool kids) and a class that takes the data and throws it at the template and saves the result.</p>
+<p>Where the convention kicks in is that I make sure the names of the properties on ViewModel are the same as the tagnames in the template. Can you see where I'm going with this?</p>
+<p>So lets have a look at our template,</p>
+<p>&nbsp;</p>
+<p>[caption id="attachment_827306" align="aligncenter" width="500" caption="A simple template"]<a href="http://cultivatingcode.files.wordpress.com/2010/11/mail_merge_template1.png"><img class="size-full wp-image-827306" title="mail_merge_template1" src="{{ site.baseurl }}/assets/mail_merge_template1.png" alt="" width="500" height="501" /></a>[/caption]</p>
+<p>&nbsp;</p>
+<p>Here is the matching ViewModel...</p>
+<p><span style="font-family:Consolas, Monaco, 'Courier New', Courier, monospace;line-height:18px;font-size:12px;white-space:pre;"> </span></p>
+<p>[sourcecode language="csharp"]<br />
+public class ArrearsModel<br />
+{<br />
+    public string Address { get; set; }<br />
+    public string Salutation { get; set; }<br />
+    public string ArrearsAmount { get; set; }<br />
+}<br />
+[/sourcecode]</p>
+<p>As you can imagine, the document builder can now use reflection to map from the properties on a view model to the content controls on the page. This is where our ContentControlInfo abstraction comes in handy - we can find content controls really easily now. Imagine something like this inside your builder class:</p>
+<p>[sourcecode language="csharp"]</p>
+<p>private void BindModel(ArrearsModel model)<br />
+{<br />
+    //more on this later ;)<br />
+    var allContent = Document.GetContentControls();</p>
+<p>    var modelProperties = typeof (ArrearsModel).GetProperties();<br />
+    foreach (var modelProperty in modelProperties)<br />
+    {<br />
+        var value = modelProperty.GetValue(model, null);<br />
+        var name = modelProperty.Name;<br />
+        var matchingContentControls = allContent.Where(cc =&gt; cc.Tag == name);</p>
+<p>        foreach (var contentControl in matchingContentControls)<br />
+            contentControl.OverwriteText((string) value); //see code for details<br />
+    }<br />
+}<br />
+[/sourcecode]</p>
+<p>The hard part here is cracking open a document and looking at its content controls. For that I wrote this simple extension method on the WordprocessingDocument object, which represents the entry point into the ContentControlInfo abstraction:</p>
+<p>[sourcecode language="csharp"]<br />
+public static IEnumerable GetContentControls(this WordprocessingDocument doc)<br />
+{<br />
+  var rootElement = doc.MainDocumentPart.Document;</p>
+<p>  var contentControls =<br />
+    from sdt in rootElement.Descendants()<br />
+    let properties = sdt.GetFirstChild()<br />
+    let content = sdt.GetFirstChild&lt;SdtContentBlock&gt;()<br />
+    where properties != null<br />
+    select new ContentControlInfo(sdt);</p>
+<p>  return contentControls;<br />
+}<br />
+[/sourcecode]</p>
+<p>From this simple extension we can now leverage LINQ to give us a variety of ways of collecting Content Controls. For instance:</p>
+<p>[sourcecode language="csharp"]<br />
+//get a single content control<br />
+Document.GetContentControls().Single(cc =&gt; cc.Tag == &quot;MyControl&quot;);<br />
+//get a bunch of like controls<br />
+Document.GetContentControls().Where(cc =&gt; cc.Tag.StartsWith == &quot;FooTable&quot;);</p>
+<p>[/sourcecode]</p>
+<p><span style="font-size:20px;font-weight:bold;">Composing documents with altChunk</span></p>
+<p>Our next move is to insert one document into another. Once we have a built a document, complete with data, we can plonk it into another document using the <a href="http://msdn.microsoft.com/en-us/library/documentformat.openxml.wordprocessing.altchunk.aspx">altChunk</a> tag. In essence the altChunk tag acts as a placeholder, and you stream the actual data into another portion of the document package, the altChunk tag references this location and at runtime the rendering engine (usually Word) expands the altChunk tag with the datastream.</p>
+<p>Since we can't use Word to insert altChunk tags I use a content control to mark where I want the altChunk tag to go. The following code replaces a placeholding Content control with an altChunk tag:</p>
+<p>[sourcecode language="csharp"]<br />
+var doc = placeholder.Ancestors&lt;Document&gt;().Single();<br />
+var altChunk = GetAltChunk(doc, altChunkId, pathToContent);<br />
+placeholder.InsertAfterSelf(altChunk);<br />
+placeholder.Remove();</p>
+<p>private static AltChunk GetAltChunk(Document doc, string altChunkId, string pathToContent)<br />
+{<br />
+  var mainPart = doc.MainDocumentPart;<br />
+  var chunk =<br />
+    mainPart.AddAlternativeFormatImportPart(<br />
+      AlternativeFormatImportPartType.WordprocessingML,<br />
+      altChunkId<br />
+    );<br />
+  using (var fs = File.OpenRead(pathToContent)) chunk.FeedData(fs);</p>
+<p>  var altChunk = new AltChunk() { Id = altChunkId };<br />
+  altChunk<br />
+    .AppendChild(new AltChunkProperties())<br />
+    .AppendChild(new MatchSource() { Val = true });<br />
+  return altChunk;<br />
+}<br />
+[/sourcecode]</p>
+<h2>Bringing it all together</h2>
+<p>So the final step in the process is to create a container document for our merge, and get its builder to take care of iterating over a list of ViewModels to create each document in the mail merge. This will result in one great big word document with our merge results. Alternatively you could skip this step and just pump out individual documents.</p>
+<p>The following is how I generally achieved this end for our arrears scenario:</p>
+<p>[sourcecode language="csharp"]<br />
+var placeHolder = Document.GetContentControls().Single(cc =&gt; cc.Tag == &quot;Page&quot;);</p>
+<p>for (int index = 0; index &lt; Model.Count; index++)<br />
+{<br />
+  var arrearsModel = Model[index];<br />
+  var tempfile = Path.GetRandomFileName();</p>
+<p>  using (var builder = new ArrearsBuilder(arrearsModel))<br />
+    builder.Build(tempfile);<br />
+  placeHolder.Self.ReplaceContent(tempfile, &quot;arrears&quot; + index);<br />
+  File.Delete(tempfile);<br />
+}</p>
+<p>placeHolder.Self.Remove();<br />
+[/sourcecode]</p>
+<p>&nbsp;</p>
+<p>[caption id="attachment_827326" align="aligncenter" width="500" caption="The final output"]<a href="http://cultivatingcode.files.wordpress.com/2010/11/mergeoutput.png"><img class="size-full wp-image-827326" title="MergeOutput" src="{{ site.baseurl }}/assets/mergeoutput.png" alt="" width="500" height="290" /></a>[/caption]</p>
+<p>&nbsp;</p>

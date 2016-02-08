@@ -1,0 +1,23 @@
+---
+layout: post
+title: Container Lifetime and web requests
+date: 
+type: post
+published: false
+status: draft
+categories: []
+tags: []
+meta: {}
+author:
+  login: Jim Burger
+  email: the-burge@outlook.com
+  display_name: Jim Burger
+  first_name: ''
+  last_name: ''
+---
+<p>I recently encountered a strange issue with a WCF service I'm helping to develop. Subsequent requests to a service operation was returning the same results, regardless of input.</p>
+<p>When debugging this service in Visual Studio it worked fine (using the internal web server), but as soon as I deployed it to a staging environment (IIS 7.5, SSL &amp; Message level security turned on) the service started to appear to cache responses.</p>
+<p>To cut a long story short: it was our DI container not creating objects per web request, but per application lifetime. If you use autofac for ASP MVC, you're probably used to it having a per request lifetime: the autofac integration rigs this up for you. If you try this in a web service though, you'll need to go and DIY.</p>
+<p>This <a href="http://nblumhardt.com/2011/01/an-autofac-lifetime-primer/">comprehensive article</a> explains it all better than I can, but if its a case of tl;dr....here is a good takeaway straight from Nicks playbook:</p>
+<p><strong>Don’t resolve from the root container. Always resolve from and then release a lifetime scope.</strong></p>
+<p>...good advice!</p>

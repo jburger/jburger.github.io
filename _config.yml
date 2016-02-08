@@ -16,4 +16,4 @@ twitter_username: burgomg
 github_username:  jburger
 
 # Build settings
-markdown: kramdown
+markdown: redcarpet

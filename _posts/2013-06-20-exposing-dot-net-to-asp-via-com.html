@@ -1,0 +1,87 @@
+---
+layout: post
+title: Exposing .NET Classes to a Classic ASP web page via COM
+date: 2013-06-20 13:42:25.000000000 +09:30
+type: post
+published: true
+status: publish
+categories: []
+tags:
+- .NET
+- ASP
+- COM
+- VBScript
+author: Jim Burger
+---
+<p>There are already heaps of posts and guidance on how to make COM Callable wrappers out there but it would seem there is a lack of posts on how to then consume and use your API from Classic ASP</p>
+<h3>Recipe for success:</h3>
+<ul>
+<li>A .NET API that you would like to expose</li>
+<li>regasm.exe (normally part of the Windows SDK, or as part of a standard Visual Studio installation)</li>
+<li>A Classic ASP web site up and running</li>
+</ul>
+<h3>.NET API</h3>
+<p>So our .NET API is simple, but complex enough to show up a particular nuance to COM in VBScript. Two classes - one is used as a the parameter to a method on another:</p>
+<p>[code language="csharp"]<br />
+var class1 = new Class1();<br />
+var class2 = new Class2();<br />
+class1.Method1(class2);<br />
+[/code]</p>
+<p>So the key with your API is that if you are going to expose this stuff over COM you'll need to decorate your wrapper in such a way that a VBSCript client can deal with it.</p>
+<p>[code language="csharp"]<br />
+using System.Runtime.InteropServices;<br />
+namespace ClassLibrary1<br />
+{<br />
+  [ClassInterface(ClassInterfaceType.None)]<br />
+  [ProgId(&quot;ClassLibrary1.Class1&quot;)]<br />
+  [Guid(&quot;004F61C7-5159-4812-B20A-68A537C33164&quot;)]<br />
+  [ComVisible(true)]<br />
+  public class Class1<br />
+  {<br />
+    public string Method1(Class2 foo)<br />
+    {<br />
+      return foo.Property1 + foo.Property2 + &quot;1&quot;;<br />
+    }<br />
+  }</p>
+<p>  [ClassInterface(ClassInterfaceType.None)]<br />
+  [ProgId(&quot;ClassLibrary1.Class2&quot;)]<br />
+  [Guid(&quot;FF4B4FB3-98D2-4D0A-A4E3-94F64D0D5F77&quot;)]<br />
+  [ComVisible(true)]<br />
+  public class Class2<br />
+  {<br />
+    public string Property1<br />
+    {<br />
+      get { return &quot;Hello &quot;; }<br />
+    }<br />
+    public string Property2<br />
+    {<br />
+      get { return &quot;Complex Parameterization&quot;; }<br />
+    }<br />
+  }<br />
+}[/code]</p>
+<p>Some things to note from the above code:</p>
+<ul>
+<li>Each class should be marked as COM Visible and have its own GUID attribute</li>
+<li>ProgID is optional, but it allows you to set how the VBScript client will create teh object by name.</li>
+<li>Set the class interface type to none.</li>
+</ul>
+<h3>Registering and unregistering the .dll</h3>
+<p>Registration can get painful when you don't know what is going on. If you get weird behaviour while registering and unregistering, you will probably need to go and edit your registry to remove orphaned entries. In my experience this is only an issue if you aren't supplying your own GUIDs and Visual studio is generating new ones for you (via the Register for COM project setting - just turn it off) or you havent locked in your version number and that is going up every time you build.</p>
+<h4>Registation</h4>
+<pre>regasm.exe "classlibrary1.dll" /tlb: "classlibrary1.tlb" /codebase</pre>
+<h4>Unregistering</h4>
+<pre>regasm.exe /u "classlibrary1.dll"</pre>
+<h3>Incorporating into Classic ASP</h3>
+<p>Finally your classic ASP needs to look like this in order to access your COM library:</p>
+<p>[code language="vb"]<br />
+Dim obj<br />
+Dim obj2<br />
+Dim parameter<br />
+Dim result</p>
+<p>Set obj = Server.CreateObject(&quot;ClassLibrary1.Class1&quot;)<br />
+Set obj2 = Server.CreateObject(&quot;ClassLibrary1.Class2&quot;)</p>
+<p>result = obj.Method1((obj2))<br />
+[/code]</p>
+<p>Please note the double braces around the parameter on the final line there - my experience was that if you do not pass this by reference, then the following error will occur:</p>
+<pre>Microsoft VBScript runtime error: Invalid procedure call or argument: 'Method1'</pre>
+<p>Note that the permissions that IIS runs with will dictate access to your library location. Make sure it has read permissions. If that freaks you out, then use the GAC (see gacutil). If that freaks you out, then maybe COM &amp; ClassicASP isn't for you. If passing by reference freaks you out, then you can instead change the type of Method1's parameter to dynamic (assuming your are on .NET 4+) and access it in a late bound fashion instead. Hope this saves somebody else some time, and that its saves some freaking out (because nobody wants that).</p>

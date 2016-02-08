@@ -1,0 +1,112 @@
+---
+layout: post
+title: 'Generating Word Documents - Part 2: Simple Databinding'
+date: 2010-10-13 16:49:17.000000000 +10:30
+type: post
+published: true
+status: publish
+categories:
+- .NET
+- Software Development
+tags:
+- Coding
+- Content Controls
+- OpenXml
+meta:
+  _publicize_pending: '1'
+  original_post_id: '827106'
+  _wp_old_slug: '827106'
+author:
+  login: Jim Burger
+  email: the-burge@outlook.com
+  display_name: Jim Burger
+  first_name: ''
+  last_name: ''
+---
+<p>In <a href="http://cultivatingcode.com/2010/07/08/generating-docs-with-open-xml/">Part 1</a> we covered the problem of generating word documents from a high level perspective. In this instalment, I'll walk through some lower level concepts. I'll show how Content Controls can be used to inject data into our templates.</p>
+<p><strong>A Simple Template</strong></p>
+<p>Depending on the source, this can either be the most tedious, or most pleasurable part of the pipeline. Upon receiving a 20-year-old document that was probably converted from WordStar 1.0 back in the summer of '87, you'll need to weigh up the benefits of cleaning it up or starting from scratch. <em>(More on automating that in a future episode.)</em></p>
+<p>So what are <a href="http://msdn.microsoft.com/en-us/library/bb157891.aspx">Content Controls</a>? Basically they are a handy placeholder that serve a dual purpose. You can validate <strong>manual input</strong> into them, through schema binding (handy for Sharepoint documents), another feature is that you can bind data to them using embedded XML and XPath.</p>
+<p>Creating Content Controls is easily done; the first step is ensuring the <a href="http://msdn.microsoft.com/en-us/library/bb608625.aspx">Developer tab</a> is on, and for extra visibility, turn on the design mode.</p>
+<p>&nbsp;</p>
+<p>[caption id="attachment_827126" align="alignnone" width="500" caption="The Office Ribbon, Showing the Developer Tab. The &#039;Rich Text Content Control&#039; &amp; &#039;Design Mode&#039; buttons are highlighted."]<a href="http://cultivatingcode.files.wordpress.com/2010/06/adding-a-content-control.png"><img class="size-full wp-image-827126  " title="Adding a content control" src="{{ site.baseurl }}/assets/adding-a-content-control.png" alt="" width="500" height="198" /></a>[/caption]</p>
+<p>&nbsp;</p>
+<p>You can click the 'Rich Text Content Control' icon (highlighted in the above picture) to create placeholders for data in your document.</p>
+<p>Personally, I like to use keyboard short-cuts where possible; in this case Alt+L, Alt+Q will create a custom control at the current selection and Alt+L, Alt+L will access a selected controls properties, shown below...</p>
+<p>&nbsp;</p>
+<p>[caption id="attachment_827129" align="alignnone" width="440" caption="The Property Page for the Rich Text Content Control."]<a href="http://cultivatingcode.files.wordpress.com/2010/06/cc-props1.png"><img class="size-full wp-image-827129 " title="Content Control Properties" src="{{ site.baseurl }}/assets/cc-props1.png" alt="" width="440" height="415" /></a>[/caption]</p>
+<p>&nbsp;</p>
+<p>After a few minutes you can end up with a pretty rich document. For this post, my example document looks like this:</p>
+<p><a href="http://cultivatingcode.files.wordpress.com/2010/06/finalexample.png"><img class="size-full wp-image-827130 alignnone" title="Example of content controls" src="{{ site.baseurl }}/assets/finalexample.png" alt="" width="500" height="338" /></a></p>
+<h3>Have Data. Will Databind.</h3>
+<p style="text-align:left;">Now that we have place holders for data, we need to get data into them. The easiest way to do this is with the <a href="http://dbe.codeplex.com/">Content Control Toolkit</a>. Close the template from Word and open it in this application. You will be presented with a list of the  content controls you created in the template.</p>
+<p style="text-align:left;"><a href="http://cultivatingcode.files.wordpress.com/2010/06/content-control-tool.png"><img class="alignnone size-full wp-image-827133" title="Content control tool" src="{{ site.baseurl }}/assets/content-control-tool.png" alt="" width="500" height="327" /></a></p>
+<p style="text-align:left;">Notice that the right hand pane is largely dedicated to the addition and edition of Custom XML parts. We will be inserting our data into the document via this tool. For starters, lets hand craft some XML satisfy this documents needs. Click the 'Create a new Custom XML Part' link under Actions, switch to the edit tab and enter the following XML:</p>
+<p style="text-align:left;"><span style="font-family:Consolas, Monaco, 'Courier New', Courier, monospace;line-height:18px;font-size:12px;white-space:pre;"> </span></p>
+<p>[sourcecode language="xml"]<br />
+&lt;data&gt;<br />
+  &lt;title&gt;Hello Content Controls&lt;/title&gt;<br />
+  &lt;subtitle&gt;Testing content controls in MS Office Word&lt;/subtitle&gt;<br />
+  Cpt. James T. Kirk<br />
+  &lt;address&gt;No fixed address&lt;/address&gt;<br />
+  &lt;phone&gt;555-8735&lt;/phone&gt;<br />
+&lt;/data&gt;<br />
+[/sourcecode]</p>
+<p>Now switch to the bind tab, and start dragging the data points across to the relevant content controls with your mouse. This will decide the correct XPath required to bind to the data and update the content controls properties. Alternatively, if you dream in XPath then you can double-click each content control on the left and enter the XPath in directly. The finished result will look like this:</p>
+<p><a href="http://cultivatingcode.files.wordpress.com/2010/06/data-bound.png"><img class="alignnone size-full wp-image-827136" title="data bound" src="{{ site.baseurl }}/assets/data-bound.png" alt="" width="500" height="373" /></a></p>
+<p>Upon saving and exiting, we can reopen our template and find that our content controls are now bound to our design time data:</p>
+<p><a href="http://cultivatingcode.files.wordpress.com/2010/06/databound-template1.png"><img class="alignnone size-medium wp-image-827138" title="Databound template" src="{{ site.baseurl }}/assets/databound-template1.png?w=300" alt="" width="300" height="184" /></a></p>
+<p>That really is the most simplest example I can show you - unfortunately, doing anything more complicated than this requires code. As you have probably surmised, that really means; <em>to do anything useful - </em>you need to write code<em>.</em></p>
+<p>However, we now have a usable template, that has not only 'design time' data embedded into it, but has XPath expressions attached to our content controls such that we can throw runtime data at it.</p>
+<p><span style="font-size:15px;font-weight:bold;">Boot strapping</span></p>
+<p>The point of the exercise is to create these things in a programmatic fashion. For various reasons, including revision history, template management &amp; automated testing, I decided to store my templates in a class library and write a small framework to manage the life-cycle of a document: from being sourced on the filesystem, to being injected with Xml data, to being rendered to a file. In Part 1 I eluded to a DocumentBuilder Class.</p>
+<p>To keep things simple for now, I'll show you the bare minimum, using the <a href="http://www.microsoft.com/downloads/en/details.aspx?FamilyId=C6E744E5-36E9-45F5-8D8C-331DF206E0D0&amp;displaylang=en">Open XML API</a>. Note that I've referenced WindowsBase.dll and DocumentFormat.OpenXml.dll.</p>
+<p>The following example code injects some static XML into the word document at runtime:</p>
+<p>[sourcecode language="csharp"]<br />
+using System.Diagnostics;<br />
+using System.IO;<br />
+using System.Xml.Linq;<br />
+using DocumentFormat.OpenXml.Packaging;</p>
+<p>namespace DocGenExample<br />
+{<br />
+    class Program<br />
+    {<br />
+        static void Main(string[] args)<br />
+        {<br />
+            var template = &quot;Example.docx&quot;;<br />
+            var outputFile = &quot;HelloContentControls.docx&quot;;</p>
+<p>            //copy the file to the output location<br />
+            File.Copy(template, outputFile, true);</p>
+<p>            //open the 'package'<br />
+            using (var wpd = WordprocessingDocument.Open(outputFile, true))<br />
+            {<br />
+                //get at the document part of the package<br />
+                var mainDoc = wpd.MainDocumentPart;</p>
+<p>                //get rid of design time data<br />
+                mainDoc.DeleteParts(mainDoc.CustomXmlParts);</p>
+<p>                //create runtime data<br />
+                var data = XElement.Parse(@&quot;<br />
+&lt;data&gt;<br />
+  &lt;title&gt;Serious Title&lt;/title&gt;<br />
+  The creation of TPS reports is SERIOUS!<br />
+  &lt;name&gt;Mr. John Smith&lt;/name&gt;<br />
+  &lt;address&gt;12 Capital Hill, Canberra&lt;/address&gt;<br />
+  &lt;phone&gt;555-8735&lt;/phone&gt;<br />
+&lt;/data&gt;<br />
+                &quot;); //this could just as easily be a serialized object..</p>
+<p>                //create a new customXmlpart<br />
+                var xmlPart = mainDoc.AddCustomXmlPart(CustomXmlPartType.CustomXml);</p>
+<p>                //stream data into the part<br />
+                using (var partStream = xmlPart.GetStream(FileMode.Create, FileAccess.Write))<br />
+                    using (var outputStream = new StreamWriter(partStream))<br />
+                        outputStream.Write(data);</p>
+<p>            }<br />
+        }<br />
+    }<br />
+}</p>
+<p>[/sourcecode]</p>
+<p>This console app copies our template to a destination, cracks it open and fills it with our runtime data and stitches things back up again. Our output looks like a 'real' document:</p>
+<p><a href="http://cultivatingcode.files.wordpress.com/2010/06/serious-document-is-serious.png"><img class="alignleft size-medium wp-image-827144" style="margin-left:25px;margin-right:25px;" title="Serious document is serious" src="{{ site.baseurl }}/assets/serious-document-is-serious.png?w=300" alt="Serious document is serious" width="300" height="272" /></a></p>
+<h2>In Summary</h2>
+<p>The code is a lot simpler than the COM Interop code for office in my opinion, and the fact that it doesn't leave instances of word hanging around in the background is a real bonus.</p>
+<p>I will be following this post up with examples of how to tackle trickier topics like tables, repeating sections and showing/hiding sections of content, and how to make this all happen without violating every OO design principle in the book.</p>

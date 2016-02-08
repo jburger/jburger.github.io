@@ -1,0 +1,27 @@
+---
+layout: post
+title: 'Tools of the trade: source control'
+date: 2010-01-08 23:44:42.000000000 +10:30
+type: post
+published: true
+status: publish
+categories:
+- Software Development
+tags: []
+meta:
+  _publicize_pending: '1'
+  original_post_id: '826937'
+  _wp_old_slug: '826937'
+author:
+  login: Jim Burger
+  email: the-burge@outlook.com
+  display_name: Jim Burger
+  first_name: ''
+  last_name: ''
+---
+<p>On the road to work this morning I was listening to a <a href="http://www.se-radio.net/podcast/2009-11/episode-150-software-craftsmanship-bob-martin">good podcast</a> from SE radio, on software craftsmanship, with Uncle Bob, and during the discussion he was asked what he thought the tools of the trade were. Among his measured responses, source control systems.</p>
+<p>I would encourage anybody not already using source control to pick one, and use it. It wont simply make your code more resilient to breakage. If you are working in a team, it will actually improve your teams communication <em>immediately.</em> What isn't advertised much, is that a good SCS is also a <strong>framework for collaborating</strong> on software. Suddenly conversations flare about merging changes, when to branch and label code, where shall the 'production' branch live, what will the backup strategy be, etc.</p>
+<p>Additionally, source control is the medium in which the <a href="http://www.informit.com/articles/article.aspx?p=1235624&amp;seqNum=6">boy scout rule</a> can flourish, preventing the <a href="http://en.wikipedia.org/wiki/Fixing_Broken_Windows#The_book">broken windows</a> from taking over your code base.</p>
+<p>I could distill a bullet point summary on how to use a particular variety of source control, but instead I'll just direct you to the <a href="http://svnbook.red-bean.com/">subversion book</a>. The pdf and html versions are free and well worth the read. While learning how to use subversion, it also makes an excellent primer on the concepts of merge based, client/server source control which you can take to most popular systems and get started quickly. Once you've mastered SVN, other systems like git and TFS aren't a big leap in understanding.</p>
+<p>As far as clients go, on the mac, I use textmate or vim, both are easily configured to map command line actions with keystrokes. Eclipse based IDEs generally support subversion, as does monodevelop. On windows, visual studio plugins include <a href="http://www.visualsvn.com/visualsvn/">visual svn</a> &amp; <a href="http://ankhsvn.open.collab.net/">ankh</a>. I prefer <a href="http://tortoisesvn.tigris.org/">tortoiseSVN</a>, mainly because it simply extends explorer and gives a UX closer to the command line variety that I know already.</p>
+<p>Ultimately, no matter what SCS you pick, or what client tool you choose, something is better than nothing. At the very least, it will get you thinking about the management of your biggest asset, your code.</p>

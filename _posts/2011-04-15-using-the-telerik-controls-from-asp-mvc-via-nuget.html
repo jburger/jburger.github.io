@@ -1,0 +1,70 @@
+---
+layout: post
+title: Using the Telerik Controls from ASP MVC via Nuget
+date: 2011-04-15 12:02:21.000000000 +09:30
+type: post
+published: true
+status: publish
+categories:
+- .NET
+- Software Development
+tags:
+- .NET
+- ASP MVC 3
+- Coding
+- Configuration
+- Telerik
+meta:
+  _publicize_pending: '1'
+  original_post_id: '827377'
+  _wp_old_slug: '827377'
+author:
+  login: Jim Burger
+  email: the-burge@outlook.com
+  display_name: Jim Burger
+  first_name: ''
+  last_name: ''
+---
+<p>Recently, Telerik started providing their open source controls over nuget, and I happened to be on an ASP MVC 3 project that is potentially going to consume them, so I thought I'd look into the nuget support.</p>
+<p>As it turns out merely installing the extensions via nuget will not magically turn your boring ASP MVC 3 Solution into a magic fun house of fancy pants controls. I needed to sprinkle in some fairy dust to get things to work correctly.</p>
+<p>In particular I had to add the following XML to my web.config ( all of it! )</p>
+<p>[sourcecode language="xml"]<br />
+&lt;!-- under the configuration tag --&gt;<br />
+&lt;configSections&gt;<br />
+    &lt;sectionGroup name=&quot;telerik&quot;&gt;<br />
+      &lt;section<br />
+        name=&quot;webAssets&quot;<br />
+        type=&quot;Telerik.Web.Mvc.Configuration.WebAssetConfigurationSection, Telerik.Web.Mvc&quot;<br />
+        requirePermission=&quot;false&quot; /&gt;<br />
+    &lt;!--&lt;span class=&quot;hiddenSpellError&quot; pre=&quot;&quot;--&gt;sectionGroup&gt;<br />
+    &lt;sectionGroup<br />
+      name=&quot;system.web.webPages.razor&quot;<br />
+      type=&quot;System.Web.WebPages.Razor.Configuration.RazorWebSectionGroup, System.Web.WebPages.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35&quot;&gt;<br />
+      &lt;section<br />
+        name=&quot;host&quot;<br />
+        type=&quot;System.Web.WebPages.Razor.Configuration.HostSection, System.Web.WebPages.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35&quot;<br />
+        requirePermission=&quot;false&quot; /&gt;<br />
+      &lt;section<br />
+        name=&quot;pages&quot;<br />
+        type=&quot;System.Web.WebPages.Razor.Configuration.RazorPagesSection, System.Web.WebPages.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35&quot;<br />
+        requirePermission=&quot;false&quot; /&gt;<br />
+    &lt;/sectionGroup&gt;<br />
+&lt;/configSections&gt;<br />
+&lt;system.web.webPages.razor&gt;<br />
+    &lt;host<br />
+        factoryType=&quot;System.Web.Mvc.MvcWebRazorHostFactory, System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35&quot; /&gt;<br />
+    &lt;pages<br />
+      pageBaseType=&quot;System.Web.Mvc.WebViewPage&quot;&gt;<br />
+      &lt;namespaces&gt;<br />
+        &lt;add namespace=&quot;System.Web.Mvc&quot; /&gt;<br />
+        &lt;add namespace=&quot;System.Web.Mvc.Ajax&quot; /&gt;<br />
+        &lt;add namespace=&quot;System.Web.Mvc.Html&quot; /&gt;<br />
+        &lt;add namespace=&quot;System.Web.Routing&quot; /&gt;<br />
+        &lt;add namespace=&quot;System.Collections&quot; /&gt;<br />
+        &lt;add namespace=&quot;Telerik.Web.Mvc.UI&quot; /&gt;<br />
+      &lt;/namespaces&gt;<br />
+    &lt;/pages&gt;<br />
+  &lt;/system.web.webPages.razor&gt;<br />
+[/sourcecode]</p>
+<p>Incidentally, this meant I had to add a reference to the System.Web.WebPages.Razor assembly as well.</p>
+<p>After that, it all worked nicely.</p>

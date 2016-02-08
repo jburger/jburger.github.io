@@ -1,0 +1,74 @@
+---
+layout: post
+title: Configuring WPA/WPA2 wifi on Ubuntu 14.04 LTS
+date: 2015-01-21 22:30:32.000000000 +10:30
+type: post
+published: true
+status: publish
+categories: []
+tags: []
+author: Jim Burger
+---
+<p>I'm not really sure how it happened, but after installing <a title="Ubuntu 14.04.01 LTS Trusty Tahr" href="https://wiki.ubuntu.com/TrustyTahr/ReleaseNotes" target="_blank">14.04 LTS</a> I couldn't connect to my network over wifi.</p>
+<p>I ran the LTS install from my CDROM - it walked me through connecting to my wifi ap. The installer uses this to initiate apt-get to download additional packages. All went well.</p>
+<p>When I log in I found that there was no wifi configured and was left with a relatively empty /etc/network/interfaces file. So maybe I did it wrong - *shrugs*. If you happen to know what I did wrong - I'd be grateful for the answer!</p>
+<p>If you find yourself in this position then my condolences to you. Here's what worked for me...please note I'm assuming you need to use a passphrase.</p>
+<p>1. Check how far your install got, type this into your console to check if you ended up with some configuration:</p>
+<pre>ls /etc/wpa_supplicant.conf</pre>
+<p>If you dont have that file like me - then this post might be useful - now check if wpa_supplicant is installed ... try..</p>
+<pre>wpa_supplicant</pre>
+<p>If this doesn't return with some usage tips - then <strong>this post will not help you as wpa_supplicant is not installed.</strong> My fix relies on it's existence. You may want to troubleshoot that, or decide if you even need to use it.</p>
+<p>However, if it does exist, then you ended up like I did. While you are staring at the usage tips - take note of the drivers section. It will look a little bit like this:</p>
+<pre>drivers:
+  nl80211 = Linux nl80211/cfg80211
+  wext = Linux wireless extensions (generic)
+  wired = Wired Ethernet driver
+  none = no dirver (RADIUS server/WPS ER)</pre>
+<p>I can't tell you what driver is right for you, but <strong>wext</strong> is what worked for me.</p>
+<p>2. I'm using a root session for brevity. If you choose not to do this - please use sudo on each line that requires access to /etc/:</p>
+<pre>sudo -i
+</pre>
+<p>3. back up the network interfaces configuration file (/etc/network/interfaces) and then edit it</p>
+<pre>cp /etc/network/interfaces /etc/network/interfaces.old
+vi /etc/network/interfaces
+</pre>
+<p>Use nano or something other than vi if thats your thing. But make the file look like this..</p>
+<pre>auto wlan0
+iface wlan0 inet dhcp
+wpa-driver wext
+wpa-conf /etc/wpa_supplicant.conf</pre>
+<p>If your don't want to use dhcp - swap that out on line 2 for 'static'. Just be sure to add an address netmask and gateway line. See the <a title="man interfaces" href="http://manpages.ubuntu.com/manpages/utopic/en/man5/interfaces.5.html">man page</a> for more on that... Note that I chose the <strong>wext</strong> driver (see step 1). You might need to select a more appropriate value for wpa-driver.</p>
+<p>4. Now create /etc/wpa_supplicant.conf using the wpa_passphrase tool:</p>
+<pre>wpa_passphrase "YOUR_SSID_GOES_HERE" "YOUR SECRET_GOES_HERE" &gt; /etc/wpa_supplicant.conf</pre>
+<pre>vi /etc/wpa_supplicant.conf</pre>
+<p>If not, your file will look something like this...</p>
+<pre>network={
+    ssid="YOUR_SSID_GOES_HERE"
+    #psk="YOUR SECRET_GOES_HERE"
+    psk=a7564765f685765d76575e76576c786b
+}</pre>
+<p>Note that the #psk line, is actually a comment to help jog your memory. I prefer to use a password manager, so I generally turf that line. I made my file look more like this...</p>
+<pre>ctrl_interface=/var/run/wpa_supplicant
+network={
+    ssid="YOUR_SSID_GOES_HERE"
+    scan_ssid=1
+    proto=WPA RSN
+    key_mgmt=WPA-PSK
+    pairwise=CCMP TKIP
+    group=CCMP TKIP
+    psk=a7564765f685765d76575e76576c786b
+}
+</pre>
+<p>..now would be a good time to consult the <a title="man pages" href="http://manpages.ubuntu.com/manpages/trusty/man8/wpa_supplicant.8.html">man page</a> for wpa_supplicant, because what you see above is a very generic take on the possible settings. It will ask your wifi card to try WPA/WPA2 and AES or TKIP crypto. In particular, scan_ssid is what tells the tool if you intend to use hidden SSIDs or not. Keep it set as above if you are connecting to a publicly visible SSID.</p>
+<p>Whats the deal with the hexified psk? Well, even if you use a passphrase, supplicant encodes that before sending over the airwaves. You are cutting out the middle man here by pre-enconding the passphrase.</p>
+<p>Now try cycling your wifi adapter:</p>
+<pre>ifdown wlan0
+ifup wlan0</pre>
+<p>Hopefully you saw something like...</p>
+<pre>Listening on LPF/wlan0/12:23:34:45:56:67
+Sending on LPF/wlan0/12:23:34:45:56:67
+.
+.
+</pre>
+<p>Final confirmation with a ping to your wifi router should let you know that it worked or not. Oh before you bail, you might want to tidy up any cleartext passes in your ~/.bash_history (and don't forget to log out from root if you copied my second step when your done)</p>
+<p>HTH</p>

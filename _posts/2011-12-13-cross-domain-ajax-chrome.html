@@ -1,0 +1,25 @@
+---
+layout: post
+title: Allowing Cross Domain AJAX
+date: 2011-12-13 10:31:10.000000000 +10:30
+type: post
+published: true
+status: publish
+categories: []
+tags:
+- .NET
+- AJAX
+- Back2Basics
+- CORS
+- HTTP
+- XSS
+author: Jim Burger
+---
+<p>Browsers traditionally, are a little particular about who you POST to.. For instance, using AJAX to post to a server from another domain can be blocked if the right headers are not included in the response. Some call this Cross Domain AJAX.</p>
+<p>Simply put, you need to implement Cross-Origin Resource Sharing. In most browsers, that means including the following header:</p>
+<p><code>Access-Control-Allow-Origin: *</code></p>
+<p>You can also whitelist ...</p>
+<p><code>Access-Control-Allow-Origin: http://yourdomain.com, http://yourotherdomain.com</code></p>
+<p>For versions of internet explorer, you may need to use the <a href="http://msdn.microsoft.com/en-us/library/cc288060(v=vs.85).aspx">XDomainRequest </a>object. <a href="http://en.wikipedia.org/wiki/Cross-Origin_Resource_Sharing#Browser_support">Some browsers</a> simply dont support it and you need to use <a href="http://en.wikipedia.org/wiki/Cross-Origin_Resource_Sharing#CORS_relationship_to_JSONP">alternatives</a> to support them, however that comes with its own set of <a href="http://en.wikipedia.org/wiki/JSONP#Cross-site_request_forgery">security considerations</a>.</p>
+<p>Good article here: <a href="http://www.nczonline.net/blog/2010/05/25/cross-domain-ajax-with-cross-origin-resource-sharing/">http://www.nczonline.net/blog/</a></p>
+<p>For the propellerheads: <a href="http://www.w3.org/TR/cors/">http://www.w3.org/TR/cors/</a></p>

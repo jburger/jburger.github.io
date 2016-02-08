@@ -1,0 +1,51 @@
+---
+layout: post
+title: Vim, Vim-Script and SCS
+date: 
+type: post
+published: false
+status: draft
+categories:
+- General
+tags: []
+meta:
+  original_post_id: '827225'
+  _wp_old_slug: '827225'
+author:
+  login: Jim Burger
+  email: the-burge@outlook.com
+  display_name: Jim Burger
+  first_name: ''
+  last_name: ''
+---
+<p>[sourcecode language="python"]<br />
+function HelloWorld()<br />
+    echo 'Hello World'<br />
+endfunction<br />
+[/sourcecode]</p>
+<h3>What is old is new again</h3>
+<p>The resurgence in interest in vim has been steadily gaining in pace and as such I thought I'd share some more ways to customize the editor and get the most out of it, for however you are choosing to use it.</p>
+<p>I use vim for things like SQL scripts, Makefiles and build scripts, powershell, and web/app.config files, even Ruby development. More often than not, there is a source control system involved in processing these files.</p>
+<p>Today I'm going to run through some vim-script basics. The mission is, if you choose to accept it, is to incorporate your favourite source control system into vim to make it quicker to for you to Get Things Done. Why shell out or fire up team explorer just to edit a configuration file?</p>
+<h3>Lets go for a browse</h3>
+<p>Before we get going, lets revisit a few ways to browse the file system from vim. Primarily, we can browse our filesystem using cd from the vim command prompt, but there is also the netrw tool:</p>
+<p><a href="http://cultivatingcode.files.wordpress.com/2010/08/netrw.png"><img class="aligncenter size-medium wp-image-827226" title="Netrw" src="{{ site.baseurl }}/assets/netrw.png?w=300" alt="The netrw directory listing" width="300" height="196" /></a></p>
+<p>Netrw is an extensive file browsing tool worthy of its <a href="http://vim.runpaint.org/other-uses-vim/using-vim-as-file-manager/">own blog post</a>. I use this thing a fair bit, especially when working with unfamiliar source trees. To use netrw, type :E from the command prompt, and it will open in a split screen. :bd will terminate it and return you to your previously opened buffer.</p>
+<h3>Editing _vimrc</h3>
+<p>The place to put customizations for your vim instance is in your vimrc configuration file. The vimrc file uses Vim-script to provide you with hook in points.</p>
+<p><a href="http://vim.wikia.com/wiki/Write_your_own_Vim_function">Functions in vim</a> are pretty simple. Here is hello world...</p>
+<p>[sourcecode language="python"]<br />
+function HelloWorld()<br />
+    echo 'Hello World'<br />
+endfunction<br />
+[/sourcecode]</p>
+<p>A slightly more complicated example:</p>
+<pre>[sourcecode language="python"]
+function HelloWorld(name)
+    let argumentValue = a:name
+endfunction
+[/sourcecode]
+
+</pre>
+<p>By adding this function in our vimrc, we can call it to do other vim operations. In our scenario, we want to map some user commands:</p>
+<p>* Check</p>

@@ -1,0 +1,38 @@
+---
+layout: post
+title: Folders in F# Projects
+date: 2010-02-12 23:17:28.000000000 +10:30
+type: post
+published: true
+status: publish
+categories:
+- .NET
+- Software Development
+tags:
+- Coding
+- FSharp
+meta:
+  _publicize_pending: '1'
+  original_post_id: '827063'
+  _wp_old_slug: '827063'
+author:
+  login: Jim Burger
+  email: the-burge@outlook.com
+  display_name: Jim Burger
+  first_name: ''
+  last_name: ''
+---
+<p>While there is no IDE support for folders in F# projects, the .fsproj file is <em>still just a build script</em>. So as long as you are prepared to manage things on both your file system and in your solution explorer, then folders are actually possible.</p>
+<p>To do this, right-click the project file in solution explorer, unload the project file. Now right-click the project again and hit edit. You can then add folders like this:</p>
+<p>[sourcecode language="xml"]<br />
+&lt;ItemGroup&gt;<br />
+    &lt;Compile Include=&quot;typeA.fs&quot; /&gt;<br />
+    &lt;Compile Include=&quot;FoldertypeB.fs&quot; /&gt;<br />
+    &lt;Compile Include=&quot;typeC.fs&quot; /&gt;<br />
+&lt;/ItemGroup&gt;<br />
+[/sourcecode]</p>
+<p>Yielding the following result:<br />
+<a href="http://cultivatingcode.files.wordpress.com/2010/02/capture.png"><img class="size-full wp-image-827064" title="Folders in F# projects" src="{{ site.baseurl }}/assets/capture.png" alt="A picture of a folder hierarchy in an F# 2.0 project" width="203" height="176" /></a></p>
+<p>To reiterate, hacking the .fsproj file in this way means you have to make the folders and move the files around yourself. Another important point is that order is still relevant, if type C depends on A &amp; B in the above example, then it still must appear last - files will be processed from top to bottom still. Also the solution explorer context menu items 'add [above|below]' displays unexpected behaviour when folders are in play, files get added to the end of the project, ignoring the directive.</p>
+<p>All things considered though, I think in large, fairly static code bases, tidying things up into folders would be a good move, and the maintenance programmers that move in after you've long gone will probably thank you for taking the time.</p>
+<p>A big thanks to <a href="http://blogs.msdn.com/chrsmith/about.aspx">Chris Smith</a> from the F# team for bringing this workaround to my attention.</p>

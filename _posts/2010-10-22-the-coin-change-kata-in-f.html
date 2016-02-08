@@ -1,0 +1,106 @@
+---
+layout: post
+title: The Coin Change Kata - In F#
+date: 2010-10-22 13:21:55.000000000 +10:30
+type: post
+published: true
+status: publish
+categories:
+- .NET
+- Software Development
+tags:
+- Coding
+- FSharp
+- kata
+- TDD
+meta:
+  _publicize_pending: '1'
+  _wp_old_slug: '827251'
+  original_post_id: '827251'
+author:
+  login: Jim Burger
+  email: the-burge@outlook.com
+  display_name: Jim Burger
+  first_name: ''
+  last_name: ''
+---
+<p>After having read and done <a href="http://matthamilton.net/">Matt Hamilton</a>'s <a href="http://matthamilton.net/coin-change-code-kata">Coin Change Kata</a>, I thought I would share one of my solutions to the kata and also some refinements to the kata itself.</p>
+<p>I split the kata over two scenarios, the intention being that I start with the first scenario for a given language / approach and then move on to including the second scenario as I feel comfortable.</p>
+<p>As a bit of fun I thought I'd share how I use <a href="http://code.google.com/p/fspec/">fspec</a> to drive out the algorithm. Fspec is a small experiment I started for writing specifications. Its very much a WIP, but I'm keen to get some feedback on its use[less|ful]ness, especially from fellow F# developers.</p>
+<p><span style="font-size:20px;font-weight:bold;">Goal</span></p>
+<p>As per Matt's original idea, the goal is to simply return a viable set of coins or notes for a given amount. You need to return the least amount of coins or notes possible to achieve that amount.</p>
+<p><span style="font-size:15px;font-weight:bold;">Scenario one - basic ATM</span></p>
+<p>1. Our basic ATM is only capable of dispensing $20 &amp; $50 notes.<br />
+2. It can only accept positive integer amounts, multiples of 10, no less than $40, no greater than $2000.</p>
+<p>Your output should be a list of tuples (denomination x qty)</p>
+<p>E.G. in F# - For an amount of $90</p>
+<p>[sourcecode language="fsharp"]</p>
+<p>let result = [<br />
+(20, 2);<br />
+(50, 1);<br />
+] // two twenties and a fifty</p>
+<p>[/sourcecode]</p>
+<p>HINT: Perhaps start by writing a specification that ensures that a zero dollar amount returns an empty list.</p>
+<h3>Scenario Two - coping with changing requirements:</h3>
+<p>1. ATM v2 has been released and is now capable of dispensing coin change. You need to adapt your program accordingly.<br />
+2. Denominations = 0.2, 0.5, 1, 2, 5, 10, 20, 50<br />
+3. Only accept positive numbers, multiples of 0.2, no less than 0.4, and no greater than $2000.00</p>
+<h3>How I approached the problem</h3>
+<p>Here are some  specifications in F# to satisfy the first scenario. Hopefully readable enough for anybody to grok...</p>
+<p>[sourcecode language="fsharp"]<br />
+namespace ``Concerning an automatic teller machine``</p>
+<p>open FSpec</p>
+<p>module ``When providing change in notes`` =<br />
+    open TellerMachine.ChangeProvider</p>
+<p>    let ``it return a non result when given a zero amount``() =<br />
+        getNotesFor 0 |&gt; should.equal []</p>
+<p>    let ``it return the least amount of notes for a small amount``() =<br />
+        getNotesFor 40 |&gt; should.equal [ (20, 2); ]</p>
+<p>    let ``it return the least amount of notes for a medium amount``() =<br />
+        getNotesFor 200 |&gt; should.equal [ (50, 4) ]</p>
+<p>    let ``it return the least amount of notes for a large amount``() =<br />
+         getNotesFor 1890 |&gt; should.equal [<br />
+            (20, 2);<br />
+            (50, 37);<br />
+         ]</p>
+<p>    let ``it fail if the input is lower than $40 or lower``() =<br />
+        should.failWith &quot;Please enter a multiple of $10 no less than $40.&quot; (fun() -&gt;<br />
+            getNotesFor 30<br />
+        )</p>
+<p>    let ``it fail if the input is higher than $2000``() =<br />
+        should.failWith &quot;The maximum withdrawal is $2000.&quot; (fun() -&gt;<br />
+            getNotesFor 2010<br />
+        )</p>
+<p>    let ``it fail if the input is not a multiple of 10``() =<br />
+        should.failWith &quot;Please enter a multiple of $10.&quot; (fun() -&gt;<br />
+           getNotesFor 19<br />
+        )<br />
+[/sourcecode]</p>
+<p>I've also provided a possible implementation. I aimed to produce a solution that used recursion, without any mutable state...</p>
+<p>[sourcecode language="fsharp"]<br />
+namespace TellerMachine</p>
+<p>module ChangeProvider =<br />
+    let denominations = [ 20; 50; ]</p>
+<p>    let rec calculateQuantities amount notes results =<br />
+        match notes with<br />
+        | [] -&gt; results<br />
+        | _ -&gt;<br />
+            let note = notes.Head<br />
+            let result = (note, amount / note)<br />
+            calculateQuantities<br />
+                (amount % note)<br />
+                (notes.Tail)<br />
+                (List.Cons(result, results))</p>
+<p>    let getNotesFor (amount:int)  =<br />
+        match amount with<br />
+            | 0 -&gt; []<br />
+            | i when not(i % 10 = 0) -&gt;<br />
+                failwith(&quot;Please enter a multiple of $10.&quot;)<br />
+            | i when i &lt; 40 -&gt;<br />
+                failwith(&quot;Please enter a multiple of $10 no less than $40.&quot;)<br />
+            | i when i &gt; 2000 -&gt;<br />
+                failwith(&quot;The maximum withdrawal is $2000.&quot;)<br />
+            | _ -&gt;<br />
+                calculateQuantities amount (denominations |&gt; List.rev)[]<br />
+                |&gt; List.filter(fun (a, b) -&gt; b &gt; 0)<br />
+[/sourcecode]</p>

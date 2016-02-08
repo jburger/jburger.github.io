@@ -1,0 +1,33 @@
+---
+layout: post
+title: Generating Word Documents - Part 3 - Inserting Content
+date: 
+type: post
+published: false
+status: draft
+categories:
+- General
+tags: []
+meta:
+  original_post_id: '827244'
+  _wp_old_slug: '827244'
+author:
+  login: Jim Burger
+  email: the-burge@outlook.com
+  display_name: Jim Burger
+  first_name: ''
+  last_name: ''
+---
+<p>In part 1 of this series, I outlined how we might solve the problem of generating Word documents from a server without any Office products installed.</p>
+<p>In part 2, I gave the simplest example of how to generate a data driven document. In this post I plan to show how off the other pillar of functionality used to create rich documents: composition.</p>
+<h3><strong>Meet AltChunk</strong></h3>
+<p>In short, we are going to insert one document into another and for this task the simplest approach is to use the AltChunk tag in WordML. To give a broader picture, I will use a Content Control as a marker for where I would like to insert some other document, and then manipulate the master documents DOM at runtime to effectively insert our sub document. To keep it simple I will take two static documents and put them together, however there is absolutely no reason why you cannot use data driven documents to compose.</p>
+<p>So lets get started, here is our master document:</p>
+<p>&nbsp;</p>
+<p>[caption id="attachment_827248" align="aligncenter" width="300" caption="Our master document: a simple letter container. Highlighted is the content control where content will end up."]<a href="http://cultivatingcode.files.wordpress.com/2010/10/master_doc.png"><img class="size-medium wp-image-827248 " title="master_doc" src="{{ site.baseurl }}/assets/master_doc.png?w=300" alt="A typical static master document" width="300" height="300" /></a>[/caption]</p>
+<p>&nbsp;</p>
+<p>Here  is the sub document to be composed:</p>
+<p>&nbsp;</p>
+<p>[caption id="attachment_827250" align="aligncenter" width="300" caption="The sub document to insert into our letter template"]<a href="http://cultivatingcode.files.wordpress.com/2010/10/sub_doc.png"><img class="size-medium wp-image-827250" title="sub_doc" src="{{ site.baseurl }}/assets/sub_doc.png?w=300" alt="the sub document" width="300" height="221" /></a>[/caption]</p>
+<p>&nbsp;</p>
+<p>Now to the code to do this. Again I will stick to a very simple approach to give you a feel for the mechanics of what is going on. This will be a three step process: creating an AlternativeFormatImportPart and linking it to an AltChunk element. The final step is to put that altChunk element in place of the content control.</p>

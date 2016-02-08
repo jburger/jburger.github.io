@@ -1,0 +1,38 @@
+---
+layout: post
+title: Removing un-versioned files with SVN and powershell
+date: 2010-07-20 12:11:29.000000000 +09:30
+type: post
+published: true
+status: publish
+categories:
+- .NET
+- Software Development
+tags:
+- Coding
+- Powershell
+- Source control
+- SVN
+meta:
+  _publicize_pending: '1'
+  _wp_old_slug: '827206'
+  original_post_id: '827206'
+author:
+  login: Jim Burger
+  email: the-burge@outlook.com
+  display_name: Jim Burger
+  first_name: ''
+  last_name: ''
+excerpt: I've been using SlikSVN's command line tools for managing SVN stuff. However,
+  there are some things a GUI client will do for you OOTB, and a treeclean is generally
+  one of them.
+---
+<p>Today I wanted to do a 'treeclean', i.e. remove all un-versioned files from my working copy of a source controlled project. I've been using<a href="http://www.sliksvn.com/"> SlikSVN</a>'s <a href="http://www.sliksvn.com/en/download">command line tools</a> for managing SVN stuff. However, there are some things a GUI client will do for you OOTB, and a treeclean is generally one of them.</p>
+<p>Rather than installing a GUI tool just for this 'once in a blue moon' functionality -- I ran with what I had; powershell, slik &amp; regex:</p>
+<p>[sourcecode language="powershell"]<br />
+#shorthand<br />
+(svn st &quot;--no-ignore&quot;) -match '^[I?]' -replace '^.s+','' | rm -fo]<br />
+#longhand<br />
+(svn status &quot;--no-ignore&quot;) -match '^[I?]' -replace '^.s+','' | Remove-Item -Force<br />
+[/sourcecode]</p>
+<p>Optionally, you could set the recurse option to rm if you were confident to do so.</p>

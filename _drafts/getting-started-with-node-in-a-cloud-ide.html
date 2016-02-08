@@ -1,0 +1,35 @@
+---
+layout: post
+title: Getting started with node in a cloud IDE
+date: 
+type: post
+published: false
+status: draft
+categories:
+- General
+tags: []
+meta:
+  original_post_id: '827422'
+  _wp_old_slug: '827422'
+author:
+  login: Jim Burger
+  email: the-burge@outlook.com
+  display_name: Jim Burger
+  first_name: ''
+  last_name: ''
+---
+<p>Wanna play with node? Don't want to install an alpha version on your windows box? Dont want to create a Linux VM to play with the real stuff? Dont!</p>
+<p>Instead... go here... http://cloud9ide.org/ get an account...create a project.... and create a &lt;awesome_node_appname_goes_here&gt;.js file.</p>
+<p><span class="Apple-style-span" style="font-size:15px;font-weight:bold;">Hello world</span></p>
+<p>The basic nodejs hello world can be found on the nodejs.org website and only needs slight modification to get to work in the Cloud9 environment. Cloud9 will expose a specific port and url for you to test against, should you need it. To refer to these things in code, you need to use the process.env.C9_PORT constant for the port and use the 0.0.0.0 as the IP address of your server. This means the hello world code would look like this:</p>
+<p>[sourcecode language="javascript"]</p>
+<p>var http = require('http');<br />
+http.createServer(function(res,req){<br />
+res.writeHead(200, {'Content-Type': 'text/plain'});<br />
+  res.end('Hello Worldn');<br />
+}).listen(process.env.C9_PORT, '0.0.0.0');</p>
+<p>console.log('ready on: ' + process.env.C9_PORT);</p>
+<p>[/sourcecode]</p>
+<h3>NPM</h3>
+<p>One of the main reasons that playing with node on windows is a little bit of a drag right now is that NPM, the 'community standard' package manager is a no-go at this point. Im certain this will change, but for now...Cloud9 will happily talk to npm. Lets use the console down the bottom of the IDE and type in:</p>
+<pre>'npm install socket.io'</pre>

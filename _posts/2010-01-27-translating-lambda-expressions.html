@@ -1,0 +1,86 @@
+---
+layout: post
+title: Translating lambda expressions
+date: 2010-01-27 18:30:28.000000000 +10:30
+type: post
+published: true
+status: publish
+categories:
+- .NET
+- Software Development
+tags:
+- Coding
+- FSharp
+meta:
+  _publicize_pending: '1'
+  original_post_id: '826952'
+  _wp_old_slug: '826952'
+author:
+  login: Jim Burger
+  email: the-burge@outlook.com
+  display_name: Jim Burger
+  first_name: ''
+  last_name: ''
+---
+<p>They're the new black of programming languages - lambda expressions - a powerful construct, used &amp; abused to ultimately produce more readable code. I find myself using them most when taking advantage of the Linq libraries.</p>
+<p>A naive example In C#:</p>
+<p>[sourcecode language="csharp"]<br />
+public IQueryable GetActiveUsers() {<br />
+ return AllUsers.Where((user) =&gt; user.IsActive; );<br />
+}<br />
+[/sourcecode]</p>
+<p>In VB .NET:</p>
+<p>[sourcecode language="vb"]<br />
+Public Function GetActiveUsers() as IQueryable(Of User)<br />
+ Return AllUsers.Where(Function (user) user.IsActive )<br />
+End Function<br />
+[/sourcecode]</p>
+<p>In F#:</p>
+<p>[sourcecode language="fsharp"]<br />
+member self.GetActiveUsers =<br />
+ AllUsers |&gt; List.filter (fun user -&gt; user.IsActive)<br />
+[/sourcecode]</p>
+<p>Though lately, there are more cases where lambdas are used to simplify an API that I might be using. Lambdas make for declarative code, describing what you want, not how you want it done. The canonical example is surely the trend away from the record/replay model in mocking frameworks of late:</p>
+<p>[sourcecode language="csharp"]<br />
+[Test]<br />
+public void it_should_launch_nuclear_missles()<br />
+{<br />
+ IMissleLauncher launcher = new Mock();<br />
+ DoomsdayDevice dd = new DoomsdayDevice(launcher.Object);<br />
+ dd.ActivateWithMessage(&quot;BROUAHAH&quot;);</p>
+<p> launcher.Verify(l =&gt; l.Launch(Missles.Nuclear));<br />
+}<br />
+[/sourcecode]</p>
+<p>Generally, this type of API uses the syntax tree generated for the lambda expression, to determine the consumers intent, in order to translate that intent to some other function. In the Linq 2 SQL case, the tree is turned into SQL statements.</p>
+<p>But not all .NET languages are created equally in the functional programming department, especially when it comes to building expression trees from these pieces of syntactic sugar. VB and C# can interchange them naturally - since they both use the System.Linq.Expressions namespace.</p>
+<p>In F#, lambda expressions can also be interpreted via expression trees, using the Quotations namespace. While there is some overlap between the two namespaces, the focus is in different areas.</p>
+<p>Right now what this means for multilanguage solutions is that an F# application cannot directly use its lambda function syntax to satisfy C# functions that use expressions. Unfortunately, this puts F# very much at odds with libraries in other .NET languages. More and more, we are seeing clever use of expressions to aid API developers in providing intuitive interfaces, and fiddling about with translating lambda expressions is the last thing a developer really wants to do when consuming an API, presumably to solve some other problem.</p>
+<p>However all is not lost, hidden away in the Powerpacks are some experimental functions that allows us to attempt translation in both directions. For those instances where we aren't stretching the boundaries of C#, we can convert F# functions into expressions with the following:</p>
+<p>[sourcecode language="fsharp"]<br />
+open Microsoft.FSharp.Linq.QuotationEvaluation ;;<br />
+open System ;;<br />
+let q = &lt;@ fun x -&gt; x = 0 @&gt; ;;<br />
+let expr = q.ToLinqExpression() ;;<br />
+[/sourcecode]</p>
+<p>The powerpack provides a swag of extensions to the FSharp.Core.FuncConvert class in order to allow two way translation between F# and other languages that favour delegates.</p>
+<p>From here we can drill into our expression to return more useful variations if required from our C# library. There are a tonne of ways to skin this cat; here in this simplistic example I use an active pattern matching to match expression types.</p>
+<p>[sourcecode language="fsharp"]<br />
+ let (|MethodCall|Lambda|Unknown|) (expression:Expression) =<br />
+     match expression with<br />
+     | :? MethodCallExpression as m -&gt;<br />
+         MethodCall(m.Arguments)<br />
+     | :? LambdaExpression as l -&gt;<br />
+         Lambda(l.Body, l.Parameters)<br />
+     | _ -&gt; Unknown()</p>
+<p> let toLinqExpression (q:Expr&lt;'a-&gt;'b&gt;) =<br />
+     let expr = q.ToLinqExpression()<br />
+     let rec convert ex =<br />
+         match ex with<br />
+         | MethodCall (args) -&gt;<br />
+             convert args.[0]<br />
+         | Lambda (body, parameters) -&gt;<br />
+             Expression.Lambda&lt;func&lt;'a, 'b&gt;&gt;(body, parameters)<br />
+         | Unknown -&gt; raise(new NotSupportedException())<br />
+             convert expr<br />
+[/sourcecode]</p>
+<p><a href="http://www.dotnetkicks.com/kick/?url=http%3a%2f%2fcultivatingcode.com%2f2010%2f01%2f27%2ftranslating-lambda-expressions%2f"><img src="{{ site.baseurl }}/assets/KickItImageGenerator.ashx?url=http%3a%2f%2fcultivatingcode.com%2f2010%2f01%2f27%2ftranslating-lambda-expressions%2f" border="0" alt="kick it on DotNetKicks.com" /></a></p>

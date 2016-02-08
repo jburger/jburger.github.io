@@ -1,0 +1,29 @@
+---
+layout: post
+title: Username Token Profile With WCF over HTTP with no code required
+date: 2012-11-27 19:11:18.000000000 +10:30
+type: post
+published: true
+status: publish
+categories: []
+tags: []
+author: Jim Burger
+---
+<p><a href="http://social.msdn.microsoft.com/Forums/en-US/wcf/thread/d55349cf-0fe8-4791-b868-58e4de66768c">WCF does not make Username Tokens over HTTP easy</a>. For <a href="http://www.w3.org/2001/tag/doc/passwordsInTheClear-52">good reason</a> too. People who pass credentials in the clear <a href="http://plaintextoffenders.com/">must be judged</a>!</p>
+<p>One day, you may find yourself forced into a corner, with a gun to your head,  having to break the rules and create a client to follow the <a href="http://docs.oasis-open.org/wss/v1.1/wss-v1.1-spec-os-UsernameTokenProfile.pdf">WS-S Username Token Profile</a> without transport level security. Like I did today.</p>
+<p>Initially, as most people do, I figured it would be a simple case of tweaking an 'out of the box' WCF binding like wsHttpBinding or basicHttpBinding. Some people put in <a href="http://stackoverflow.com/questions/7247536/creating-headers-wsse-section-of-wcf-client-programatically-in-c-sharp">herculean </a>efforts to fit their scenarios into the customBinding approach.</p>
+<p>An even less obvious approach is to turn to the WCF's <a href="http://msdn.microsoft.com/en-us/library/aa717047.aspx">message inspector</a> extensibility point. This by the way, works like a charm, as long as you are OK with using what amounts might as well be a loose wrapper around <a href="http://msdn.microsoft.com/en-us/library/system.text.stringbuilder.aspx">StringBuilder</a> to complete the task. Good enough if you need run time flexibility.</p>
+<p>I <a href="http://stackoverflow.com/a/5858286">dug further</a> and found that it is really easy to <a href="http://www.hanselman.com/blog/BreakingAllTheRulesWithWCF.aspx">break the rules</a> when it comes to SOAP Headers and the <a href="http://msdn.microsoft.com/en-us/library/ms731361.aspx">basicHttpBinding</a>. Often forgotten, the <a href="http://msdn.microsoft.com/en-us/library/ms731749(v=vs.110).aspx">&lt;headers&gt;</a> configuration element to the rescue (namespaces &amp; prefixes removed for brevity):</p>
+<p>[sourcecode language="xml"]</p>
+<p>&lt;endpoint ... &gt;<br />
+&lt;headers&gt;<br />
+  &lt;Security mustUnderstand=&quot;0&quot;&gt;<br />
+    &lt;UsernameToken Id=&quot;ABC-123&quot;&gt;<br />
+      &lt;Username&gt;username&lt;/Username&gt;<br />
+      &lt;Password&gt;password&lt;/Password&gt;<br />
+    &lt;/UsernameToken&gt;<br />
+  &lt;/Security&gt;<br />
+&lt;/headers&gt;<br />
+&lt;/endpoint&gt;</p>
+<p>[/sourcecode]</p>
+<p>So this may not give you much run time flexibility, but it's good to know that adding SOAP headers is not difficult at all. I wish I had known about the headers element a long time ago.</p>

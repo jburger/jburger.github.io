@@ -1,0 +1,32 @@
+---
+layout: post
+title: 'Doing Everyday Things in F#: Creating a database'
+date: 
+type: post
+published: false
+status: draft
+categories:
+- General
+tags: []
+meta:
+  original_post_id: '827414'
+  _wp_old_slug: '827414'
+author:
+  login: Jim Burger
+  email: the-burge@outlook.com
+  display_name: Jim Burger
+  first_name: ''
+  last_name: ''
+---
+<p>Most posts on F# focus on all the cool stuff F# can do. I can understand that - many people need convincing to try a new language and it seems obvious to tempt them with the fancy things. </p>
+<p>I guess this post is a reaction to a recent call to the F# community...</p>
+<blockquote><p>
+I'd love to see a functional programming talk that wasn't all theory - e.g., why would I build a web app in F#?<br />
+    - @paulstovell via twitter
+</p></blockquote>
+<p>I like to think the answer to that question is simply "because you can", not "because its a terse language that manipulates data in a functional way." </p>
+<p>The problem F# faces right now, is that it is a young language, that is different. While it is a legitimate .NET language, tooling support is in its infacy. Web development in F# is going to have a distinct DIY feel to it today, maybe that is for you, maybe it isn't.</p>
+<p>In this post I hope to demonstrate how F# makes the everyday tasks in C# a joy to read and write. </p>
+<h2>On the first day, the developer created the Database</h2>
+<p>So of all the boring, every day things one could do - the most obvious is the database. Since DataDude only works for lesser languages, we'll have to use a real database management tool: DbUp (obvious plug is obvious)</p>
+<p>For users of VS 2010, Nuget support works well at time of writing, so in your package manager you can go ahead and include DbUp and plonk it into your nearest F# console application.</p>

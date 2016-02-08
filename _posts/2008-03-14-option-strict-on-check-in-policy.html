@@ -1,0 +1,114 @@
+---
+layout: post
+title: Option Strict On Check In Policy
+date: 2008-03-14 09:00:55.000000000 +10:30
+type: post
+published: true
+status: publish
+categories:
+- .NET
+- Software Development
+tags:
+- Check In Policies
+- Coding
+- Source control
+- TFS
+- VB9
+meta:
+  _publicize_pending: '1'
+  _wp_old_slug: '827216'
+  original_post_id: '827216'
+author:
+  login: Jim Burger
+  email: the-burge@outlook.com
+  display_name: Jim Burger
+  first_name: ''
+  last_name: ''
+excerpt: ' I hope to clarify how one might go about implementing a check in policy
+  which ensures that Option Strict is turned on for VB projects.'
+---
+<p><span style="color:#0000ff;">NOTE ** This is a repost from my old blog, it may or may not be relevant any more, I'm posting it to keep it alive for people who may have been struggling to find it from </span><a href="http://blog.codeassassin.com/2008/04/09/custom-tfs-check-in-policy-responsiveness/"><span style="color:#800080;">other links</span></a><span style="color:#0000ff;"> on the web </span>**</p>
+<p>Today I hope to clarify how one might go about implementing a check in policy which ensures that Option Strict is turned on for VB projects.</p>
+<p>Rather than rehashing a perfectly good walk through, I suggest you read <a href="http://web.archive.org/web/20080531022519/http://msdn2.microsoft.com/en-us/library/bb668980.aspx">this article from MSDN</a> to get the basics of Check In Policy creation.</p>
+<p>Once we have our check in policy project and have derived a class from Microsoft.TeamFoundation.VersionControl.Client.PolicyBase it is time to start overriding the behaviour of the base rule.</p>
+<p>[sourcecode language="vb"]<br />
+Imports Microsoft.TeamFoundation.VersionControl.Client</p>
+<p>&lt;Serializable()&gt; _<br />
+Public Class OptionStrictPolicy<br />
+    Inherits PolicyBase<br />
+[/sourcecode]</p>
+<p>Once we are over that little hurdle we want to:</p>
+<ul>
+<li> Get the set of pending changes that have been selected by the user to check in</li>
+<li>For each pending change find the project file that the change belongs to</li>
+<li>For each VB project decide if Option Strict has been turned on</li>
+<li>For each project that hasn't got option strict turned on, create a policy warning.</li>
+</ul>
+<p>For extra fun I'll do this all with VS2008 &amp; VB9. I love my C# but to be honest VB9 kicks its ass when dealing with XML.</p>
+<h3>1: Get the set of pending changes that have been selected by the user to check in</h3>
+<p>Everything from here on out extends the Evaluate method of PolicyBase. Getting the set pending changes selected by the user is a cinch. I've filtered by vb code files, but you could just as easily go for more file types.</p>
+<p>[sourcecode language="vb"]</p>
+<p>Public Overrides Function Evaluate() As PolicyFailure()</p>
+<p>  Dim pendingChanges = PendingCheckin.PendingChanges.CheckedPendingChanges<br />
+  Dim vbCodeFiles = _<br />
+    From c In pendingChanges _<br />
+    Let extension = Path.GetExtension(c.FileName) _<br />
+    Where extension = _VBFileExtension OrElse extension = _VBProjectFileExtension _<br />
+    Select c.LocalOrServerFolder, c.FileName<br />
+[/sourcecode]</p>
+<h3>2: For each pending change find the project file that the change belongs to</h3>
+<p>This step is a little trickier and basically involves drilling up the folder structure until we find a project file, and then checking the project file for a compilation reference to the pending change. This seems like a good place to refactor into a recursive function...</p>
+<p>*SIDE NOTE* Am thinking of starting a petition to all relevant Dictionary makers to make the word "Refactor" a real word. Whose with me?</p>
+<p>I'm sure we are all capable of looking for .vbproj files recursively up the folder chain. However we do need to allow for the possibility that there may be two vbproj files in a folder and if so, is our pending change referenced by either of them? To do this I need to go through the project file looking for  tags that include my pending change. For example in C# we might do it like this</p>
+<p>[sourcecode language="csharp"]<br />
+var doc = XDocument.Load(XmlReader.Create(projectFilename));<br />
+var compileItems =<br />
+    from e in doc.Descendants()<br />
+    where e.Name.LocalName == &quot;Compile&quot;<br />
+    select e;<br />
+return<br />
+    (from c in compileItems<br />
+     where c.Attribute(&quot;Include&quot;) != null &amp;&amp; c.Attribute(&quot;Include&quot;).Value.Contains(filename)<br />
+     select c).Any();<br />
+[/sourcecode]</p>
+<p>But since Im using VB today I can do it like this...</p>
+<p>[sourcecode language="vb"]<br />
+Dim doc = XDocument.Load(XmlReader.Create(projectFilename))<br />
+Return doc...&lt;Compile&gt;.@Include.Contains(filename)<br />
+[/sourcecode]</p>
+<p>Not bad...but for this to work I do need to import the namespace of the project file schema, since the syntax that allows for &lt;Compile&gt; is checking qualified names, not local names.</p>
+<p>[sourcecode language="vb"]<br />
+Imports &lt;xmlns=&quot;http://schemas.microsoft.com/developer/msbuild/2003&quot;&gt;<br />
+[/sourcecode]</p>
+<h3>3: For each VB project decide if Option Strict has been turned on</h3>
+<p>Once I have a list of projects that are loosely associated with a check in, I can easily check for the existence of OptionStrict tags in the vbproj file. Option Strict still defaults to off, so a lack of OptionStrict tags implies the setting is OFF. However it is perfectly valid to have an OptionStrict tag that is set to OFF so I need to account for those.</p>
+<p>[sourcecode language="vb"]<br />
+Private Shared Function IsOptionStrictOn(ByVal project As XDocument) As Boolean<br />
+    Return project...&lt;OptionStrict&gt;.Value = &quot;On&quot;<br />
+End Function<br />
+[/sourcecode]</p>
+<h3>4. For each project that hasn't got option strict turned on, create a policy warning.</h3>
+<p>Creating policy warnings is a breeze and you can return as many as you want, in this scenario I want to make sure that one is created for each project that is in violation of my rule. The Evaluate function looks like this...</p>
+<p>[sourcecode language="vb"]<br />
+Public Overrides Function Evaluate() As Microsoft.TeamFoundation.VersionControl.Client.PolicyFailure()<br />
+  Dim pendingChanges = PendingCheckin.PendingChanges.CheckedPendingChanges</p>
+<p>  Dim vbCodeFiles = _<br />
+    From c In pendingChanges _<br />
+    Let extension = Path.GetExtension(c.FileName) _<br />
+    Where extension = _VBFileExtension OrElse extension = _VBProjectFileExtension _<br />
+    Select c.LocalOrServerFolder, c.FileName</p>
+<p>  Dim vbProjects = _<br />
+    From c In vbCodeFiles _<br />
+    Select GetProjectFile(c.LocalOrServerFolder, c.FileName)</p>
+<p>  Dim strictOffprojects = _<br />
+    From p In vbProjects _<br />
+    Where Not IsOptionStrictOn(p)</p>
+<p>  Dim policyFailures = New List(Of PolicyFailure)<br />
+  Dim messageFormat = &quot;Please turn option strict on in the project file: {0}&quot;</p>
+<p>  For Each s In strictOffprojects.Distinct<br />
+    policyFailures.Add(New PolicyFailure(String.Format(CultureInfo.InvariantCulture, messageFormat, s), Me))<br />
+  Next</p>
+<p>  Return policyFailures.ToArray()<br />
+End Function<br />
+[/sourcecode]</p>
+<p>So there you have it, VB9 to make coding an Option Strict ON policy nice and easy. Seems appropriate doesn't it?</p>

@@ -1,0 +1,71 @@
+---
+layout: post
+title: The state of BDD frameworks
+date: 
+type: post
+published: false
+status: trash
+categories:
+- General
+tags: []
+meta:
+  original_post_id: '826940'
+  _wp_old_slug: '826940'
+author:
+  login: Jim Burger
+  email: the-burge@outlook.com
+  display_name: Jim Burger
+  first_name: ''
+  last_name: ''
+---
+<p>These are the kinds of issues BDD attempts (but I feel fails) to solve.</p>
+<ul>
+<li>To produce tests that are useful.</li>
+<li>To produce tests you can trust.</li>
+<li>To produce loosely coupled tests.</li>
+</ul>
+<p>The failure of BDD is that it forces a cubersome semantic around these issues. The developer has to think about how to coerce their intent into the BDD 'language'. Really, what is more important, is that the TDD'er understands why these issues are important, and how to avoid falling into the classic testing traps. That has to be learned through experience, and no framework is going to get those ideas through to anybody.</p>
+<p>Hence, frameworks like <a href="http://elegantcode.com/2009/07/05/mspec-take-2/" target="_blank">Machine.Specificaitons</a>, <a href="http://code.google.com/p/specunit-net/" target="_blank">SpecUnit</a>, <a href="http://nbehave.codeplex.com/wikipage?title=Getting%20started&amp;referringTitle=latest%20release" target="_blank">NBehave</a>, <a href="http://www.ohloh.net/p/tinybdd" target="_blank">TinyBDD </a>and <a href="http://bitbucket.org/forki/naturalspec/wiki/Home" target="_blank">NaturalSpec</a>, all irk me a little. There intentions are pure, but I feel the need to lump them into the the category of 'teaching aid'. These frameworks want to teach you how to test correctly. They don't care that they get inyour way.</p>
+<p>Amnogst other problems, the general assumption is that BDD is not possible with a standard framework and that devs need to be funnelled into good practices. This isn't true though, I can behave myself in MSTest if I know how:</p>
+<p>[sourcecode language="csharp"]</p>
+<p>namespace My.App.Model<br />
+{<br />
+    [TestClass]<br />
+    public class When_processing_a_payment : behaves_like_a_customer_with_an_invoice<br />
+    {<br />
+        [TestMethod]<br />
+        public void should_publish_an_invoice_paid_event()<br />
+        {<br />
+              var output =<br />
+                    paymentProcessor.PayInvoice(customer.Invoice);<br />
+              Assert.AreEqual(OutCome.Success, output);<br />
+              eventAggregator.verifyWasCalled(d =&amp;gt; d.PublishEvent&amp;lt;InvoicePaidEvent&amp;gt;());<br />
+        }<br />
+    }<br />
+}</p>
+<p>[/sourcecode]</p>
+<p>So what do I think is wrong with testing like this?</p>
+<ul>
+<li> Use of underscores is a poor solution to the naming problem.</li>
+<li> Use of metaprogramming is messy and provides no real value to the document.</li>
+<li> Use of inheritance to achieve reusability is the [potential] beginnings of a code smell. Ideally, composition would beused to provide test setup.</li>
+<li> The assertion syntax doesn't read very well.</li>
+</ul>
+<p>So with all of this in mind, I want:</p>
+<ul>
+<li> Tests *anybody* can read</li>
+<li> A framework that supports me in my decision to apply any testing paradigm that I want. Ideally in any .NET language that I want.</li>
+<li> Zero voodoo (setup/teardown)</li>
+<li> Zero ceremony (metaprogramming)</li>
+<li> Supports me in my decision to bring in the code smells of my choice, not force me down a particular track.</li>
+<li> When used in the above manner, produces an output document similar to that of most BDD frameworks, that can be used for manual acceptance testing.</li>
+</ul>
+<p>So, as a good programmer should, I decided to experiment with a few ideas and roll my own. Thankfully, with the advent of the Gallio framework, this wasn't the massive undertaking it once was. While not still not what I consider ideal, my framework (based on F#) allows for a neat, unrestrictive testing workflow.</p>
+<p>[sourcecode language="fsharp"]<br />
+namespace ``Concerns my payment system``</p>
+<p>module ``When used to process a payment for a customer``=<br />
+    open ``A customer with an invoice``</p>
+<p>    let ``it publish an invoice paid event``()=<br />
+        paymentProcessor.PayInvoice customer.Invoice |&amp;amp;gt; should.equal Success<br />
+        eventAggregator.verifyWasCalled(fun d -&amp;amp;gt; d.PublishEvent&amp;amp;lt;InvoicePaidEvent&amp;amp;gt;())</p>
+<p>[/sourcecode]</p>

@@ -1,0 +1,22 @@
+---
+layout: post
+title: Enable ES6 support in VS code
+date: 2015-08-19 19:33:51.000000000 +09:30
+type: post
+published: true
+status: publish
+categories: []
+tags: []
+author:
+  Jim Burger
+---
+<p>I've recently been playing with <a href="http://koajs.com">koa.js</a> - which happens to lean on ES6 features quite heavily. Also using this as an opportunity to learn to use <a href="https://code.visualstudio.com/">VS Code</a>. Loving both tools incidentally.</p>
+<p>Code supports ES6 nicely, however you do need to configure your working directory to tell the IDE that you want to use it. Just add a jsconfig.json file to your directory root and add the following:</p>
+<pre>
+{
+  "compilerOptions": {
+    "target": "ES6"
+  }
+}
+</pre>
+<p>While you are there you may want to <a href="https://code.visualstudio.com/Docs/languages/javascript#_javascript-projects-jsconfigjson">setup other features!</a></p>

@@ -1,0 +1,35 @@
+---
+layout: post
+title: Languages are tools, use them.
+date: 2008-10-17 04:38:15.000000000 +10:30
+type: post
+published: true
+status: publish
+categories:
+- .NET
+- Software Development
+tags:
+- CLR
+- Coding
+- Languages
+- Tools
+meta:
+  _publicize_pending: '1'
+  original_post_id: '826831'
+  _wp_old_slug: '826831'
+author:
+  login: Jim Burger
+  email: the-burge@outlook.com
+  display_name: Jim Burger
+  first_name: ''
+  last_name: ''
+excerpt: While I think its great that I can use C# to express functional concepts,
+  I also think that for anything more than the odd lambda expression, that I'm using
+  the wrong tool for the job.
+---
+<p>While I think its great that I can use C# to express functional concepts, I also think that for anything more than the odd lambda expression, that I'm using the wrong tool for the job.</p>
+<p>If large portions of your code begin with:<code>&lt;Expression&lt;Func&lt;T, R&gt;&gt;</code> Then have a think about what it is you are trying to achieve. Sure, the usage may look fine, the fact remains that you're trying to express concepts at a level of abstraction that C style languages aren't equipped to cope with. Personally I think the well rounded coder would feel more comfortable writing an F# or Scala Library.</p>
+<p>Why bang your head against C# to write DSL's when Boo will go out of its way to make it easy for you? Found yourself falling in love with AOP techniques and have consumed 3rd party libraries to get it done? Did you provide an interface layer to decouple that dependency? Why aren't we just naturally breaking out into IronRuby/Python here?</p>
+<p>The only reason I use C# 3 to write unit tests these days is there isn't really a viable testing language created yet. A few years ago and beyond we had an excuse. Each language usually had its chosen platform and it didn't play well with others. Using Erlang made sense for telecommunication work, but it would be considered counter productive to write a windows GUI in that language. Similarly, you simply wouldn't bother using VB to write code for massively multithreaded environments.</p>
+<p>Today, we have no excuse. The fact is that the Common Language Runtime provides us a mechanism to use the right language for the task at hand, and not only that, compile in a cross language solution, such that the net result is completely seamless to the untrained eye. The 'core strengths' that the average business application developer is available for <a href="http://en.wikipedia.org/wiki/List_of_CLI_Languages">any CLI language</a>.</p>
+<p>Today, we are only restricted by those who refuse to learn new languages, when in fact, learning has never been simpler.</p>

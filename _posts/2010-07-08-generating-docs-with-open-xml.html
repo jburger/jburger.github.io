@@ -1,0 +1,101 @@
+---
+layout: post
+title: Generating Documents with the Open XML SDK - Part 1
+date: 2010-07-08 08:11:37.000000000 +09:30
+type: post
+published: true
+status: publish
+categories:
+- .NET
+- Software Development
+tags:
+- Coding
+- DocumentGeneration
+- OpenXMLSdk
+- Word
+meta:
+  _publicize_pending: '1'
+  original_post_id: '827153'
+  _wp_old_slug: '827153'
+author:
+  login: Jim Burger
+  email: the-burge@outlook.com
+  display_name: Jim Burger
+  first_name: ''
+  last_name: ''
+---
+<p>Recently I was asked to create a document generation engine for a loan application and quote system at work. Our customers needed to enter some basic information about a loan applicant, and at a later time receive a URL to the bundle of PDF's which represented the data rich documents they needed to send to their client.</p>
+<h3>The problem outlined:</h3>
+<p>Generally speaking, the templates were already in .rtf, .doc or .docx form. Many included old mail merge and form fields, as well as embedded formulas and the like. Additionally, the following cases  needed to be catered for:</p>
+<ul>
+<li>Repeating sections</li>
+<li>Data-bound tables</li>
+<li>Template composition</li>
+<li>Turning sections on and off based on data</li>
+<li>Image injection</li>
+<li>Data-bound fields</li>
+</ul>
+<p>Several documents need to be created at once, then zipped up to form a downloadable bundle for the end user to consume. The killer was that the end users wanted to make templates using familiar tools.</p>
+<p>With a variety of options at our disposal; <a href="http://en.wikipedia.org/wiki/XSL_Formatting_Objects">XSL:FO</a> , HTML via a view engine like <a href="http://sparkviewengine.com/">Spark</a>, <a href="http://office.microsoft.com/en-au/infopath/">InfoPath</a>, or even <a href="http://www.adobe.com/products/livecycle/forms/">Adobe Forms</a> the determining factor for us was that when end users want to design documents, 90% of the time, they want to do it in MS Word. Generally speaking, our users were familiar with defining 'what they want' in Word. As a design tool, Word's typographic capabilities lie somewhere between XSL:FO and <a href="http://www.adobe.com/products/indesign/">Adobe InDesign</a> or <a href="http://www.quark.com/index2.html">QuarkXPress</a>.</p>
+<p>Unfortunately, using Word has its drawbacks. Given source documents that contain various conflicting methods of data binding, domain logic on the form of formulas and form fields, as well as having file creation dates in the early 90's; the potential for <a href="http://en.wikipedia.org/wiki/Unusual_software_bug">mandelbugs</a> is extremely high.</p>
+<p>In the past, automating word server-side with .NET meant hacking about with <a href="http://www.developerdotstar.com/community/automate_excel_dotnet">COM Interop</a> or VBA or both. While it was a practical approach, it often meant a number of things:</p>
+<ul>
+<li>Server side installation and licensing of Office products</li>
+<li>Difficulties in managing instances of winword.exe, excel.exe etc.</li>
+<li>COM Interop libraries were designed with Visual Basic making development in C# difficult.</li>
+<li>Generally high levels of excruciating, eye-popping, pain.</li>
+</ul>
+<h2>A new solution</h2>
+<p>The Open XML SDK, now in its second version, is a suite of tools including a flexible API to generate documents, and a reflectoresque tool that shows how an office document is constructed. This suite is designed to cater for document creation; it will not automate user interactions to Powerpoint, but it will make awesome documents from scratch, and it will do it faster than you can say "No more PIA's!".</p>
+<p>This <a href="http://msdn.microsoft.com/en-us/library/dd608815(office.14).aspx">comprehensive</a> API gives you the flexibility to inject content as XML directly, or to create content using typed classes. Finally, <a href="http://msdn.microsoft.com/en-us/library/bb387098.aspx">LINQ to XML</a> works brilliantly, and VB developers could even take full advantage of <a href="http://geekswithblogs.net/Silverlight2/archive/2008/03/30/xml-literals-and-embedded-expressions.aspx">XML literals</a>, and <a href="http://msdn.microsoft.com/en-us/library/bb531325.aspx">intellisense for XML Schemas</a> if desired.</p>
+<h3>Developer prerequisites:</h3>
+<ul>
+<li><a href="http://www.microsoft.com/downloads/details.aspx?FamilyId=C6E744E5-36E9-45F5-8D8C-331DF206E0D0&amp;displaylang=en">Open XML SDK v2.0</a> ( get the productivity tool here too)</li>
+<li><a href="http://dbe.codeplex.com/">Content Control Toolkit</a></li>
+<li><a href="http://www.microsoft.com/express/">Visual Studio</a> 2008 or above</li>
+</ul>
+<h3>Benefits</h3>
+<ul>
+<li>No need to have licenced products installed on servers to generate templates.</li>
+<li>Templating in a familiar editor</li>
+<li>Can convert various formats of documents into templates</li>
+<li><em>Super awesome fast</em></li>
+<li>Verifiable output - output can be schema verified</li>
+<li>Extensible</li>
+<li>Testable, maintainable code</li>
+</ul>
+<h3>Drawbacks</h3>
+<ul>
+<li>No ability to automate Word itself, or inspecting paginated output.</li>
+<li>Requires a basic understanding of XML &amp; XPath queries</li>
+<li>Code required.</li>
+</ul>
+<h2>A design emerges</h2>
+<h3>User interaction</h3>
+<p>The process begins when a customer interacts with the user interface to enter relevant information about the documents to be created. Additional information about the request is sourced from any existing data available. The interface stores these requests for documents as jobs in a queue.</p>
+<p>&nbsp;</p>
+<p>[caption id="attachment_827161" align="alignnone" width="500" caption="Our customers interact with our software to request a bundle of generated, data-rich documents. These are stored as jobs in a queue."]<a href="http://cultivatingcode.files.wordpress.com/2010/07/qatsdocsjobprocessing1.png"><img class="size-full wp-image-827161" title="User interface driven document generation jobs" src="{{ site.baseurl }}/assets/qatsdocsjobprocessing1.png" alt="" width="500" height="154" /></a>[/caption]</p>
+<p>&nbsp;</p>
+<h3>Job processing</h3>
+<p>A separate job service polls this collection of jobs for new work to perform, fetches any required data, flattens the data into presentation models, and delegates to relevant 'DocumentBuilders' to create the documents themselves.</p>
+<p>The last stage involves converting the documents to PDF, moving the resultant documents into a folder structure which is then zipped, moved and linked to.</p>
+<p>&nbsp;</p>
+<p>[caption id="attachment_827163" align="alignnone" width="500" caption="The job processor polls the job queue for docgen jobs, and chooses the required document builder(s) to execute the job."]<a href="http://cultivatingcode.files.wordpress.com/2010/07/qatsjobprocessor.png"><img class="size-full wp-image-827163" title="Job Procesing" src="{{ site.baseurl }}/assets/qatsjobprocessor.png" alt="" width="500" height="498" /></a>[/caption]</p>
+<p>&nbsp;</p>
+<h3>Document Building</h3>
+<p>The document builders create a word document based on a template document and an XML representation of the data to be injected. They do this following an <a href="http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller">MVC pattern of sorts</a>; the template is just a view, it has knowledge of data-bindings and that's about it. The document builder is the controller, it initializes the process and passes data to the template, as well as orchestrating post-data-binding manipulations of the template. The model, comes in the form of a <a href="http://en.wikipedia.org/wiki/Plain_Old_CLR_Object">POCO</a> which is ultimately serialized to XML and injected into the view by the controller.</p>
+<p>To clarify, each document builder is responsible for generating one type of document. They may have intimate knowledge of the view and the model; they are by no means generic. However, there are generic patterns we can apply to common design issues and I will get to those in a later post.</p>
+<h3>Content Controls and CustomXmlParts</h3>
+<p>At the heart of the design is the concept of <a href="http://blogs.msdn.com/b/mikeormond/archive/2006/08/10/694173.aspx">content controls</a>: these are a feature of MS Word that allow us to use place holders in a document and bind data to them. I also use them to allow manipulations to the document beyond simple data-binding.</p>
+<p><a href="http://msdn.microsoft.com/en-us/library/bb608618.aspx">CustomXmlParts</a> are equally integral; these are the buckets in which we pour our view models into. Once hydrated, the content controls in a word document can data bind to nodes in the CustomXmlPart via XPath queries.</p>
+<h2>Where to go from here</h2>
+<p>In my next few posts, I'll dive deeper into the preparation of templates, data binding them to XML, various tools I use, and the Document Builders themselves. Along the way I'll be solving some common issues like tables and composing templates. Finally, I'll broach the topic of automated testing and potential for a TDD like approach.</p>
+<p>UPDATE: <a href="http://cultivatingcode.com/2010/10/13/generating-word-documents-p2/">Part two - Databinding with ContentControls</a> is now published.</p>
+<p>In the meantime, I'd like to direct you to the sources of information I used to become familiar with Open XML:</p>
+<ul>
+<li><a href="http://msdn.microsoft.com/en-us/office/bb265236.aspx">Open XML Developer Centre</a></li>
+<li><a href="http://blogs.msdn.com/b/brian_jones/archive/tags/open+xml+sdk/">Brian Jones on Open XML</a></li>
+<li><a href="http://blogs.msdn.com/b/ericwhite/archive/tags/openxmlsdk/">Eric White on Open XML</a></li>
+</ul>
+<p>While I'm here, I'll just make a quick shout out to my new colleagues on this project George and Paul, whose hard work underpins a lot of the ideas you see here. A special thanks to <a href="http://2010wave.blogspot.com/">Darren</a> for encouraging me to get this stuff out in the form of a blog, and challenging my thinking every step of the way. Thanks guys, this is a direct result of your hard work and advice.<br />
+<a href="http://www.dotnetkicks.com/kick/?url=http://cultivatingcode.com/2010/07/08/generating-docs-with-open-xml/"><img src="{{ site.baseurl }}/assets/generating-docs-with-open-xml" border="0" alt="kick it on DotNetKicks.com" /></a></p>

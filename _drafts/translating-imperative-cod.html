@@ -1,0 +1,27 @@
+---
+layout: post
+title: Translating imperative code to a functional style with LINQ
+date: 
+type: post
+published: false
+status: draft
+categories:
+- General
+tags: []
+meta:
+  original_post_id: '827357'
+  _wp_old_slug: '827357'
+author:
+  login: Jim Burger
+  email: the-burge@outlook.com
+  display_name: Jim Burger
+  first_name: ''
+  last_name: ''
+---
+<p>Just a few cases where the classic C style can be made more readable with declarative syntax made available via LINQ.</p>
+<h2>Case 1: Filtering results</h2>
+<p>This is a basic one, but its the first thing I look for when 'linqifying' code...</p>
+<p>[caption id="attachment_827358" align="aligncenter" width="464" caption="The case of the for loop and if statement"]<a href="http://cultivatingcode.files.wordpress.com/2011/01/linq_ex_1.png"><img class="size-full wp-image-827358" title="Case 1: The case of the for loop and if statement" src="{{ site.baseurl }}/assets/linq_ex_1.png" alt="" width="464" height="183" /></a>[/caption]</p>
+<p>The first thing that should spring to mind when you see this pattern is "Where". Allow me to demonstrate:</p>
+<p>[caption id="attachment_827360" align="aligncenter" width="465" caption="For loops with if statements inside them are usually equivalent to a Where clause."]<a href="http://cultivatingcode.files.wordpress.com/2011/01/linq_ex_2.png"><img class="size-full wp-image-827360" title="linq_ex_2" src="{{ site.baseurl }}/assets/linq_ex_2.png" alt="" width="465" height="97" /></a>[/caption]</p>
+<p>Case 2: Overuse of Count</p>

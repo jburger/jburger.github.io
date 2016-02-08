@@ -1,0 +1,57 @@
+---
+layout: post
+title: Seriously, Why Test First?
+date: 2008-10-01 07:34:17.000000000 +09:30
+type: post
+published: true
+status: publish
+categories:
+- Software Development
+tags:
+- BDD
+- Coding
+- TDD
+meta:
+  _publicize_pending: '1'
+  original_post_id: '826832'
+  _wp_old_slug: '826832'
+author:
+  login: Jim Burger
+  email: the-burge@outlook.com
+  display_name: Jim Burger
+  first_name: ''
+  last_name: ''
+excerpt: |-
+  Is TDD over the top? Surely I can write my tests 'alongside' my code?
+
+  Short answer: No.
+---
+<p>Is <a href="http://en.wikipedia.org/wiki/Test_Driven_Development">TDD</a> over the top? Surely I can write my tests 'alongside' my code?</p>
+<p>Short answer: No.</p>
+<p>Long answer:</p>
+<p>To borrow Michael Feathers, author of <a href="http://www.objectmentor.com/resources/articles/WorkingEffectivelyWithLegacyCode.pdf">"Working effectively with Legacy Code"</a> the definition of legacy code is code without tests. By writing a function without a test first, you've just banged out a whole bunch of legacy code. It might not feel like it, but you could have just wasted your precious time.</p>
+<p>OK, so lets pretend we have some of this legacy code in front of us. We begin writing some tests to cover it. What you'll find is that many programmers do one of a few things:</p>
+<ul>
+<li>Coder A will write four or five tests for every method and generally not have to change their implementation much, if at all.</li>
+<li>Coder B writes less tests overall, but in order to get it there they had to change their code due to recognising some unnecessary coupling or logic.</li>
+</ul>
+<p>The next few examples are people who would have used TDD or no tests at all...</p>
+<ul>
+<li>Coder C used TDD but strangely the end result looks like Coder A's code.</li>
+<li>Coder D thinks unit testing is a waste of time, and has already deployed to production by now and is currently smugly sipping on Kool Aid.</li>
+<li>Coder E only wrote a few tests, each test concerned with what the code should do, not what the code currently does, or how it goes about doing it.</li>
+</ul>
+<p>Now that we have brutally put everybody in a box with rash generalizations and assumptions, lets come up with a way to throw a cat amongst the pigeons. Generally the best way to do this to a developer, is to ask them to add a new feature to their code.</p>
+<ul>
+<li>Coder A when finished, finds that all the old tests wont even compile let alone pass because the new requirements severely altered the required architecture. Time is wasted rewriting all the tests to facilitate the new architectural requirements.</li>
+<li>Coder B finds that only half of the old tests build or pass after implementing the new code. Because they removed some coupling it was easy enough to add, but they wasted time on some old tests that were obsolesced by the new architecture.</li>
+<li>Coder C decides that the existing test suite isn't going to facilitate the new requirements. After they rewrite most of their tests they rewrite the code to satisfy them. Its like much Coder A's experience just in reverse.</li>
+<li>Coder D deploys the new code to production or QA, only to find that the new changes stomped all over old functionality. What do you mean it 'doesn't work'? <em>That's impossible! </em>Time for a week long debugging session.</li>
+<li>Coder E on the other hand writes one more test to the test suite and adds as little code as necessary to make it pass, then brutally refactors anything possible. None of the tests needed rewriting in the process. All user requirements are met and the project is delivered on time and on budget. If your lucky that is...</li>
+</ul>
+<p>What some people fail to understand, is that using TDD doesn't prevent you from writing bad code. On the contrary, <strong>it can encourage you to over specify things</strong>.</p>
+<p>When you over specify, you increase the places in your test suite that depend on how your implementation is structured. The very same thing happens when you write a function, and then a test or write tests 'alongside' your code. This is the mistake that Coder C makes, taking the bull by the tail, instead of the horns.</p>
+<p>Coder E has no idea that he/she is in part practicing <a href="http://en.wikipedia.org/wiki/Behavior_Driven_Development">BDD</a>. Its a natural progression from blindly banging out tests to cover every feasible outcome. Eventually you get a feel for tests that give you maximum 'bang for buck'. These tests provide maximum (quality) coverage for the least effort. In other words, we aren't bothering with a test per function. We are writing one test per <em>desired behaviour</em>. OK so every now and again, you head down the wrong track and tear up a few behavioural tests. Usually that's because you misunderstood the requirements, not how to code it, and that's where the value lies.</p>
+<p><strong>If you cant write a behavioural test, then you haven't understood the problem fully</strong>. If you don't understand the users problem, why are you coding?</p>
+<p>That's why initially, its tempting to TDD blindly, you can ignore certain aspects of the users problem and just simply code until you think you got it right. Of course there are a few other aspects to BDD that I'm sure you're either aware of, or hopefully discover after reading this, but its important to remember:</p>
+<p>BDD isn't something new and funky fresh. Its not the latest soda pop fad. At its heart its simply <strong>TDD</strong><strong> Done Well</strong>.</p>

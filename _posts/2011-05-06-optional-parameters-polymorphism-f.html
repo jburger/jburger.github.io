@@ -1,0 +1,47 @@
+---
+layout: post
+title: Optional Parameters, Polymorphism & F#
+date: 2011-05-06 08:57:40.000000000 +09:30
+type: post
+published: true
+status: publish
+categories:
+- .NET
+- Software Development
+tags:
+- Coding
+- FSharp
+meta:
+  _publicize_pending: '1'
+  original_post_id: '827387'
+  _wp_old_slug: '827387'
+author:
+  login: Jim Burger
+  email: the-burge@outlook.com
+  display_name: Jim Burger
+  first_name: ''
+  last_name: ''
+---
+<p>Optional parameters are one of those things. Love them or hate them they have their place. Generally, F# style dictates using optional parameters over overloaded methods. From <a href="http://msdn.microsoft.com/en-us/library/dd483468.aspx">MSDN</a></p>
+<blockquote><p>In F#, optional arguments are usually used instead of overloaded methods. However, overloaded methods are permitted in the language</p></blockquote>
+<p style="display:inline !important;">Briefly, the way to declare optional parameters in F# <a href="http://msdn.microsoft.com/en-us/library/dd233213.aspx">is as follows</a>:</p>
+<p>[sourcecode language="fsharp"]<br />
+type Person() =<br />
+    ///&lt;summary&gt;Pants are optional&lt;/summary&gt;<br />
+    member this.WearClothes(top, shoes, ?pants) = ignore()<br />
+[/sourcecode]</p>
+<p>When we need to find the value of an optional we can use a function called defaultArg. It checks the call and if no value was passed, the value provided is used. </p>
+<p>[sourcecode language="fsharp"]<br />
+type Person() =<br />
+    member this.Say(message, ?name) =<br />
+         let who = defaultArg name &quot;nobody&quot;<br />
+         printfn &quot;You said: '%s', to %s&quot; message who<br />
+[/sourcecode]</p>
+<p>When using polymorphism in F#, you declare the type signature, and optionally, a default implementation (equivalent to a virtual method in C#). If you intend to use optional parameters, in this case you'll need to use labels for optional parameters in your abstract declaration. You cannot use curried arguments either, so you must tuple your signature. Like so...</p>
+<p>[sourcecode language="fsharp"]<br />
+type Person() =<br />
+    abstract Say :  'a * ?name : string -&gt; unit<br />
+    default this.Say (message, ?name) =<br />
+        (* and so on *)<br />
+[/sourcecode]</p>
+<p>Aside: both optional parameters and parameter arrays must be used last in a method signature in F#. In the case you use both, the compiler fails unless the optional parameters go last. Those familiar with C# in this instance will know the opposite is true in that language. Odd?</p>

@@ -1,0 +1,41 @@
+---
+layout: post
+title: Prototyping in node.js on windows
+date: 
+type: post
+published: false
+status: draft
+categories: []
+tags: []
+meta:
+  _edit_last: '11285636'
+  _oembed_060f823dc2c319b0e9cef3d5bda25c34: '{{unknown}}'
+author:
+  login: Jim Burger
+  email: the-burge@outlook.com
+  display_name: Jim Burger
+  first_name: ''
+  last_name: ''
+---
+<p>If you've been like me and left jumping on node a little late, now might be a good time. Windows support seems to have settled to a point where you can expect a decent installation experience, a package manager and Azure support.</p>
+<p>One of the simplest things you can do with node is serve up single pages, so I'll walk through installing and getting going with a single page, through to an MVC application based on the popular library, express.</p>
+<p>From there its up to your imagination, there is a huge selection of quality packages on npmjs.org and you can interface to most kinds of data your likely to want to interface with.</p>
+<p>YOU WILL NEED:</p>
+<ul>
+<li>A text editor</li>
+<li>The latest node installer from <a href="http://nodejs.org/">http://nodejs.org</a></li>
+</ul>
+<p>If you have an previous versions of node installed I'd suggest removing them, to be on the safe side. After running the installer, and fire up cmd or powershell. I needed to put the location of NPM on my path to run it from any location. Generally, that will be 'C:\program files(x86)\nodejs\</p>
+<p>PROXIES</p>
+<p>NPM will use your internet connection to update packages on your system, so if you are behind a proxy I suggest one of the three following approaches:</p>
+<ol>
+<li>Create a HTTP_Proxy environment variable and set it to the URL of your proxy (basic auth only AFAIK)  e.g.<br />
+HTTP_PROXY = "http://yourdomain\User:P4ssw0rd@10.1.2.2/"</li>
+<li>I needed to turn off HTTPS and use HTTP, to do this run the following command:<br />
+npm set registry http://registry.npmjs.org/</li>
+</ol>
+<div>Confirm that it all works by typing 'node' to bring up the node console:</div>
+<div><a href="http://maintenancecoder.files.wordpress.com/2012/01/capture.png"><img class="size-full wp-image" src="{{ site.baseurl }}/assets/capture.png?w=309" alt="Image" /></a></div>
+<div></div>
+<div>LETS GET NODING</div>
+<p>There are a tonne of nodejs 'hello worlds' (or hello ladies) out there , and while thats is great if you want to start diving into the standard libraries that ship with node, becuase before too long, you will wa</p>

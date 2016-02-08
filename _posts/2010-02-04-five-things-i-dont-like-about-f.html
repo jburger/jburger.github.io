@@ -1,0 +1,140 @@
+---
+layout: post
+title: Five things I don't like about F#
+date: 2010-02-04 17:47:16.000000000 +10:30
+type: post
+published: true
+status: publish
+categories:
+- .NET
+- Software Development
+tags:
+- Coding
+- FSharp
+meta:
+  _publicize_pending: '1'
+  original_post_id: '827011'
+  _wp_old_slug: '827011'
+  _oembed_037172018581cda5dead07916bfe074a: '{{unknown}}'
+  _oembed_0a9527f0471f761feb303ebfbf2101d9: '{{unknown}}'
+author:
+  login: Jim Burger
+  email: the-burge@outlook.com
+  display_name: Jim Burger
+  first_name: ''
+  last_name: ''
+---
+<p>Don't get me wrong --<a href="http://twitter.com/jburger/status/7767727815"> I love F#</a> it's a terse creature capable of solving just about any problem you can throw at -- in no less than three different ways. The list of <a href="http://diditwith.net/CategoryView,category,Why%2BI%2BLove%2BF%23.aspx">things I love</a> about F# is so long that it's simply quicker for me to tell you about the things I hate. I also see a lot of unfounded criticism about whether the language should exist at all, and I was hoping to direct some honest and hopefully useful criticism instead.</p>
+<h2>5. Hiding bindings</h2>
+<p>Starting with something not so bad at all, some might even call this a feature, is the effect of scope on bindings. You can bind to the same name as something in a wider scope without compilation failure. You just need to expect the outcome. For instance, it is possible to compile the following:</p>
+<p>[sourcecode language="fsharp"]<br />
+let name = &quot;Jim&quot;<br />
+for i in [1..10] do<br />
+    let name = name + i.ToString() // I wonder what name I'm talking to?<br />
+    printfn &quot;%s&quot; name //oh well I hope its the same as the last line...<br />
+printfn &quot;%s&quot; name</p>
+<p>//fsi output:</p>
+<p>Jim1<br />
+Jim2<br />
+Jim3<br />
+Jim4<br />
+Jim5<br />
+Jim6<br />
+Jim7<br />
+Jim8<br />
+Jim9<br />
+Jim10<br />
+Jim<br />
+[/sourcecode]</p>
+<p>It all makes sense, until you read the last line of output. The answer is that there are actually two different bindings to 'name', one for each scope.</p>
+<p>Once you've seen this, it makes plenty of sense, but until you've bumped into this language feature you can be scratching your head for some time.</p>
+<h2>4. Explicit interfaces</h2>
+<p>So the main sales pitch for F# is that it allows functional programming, but it's also one heck of a swiss army knife. Doing OO in a language like F# is not only OK, its encouraged. However, once I head down this road, I'm compelled to apply good practices - namely SOLID. Interfaces form part of those practices, and though the interface story is well crafted, the last piece in the puzzle is to be able to use them implicitly.</p>
+<p>The argument against implicit usage is really quite simple: <strong>YAGNI!</strong></p>
+<p><strong> </strong>While I'm on board with this line of thinking, I still feel that it would simply be more inline with the general .NET experience, given that so much good stuff is built on C# -- and it relies on implicit interfacing to keep APIs looking neat and tidy. I shouldn't be asked to throw the baby out with the bath water when it comes to using those libraries. It's unfortunate that the following will not compile:</p>
+<p>[sourcecode language="fsharp"]<br />
+type IFoo =<br />
+  abstract Bar : string -&gt; unit</p>
+<p>type Foo() =<br />
+  interface IFoo with<br />
+    member x.Bar name = printfn &quot;Hello %s!&quot; name</p>
+<p>module Baz=<br />
+  let f = new Foo()<br />
+  f.Bar &quot;jimbo&quot; //boom!</p>
+<p>[/sourcecode]</p>
+<p>While there is some sense in forcing a separation between interface and instance methods I find the purism a little annoying. Object expressions are a nice alternative which might solve some issues - albeit in a different way, remembering that an F# solution is simply going to be engineered differently:</p>
+<p>[sourcecode language="fsharp"]<br />
+let f =<br />
+  {<br />
+    new IFoo with<br />
+      member x.Bar str = printfn ( &quot;BAZ&quot; + str )<br />
+  }<br />
+f.Bar &quot;bam&quot;<br />
+[/sourcecode]</p>
+<p>Another approach is to let the compiler coerce the type for us when we pass it to a function. It baffles me that while the assignment example will not compile, we <em>can </em>do the following...</p>
+<p>[sourcecode language="fsharp"]<br />
+let executeFoo (f:IFoo) input = f.Bar input<br />
+executeFoo (new Foo())<br />
+[/sourcecode]</p>
+<h2>3. Pain in the class</h2>
+<p>OO programming with F# in general is kind of weird and most of my issues lie within this segment of the language specification. Read/write properties feel clunky to me and while they're a bit new, even for C#, autoprops would still rock my world so I can avoid the following code:</p>
+<p>[sourcecode language="fsharp"]<br />
+type Car()=<br />
+  let mutable pedalPosition = 0.0<br />
+  member internal self.pedalPosition<br />
+    with get() = pedalPosition<br />
+    and set(v) = pedalPosition &lt;- v<br />
+[/sourcecode]</p>
+<p>The functional zealot is going to scream at me for not using an immutable record type. The pragmatist will scream at me for not falling back on C#.<em> </em>I think that if F# is going to let me do things at all, it should let me <em>do it nicely</em>. Ideally, read/write properties would be as simple to declare as read only properties which, are very nice to declare. Maybe this could work:</p>
+<p>[sourcecode language="fsharp"]<br />
+type Car()=<br />
+ member mutable self.PedalPosition : float //read write auto property<br />
+ member mutable self.IntakeTemp    : &lt;degC&gt;<br />
+ member self.IsCruising = self.PedalPosition &lt; 0.1<br />
+ member self.OpenIdleAirControlValve = self.IsCruising &amp;&amp; self.IntakeTemp &lt;= 50.0&lt;degC&gt;<br />
+[/sourcecode]</p>
+<p>Another weirdness that gets me is the self identifier is not a keyword but a binding. While I get that it is nice, it also allows a team of 5 different developers the opportunity to have a holy war over  the one true self reference. 'this', 'self', 'me', 'it' or 'x'? On top of this -- there are two scopes involved: class level self, and member level self. All told, the power that this gives you is nothing compared to the level of ambiguity you can create.</p>
+<p>[sourcecode langauge="fsharp"]<br />
+type Person(id) as this =<br />
+  do trace &quot;created person with id {0}&quot; this.Id<br />
+  member their.Id = id<br />
+  member that.FullName = that.LastName + &quot; &quot; + this.FirstName<br />
+  member them.LastName = &quot;Burger&quot;<br />
+  member they.FirstName = &quot;Jim&quot;<br />
+[/sourcecode]</p>
+<p>This is one of those moments where the phrase: "With great power comes great responsibility" comes to mind.</p>
+<h2>2. Dependency order is important</h2>
+<p>This is a biggy, and I'm not sure what they will ever do about this, because it's apparently a pervasive issue. It's an issue that starts out as annoying, and eventually morphs into pain.</p>
+<p>At the annoying level, we have to arrange things that make sense to the compiler. In the simplest of cases, any types that you need to use have to be implemented before you call them. In a single code file, that isn't so bad, but it is annoying. It all really takes me back to my C days:</p>
+<p>[sourcecode language="fsharp"]<br />
+let myFunc x = someOtherFunc y //not defined!!<br />
+let someOtherFunc x = x * x<br />
+[/sourcecode]</p>
+<p>It gets worse, because the same applies at the type level:</p>
+<p>[sourcecode language="fsharp"]<br />
+namespace Model</p>
+<p>type Animal(name, regTag) =<br />
+  member x.Name = name<br />
+  member x.Registration : RegistrationTag = regTag //not defined!!</p>
+<p>type RegistrationTag(dateIssued, number) =<br />
+  member x.DateIssued = dateIssued<br />
+  member x.Number = number<br />
+[/sourcecode]</p>
+<p>While at first you think, "OK this is just enforcing some order, that can't be bad", the problem is <em>what if you need a circular reference</em>? Well, to combat that edge case we have  yet another type construct we don't really want or need - <strong>mutually recursive types</strong>.</p>
+<p>Say what? It's not nearly as bad as it sounds...</p>
+<p>[sourcecode language="fsharp"]<br />
+open System.IO<br />
+type Folder(path) =<br />
+    member x.Files = seq {<br />
+        for fileName in Directory.GetFiles(path) do<br />
+            yield new File(fileName, path)<br />
+    }</p>
+<p>and File(filename, parent) =<br />
+    member x.Name = filename<br />
+    member x.Parent = parent<br />
+[/sourcecode]</p>
+<p>This defines two types, one referencing the other. Problem solved. Imagine now that these classes are BIG. Too bad I now have more than one type per code file!</p>
+<h2>1. Flat projects</h2>
+<p>I saved this one till last for two reasons: because it is my biggest beef thus far, but also because it is a symptom of the previous issue. <em>Even files need to be in the correct order</em>, by dependency, for the compiler to cope. Rather than abstracting file order and dependencies, it is coupled to the order of appearance in the project file. Sure you get some UI tools to help deal with it, but its less than ideal.</p>
+<p>[caption id="attachment_827027" align="alignnone" width="300" caption="Its a shame that we actually need these at all."]<a href="http://cultivatingcode.files.wordpress.com/2010/02/uienhancements.png"><img class="size-medium wp-image-827027" title="F# UI Enhancements" src="{{ site.baseurl }}/assets/uienhancements.png?w=300" alt="Shows the F# UI Enhancements for handling file order" width="300" height="169" /></a>[/caption]</p>
+<p>The final blow is that this means that folders inside projects not a possibility. While I understand the reasons that forced us down this road, I don't understand why it was thought that this is a good enough solution. Personally, I think the use of folders is a necessity in any projects that has more than a handful of files. I fear that F# will never be taken seriously in the mainstream until it has a project experience similar to that of C# and VB.</p>

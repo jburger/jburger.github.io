@@ -1,0 +1,191 @@
+---
+layout: post
+title: Giving a damn about the broken windows
+date: 2009-02-09 08:28:27.000000000 +10:30
+type: post
+published: true
+status: publish
+categories:
+- .NET
+- Software Development
+tags:
+- Coding
+- TDD
+meta:
+  _publicize_pending: '1'
+  original_post_id: '826828'
+  _wp_old_slug: '826828'
+author:
+  login: Jim Burger
+  email: the-burge@outlook.com
+  display_name: Jim Burger
+  first_name: ''
+  last_name: ''
+excerpt: 'Leon Bambrick has written some great posts lately, and two things have really
+  struck a chord with me. '
+---
+<p>Leon Bambrick has written some great posts lately, and two things have really struck a chord with me. Firstly, in 6 ways to become a better programmer in 8 minutes <a href="http://www.secretgeek.net/6min_program.asp">(or was it the other way around)</a> he drives home the point that attempting to increase code coverage in your project by 1% is a Good Thing. Especially given the fact that its likely that your code coverage is 0% hmm? The biggest gain in unit testing probably arises from that first attempt to bring your code base under some semblance of control.</p>
+<p>Secondly, <a href="http://www.secretgeek.net/give_take.asp">in an earlier post</a> he finishes up by espousing the importance of passion.</p>
+<blockquote><p>You've got to give a shit about the code you write and the people who use it. If you</p>
+<p>don't care about it, you're never going to enjoy it properly.</p></blockquote>
+<p>“Give a shit” about your code – otherwise coming to work is pointless. Go home and find out how to care about the project before coming back. I care about unit testing, because I care about my code. It saddens me to think that most code bases out there have a code coverage of 0%. More so, it saddens me that there are people who don’t even try to understand unit testing and how it can work for you, and not against you.</p>
+<p>IMNSHO if you haven’t wrapped your head around unit testing by now, then <a href="http://www.codinghorror.com/blog/archives/000640.html">you’re are not doing your job properly</a>. You can’t possibly remember all the permutations of a complex problem, nor can you verify them all. So when you figure one out, you should verify it, code it and check it in.</p>
+<p>It is also a shame that <a href="http://www.joelonsoftware.com/items/2009/01/31.html">prominent members</a> of the coding community can’t get their story straight. There are still plenty of people out there who just don’t seem to get it. Even with a test suite in place, it may become neglected. Progressively it too, falls into the category of legacy code.</p>
+<p>So how do we improve the efficacy of our test suite if we have one? First and foremost:</p>
+<p><strong>Have tests run as part of the build, and fail the build if the tests do not pass.</strong></p>
+<p>This is a no brainer. There are so many benefits to having tests and automating them that I cannot begin to summarize them here.&nbsp; <a href="http://martinfowler.com/articles/continuousIntegration.html#MakeYourBuildSelf-testing">Just</a><a href="http://www.codeproject.com/KB/architecture/onunittesting.aspx">do</a><a href="http://www.codeproject.com/KB/architecture/onunittesting.aspx">it.</a> Of course this is no good, if other team members aren’t compelled to fix the build. Which lead Leon to the conclusion that some form of build monitor is a definite improvement. If you don’t have a <a href="http://www.thinkgeek.com/geektoys/warfare/8bc4/?cpg=ab">laser</a> <a href="http://www.thinkgeek.com/geektoys/warfare/8bc4/?cpg=ab">guided USB missile launcher</a> pointed at the person who broke the build, then your still fighting an uphill battle to <strong>make people care</strong>.</p>
+<p>So, failing office warfare, you can try lowering the cognitive effort of understanding unit testing in the first place. The testing newbie usually finds learning about mock objects, test fakes, test runners and testing frameworks up front all a bit too much.</p>
+<p><strong>Writing neat test code helps testing newbies.</strong> I like to impose the following rules on myself.</p>
+<ol>
+<li>Use plain English when naming test classes, methods and variables</li>
+<li>Avoid obnoxious acronyms</li>
+<li>Clearly name test fakes and mocks</li>
+<li>Differentiate between the ‘expected’ and the ‘actual’ value</li>
+<li>Minimize the asserts in your tests</li>
+<li>Use language features to full effect to improve readability</li>
+<li>Refactor your tests as ruthlessly as your code</li>
+</ol>
+<h3>Use plain English when naming</h3>
+<p>Testing is about specification, and should read as such. Having a class called FooFixture makes sense to some, but everybody understands WhenEmailingACustomer. Similarly, a test named ShouldThrowWhenNullParm(), is too obscure. Should throw what exception? Which ‘parm’… schnitzel or olive parm? Avoid such cryptograms and defer to a more English style. ShouldThrowANullReferenceExceptionWhenProvidedANullFooParameter might be a little long, but at least it doesn’t need deciphering.&nbsp; Hell, we are all coding on <a href="http://www.codinghorror.com/blog/archives/000012.html">24” widescreens and better</a> right? :P</p>
+<p>Some people say that the code should document the test and the method name is a little superfluous. Sorry, but I say: <strong>nuts</strong>. I want to skim a list of test methods and fixtures to learn how a program works, as well as what it does, without reading the code, and so should my team members.</p>
+<p>I also advocate using underscores, to further improve readability, however I realise this is a personal preference. For example:</p>
+<p>[sourcecode language="csharp"]<br />
+[TestClass]<br />
+public&amp;nbsp;class Concerning_the_person_controller<br />
+  {<br />
+  [TestMethod]<br />
+  public&amp;nbsp;void It_should_retrieve_the_tallest_person_from_the_person_model()<br />
+  {<br />
+     //TODO: Write a READABLE test<br />
+  }<br />
+}<br />
+[/sourcecode]</p>
+<h3>Avoid acronyms </h3>
+<p>I’m a fan of marking the “system under test” and I used to use the acronym, SUT to do so. However, I’ve come full circle and realized that having a CreateSUT method is taking it all too far. You will only serve to confuse the masses who aren’t up to speed on the latest BDD TLA.</p>
+<h3>Clearly name fakes and mocks</h3>
+<p><em>You</em> might remember that you faked out the FooService in the TestInitialize (Setup) method, but by the 5th test, I can guarantee you that the testing newbie will have forgotten. Keep reminding yourself and others by sticking ‘fake’ in the name of the variable somewhere. Please do name the fake class as such also. If you are going to hide behind an interface, call it out explicitly. Remember, you are coding a specification.</p>
+<p>[sourcecode language="csharp"]<br />
+[TestClass]<br />
+public class Concerning_the_person_controller<br />
+{<br />
+  [TestMethod]<br />
+  public void It_should_retrieve_the_tallest_person_from_the_person_model()<br />
+  {<br />
+    IPersonModel fakePersonModel = new FakePersonModel();<br />
+    //...<br />
+  }<br />
+}<br />
+[/sourcecode]</p>
+<h3>Differentiate the expected and actual value </h3>
+<p>Similarly, if you are going to cache an expected or actual value, make it clear to what its purpose is. People who haven’t memorized every overload of Assert.AreEqual will quickly forget where what goes where. Keep reminding them with verbose naming.</p>
+<p>[sourcecode language="csharp"]<br />
+[TestClass]<br />
+public class Concerning_the_person_controller<br />
+{<br />
+  [TestMethod]<br />
+  public void It_should_retrieve_the_tallest_person_from_the_person_model()<br />
+  {<br />
+    IPersonModel fakePersonModel = new fakePersonModel();<br />
+    var expectedPerson = new Person() {<br />
+      FirstName = &quot;Joe&quot;,<br />
+      LastName = &quot;Hill&quot;,<br />
+      Height = 203.00,<br />
+    };</p>
+<p>    fakePersonModel.Persons.Add(expectedPerson);<br />
+    //..<br />
+  }<br />
+}<br />
+[/sourcecode]</p>
+<h3>Minimize your asserts </h3>
+<p>I’m no ‘1 assert per test’ nazi; sometimes it makes sense to group asserts. However, aiming to keep them to a minimum will further help the readability. Newbie's (and refactoring tools) don’t always realise that Asserts are really potential method exit points so keeping them close to the bottom of the test helps a lot too.</p>
+<p>[sourcecode language="csharp"]<br />
+[TestClass]<br />
+public class Concerning_the_person_controller<br />
+{<br />
+  [TestMethod]<br />
+  public void it_should_retrieve_the_tallest_person_from_the_person_model()<br />
+  {<br />
+    IPersonModel fakePersonModel = new FakePersonModel();<br />
+    var expectedPerson = new Person();</p>
+<p>    var expectedPerson = new Person() {<br />
+      FirstName = &quot;Joe&quot;,<br />
+      LastName = &quot;Hill&quot;,<br />
+      Height = 203.00,<br />
+    };</p>
+<p>    fakePersonModel.Persons.Add(expectedPerson);<br />
+    var personController = new PersonController(fakePersonModel);<br />
+    Assert.AreSame(expectedPerson, personController.RetrieveTallestPerson());<br />
+  }<br />
+}<br />
+[/sourcecode]</p>
+<h3>Use language features to improve readability</h3>
+<p>Extension methods are a boon to readable tests. Practice a little language oriented programming and write a more readable testing interface for your colleagues to grok quicker. Or use a test framework that has done some of the work for you. For instance I have put together a library for internal use that has extension methods for common assertions to make them more English Readable®. Every time I come up with a new sentence, the test drives out development of my internal library, which has a nice side benefit of being useful in other projects.</p>
+<p>[sourcecode language="csharp"]<br />
+[TestClass]<br />
+public class Concerning_the_person_controller<br />
+{<br />
+  [TestMethod]<br />
+  public void It_should_retrieve_the_tallest_person_from_the_person_model()<br />
+  {<br />
+    IPersonModel fakePersonModel = new FakePersonModel();<br />
+    var expectedPerson = new Person<br />
+    {<br />
+      FirstName = &quot;Joe&quot;,<br />
+      LastName = &quot;Hill&quot;,<br />
+      Height = 203.00<br />
+    };<br />
+    fakePersonModel.Persons.Add(expectedPerson);<br />
+    var personController = new PersonController(fakePersonModel);<br />
+    var actualPerson = personController.RetrieveTallestPerson();<br />
+    actualPerson.should().be_the_same_as_the(expectedPerson);<br />
+  }<br />
+}<br />
+[/sourcecode]</p>
+<p>You might even consider going one step further and providing a project specific DSL to really capture your intent. However the further you go down this route, the further you might obscure things, so be cautious.</p>
+<h3>Refactor your tests as ruthlessly as your code</h3>
+<p>Don’t repeat yourself, and refactor your tests when you see opportunity. By all means, take full advantage of the testing framework - as long as it works to your advantage. [TestInitialize/TestCleanup] or [SetUp/TearDown]routines will get missed, but explicit calls to a function will not. Furthermore, allowing for reading ‘top-down’ will win you extra brownie points.</p>
+<p>[sourcecode language="csharp"]<br />
+[TestClass]<br />
+public class Concerning_the_person_controller<br />
+{<br />
+  private Person TallestPerson;<br />
+  private Person FirstPerson;<br />
+  private PersonController CreatePersonControllerWithDependencies()<br />
+  {<br />
+    IPersonModel fakePersonModel = &lt;span style=&quot;color: blue;&quot;&gt;new&lt;/span&gt; FakePersonModel();<br />
+    var person = new Person {<br />
+      FirstName = &quot;Joe&quot;,<br />
+      LastName = &quot;Hill&quot;<br />
+      Height = 203.00<br />
+   &amp;nbsp;};<br />
+    TallestPerson = person;<br />
+    fakePersonModel.Persons.Add(person);</p>
+<p>    person = new Person {<br />
+      FirstName = &quot;John&quot;,<br />
+      LastName = &quot;Alfred&quot;,<br />
+      Height = 200.00<br />
+   &amp;nbsp;};<br />
+    FirstPerson = person;<br />
+    fakePersonModel.Persons.Add(person);<br />
+    return new PersonController(fakePersonModel);<br />
+  }</p>
+<p>  [TestMethod]<br />
+  public void It_should_retrieve_the_tallest_person_from_the_person_model()<br />
+  {<br />
+    var personController = CreatePersonControllerWithDependencies();<br />
+    var actualPerson = personController.RetrieveTallestPerson();</p>
+<p>    actualPerson.should().be_the_same_as_the(TallestPerson);<br />
+  }</p>
+<p>  [TestMethod]<br />
+  public void It_should_retrieve_all_people_in_alphabetical_order_of_last_name()<br />
+  {<br />
+    var personController = CreatePersonControllerWithDependencies();<br />
+    var allPeople = personController.RetrieveAllPeople();</p>
+<p>    allPeople.Count.should().equal(2);<br />
+    allPeople[0].should().be_the_same_as_the(FirstPerson);<br />
+  }<br />
+}<br />
+[/sourcecode]</p>
+<p>If you haven’t figured it out already, then what all these suggestions amount to, is this: Treat your tests as well as your production code if you want people to bother keeping them up to date.</p>
+<p>It is simply the <a href="http://www.artima.com/intv/fixit.html">broken windows idea from pragmatic programmer</a>.&nbsp; If you haven’t got some sort of mechanism to hold people accountable for build breakages, then simply getting in there and caring enough to fix the broken windows might be all you have left.</p>
+<p>Broken windows? Don’t live with them. Give a damn.</p>

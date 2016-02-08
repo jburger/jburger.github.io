@@ -1,0 +1,38 @@
+---
+layout: post
+title: Throw your code away
+date: 2009-10-01 03:54:06.000000000 +09:30
+type: post
+published: true
+status: publish
+categories:
+- Software Development
+tags:
+- Coding
+- Prototyping
+- TDD
+meta:
+  _publicize_pending: '1'
+  original_post_id: '12'
+  _wp_old_slug: '12'
+author:
+  login: Jim Burger
+  email: the-burge@outlook.com
+  display_name: Jim Burger
+  first_name: ''
+  last_name: ''
+excerpt: So every now and again I hear about developers doing a thing called prototyping.
+---
+<p>So every now and again I hear about developers doing a thing called <em>prototyping. </em>It sounds intriguing enough, you code out a bunch of functionality <strong>quickly. </strong>What happens next is even more intriguing: apparently the idea is to now go and use this code as the basis for your production code. Not rewrite it per se, actually reuse this rapidly, sloppily developed code and ultimately deploy it.</p>
+<p>If this is your idea of prototyping, you're <strong>doing it wrong.</strong></p>
+<p>This, dear readers, is a prototype:<br />
+<a href="http://www.flickr.com/photos/daveoflogic/3579407924/"> <img style="display:inline;border-width:0;" title="2004 Ferrari 612 Scalietti - 1:3 Wind Tunnel Prototype. Photo taken by daveoflogic. Courtesy of Flickr" src="{{ site.baseurl }}/assets/3579407924_898fbfe1e0_m_d.jpg" border="0" alt="2004 Ferrari 612 Scalietti - 1:3 Wind Tunnel Prototype. Photo taken by daveoflogic. Courtesy of Flickr" width="244" height="184" /></a></p>
+<p>Now you could try selling this car, I’m sure somebody would buy it, but it won’t drive on any road. What is the point of such a thing? It is a 1:3 scale model presumably made from some cheap plastic like material, that was never intended to hit the roads. It isn’t made according to any design standards to do with structural integrity, there are no seats, and no steering wheel. There is no engine, it doesn’t move, it just sits there. It doesn’t even look good, in fact it looks terrible.</p>
+<p>Prototyping as an engineering practice is about what you learn, not what you create. In the above case the point is learning about the aerodynamic properties of the cars shape. Nothing more. You wont see the car manufacturer take this object and turn it into a road vehicle. The very thing that makes it a prototype makes it unsuitable for the true purpose of the final product.</p>
+<p>They key feature of any prototype is that they make assumptions about their environment; for code this means things like hard-coded connection strings, XML test data instead of SQL tables, Balsamiq UIs, OO design principles are thrown out the window, faking out unneeded side effects and so forth.</p>
+<p>Taking this code and using it is a mistake, because invariably you will forget to remove all the assumptions and leave something behind. You might also paint yourself into an architectural corner you could have otherwise avoided. The point is folks: <strong>tomorrow never comes. </strong>The attitude of, “I’ll just refactor this later into something that is more suitable for production” is based around the fallacious idea that you will have time later.</p>
+<p>What happens is that when someone sees this prototype who doesn’t really know its in fact made from duct tape* and balsa wood, <strong>they assume that you're finished and give you more work to do.</strong></p>
+<p>Failing that, we often fall into the trap of convincing ourselves that this piece of work is done, and we can get to building some more cool functionality. Lets face it, discovering new things and producing cool new features is the fun part of what we do. It's tempting to leave things at the prototype stage and build other components around them.</p>
+<p>Recently I was asked, if you prototype without TDD then are you in fact practicing <em>real</em> TDD? My reaction to that is that depends on what you do *after* you throw away your prototype. You shouldn’t be doing prototyping and production coding at the same time, regardless of your thoughts on TDD. Throw your prototypes in the bin where they belong.</p>
+<p>As an aside, I recently became aware of <a href="http://www.21apps.com/development/daily-tdd-kata/">TDD</a> <a href="http://www.21apps.com/development/daily-tdd-kata/">Kata</a> which in effect, is a way of using a prototype (read throwaway) <strong>problem domain,</strong> to learn something about the act of TDD itself. Also very useful by the sounds, I might try it out.</p>
+<p>* Some people clearly make a living out of being <a href="http://www.joelonsoftware.com/items/2009/09/23.html">duct</a> <a href="http://www.joelonsoftware.com/items/2009/09/23.html">tape coders</a>. I just feel sorry for the legions of ‘maintenance developers’ that invariably follow in the wake of their greatness.</p>

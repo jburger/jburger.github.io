@@ -1,0 +1,24 @@
+---
+layout: post
+title: Changing web services soap:address for SSL enabled IIS web services
+date: 
+type: post
+published: false
+status: draft
+categories: []
+tags: []
+meta:
+  _edit_last: '11285636'
+author:
+  login: Jim Burger
+  email: the-burge@outlook.com
+  display_name: Jim Burger
+  first_name: ''
+  last_name: ''
+---
+<p>SCENARIO:</p>
+<p>You have just deployed a shiny WCF Service to https://awesome.website.com/service1.svc/</p>
+<p>Browsing to https://awesome.website.com/service1.svc?wsdl works as expected, however when trying to generate a service client (using svcutil) the following error occurs:</p>
+<p>[caption id="attachment_826880" align="aligncenter" width="300" caption="command console showing the error with SVCUtil.exe"]<a href="http://maintenancecoder.files.wordpress.com/2011/12/capture1.png"><img class="size-medium wp-image-826880" title="SVCUtil.exe error" src="{{ site.baseurl }}/assets/capture1.png?w=300" alt="Screen capture of a command console showing an error with SVCUtil.exe" width="300" height="63" /></a>[/caption]</p>
+<p>You notice that the WSDL contains an incorrect soap:address - its pointing to your websites internal name for instance. This is because WCF populates these addresses from the IIS Site bindings. Setting the HostName is not supported when you create SSL bindings in IIS 7. Setting the HostName is as easy as editing your IIS application.config like so.</p>
+<p>&nbsp;</p>

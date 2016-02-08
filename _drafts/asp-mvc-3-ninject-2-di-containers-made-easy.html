@@ -1,0 +1,48 @@
+---
+layout: post
+title: ASP MVC 3 & Ninject 2 - DI Containers made easy
+date: 
+type: post
+published: false
+status: draft
+categories:
+- General
+tags: []
+meta:
+  original_post_id: '827352'
+  _wp_old_slug: '827352'
+author:
+  login: Jim Burger
+  email: the-burge@outlook.com
+  display_name: Jim Burger
+  first_name: ''
+  last_name: ''
+---
+<p>If you're like me and have been waiting patiently for ASP MVC 3 to go RTM before diving into the new feature set, you may have gotten to the point where you were ready to get into hooking up DI and bumped into a tonne of blog posts referring to Beta this and RC that. All of which will lead you down a road of despair, running back to version 2 style Factories.</p>
+<p>Well, its all very easy now thanks to <a href="http://commonservicelocator.codeplex.com/">http://commonservicelocator.codeplex.com/</a></p>
+<p>I'm going to use <a href="http://ninject.org/download">Ninject</a> - for no other reason than it has ninja's in it. However for any of the DI containers supporting the Common Service Locator library, the process should be much the same.</p>
+<p>First up, reference two DLL's:</p>
+<ul>
+<li>Ninject.dll</li>
+<li>From the extensions directory... CommonServiceLocator.NinjectAdapter.Dll</li>
+</ul>
+<p>[caption id="attachment_827353" align="aligncenter" width="514" caption="Add a reference to the Common Service Locator Adapter"]<a href="http://cultivatingcode.files.wordpress.com/2011/01/ninject.png"><img class="size-full wp-image-827353" title="Ninject" src="{{ site.baseurl }}/assets/ninject.png" alt="" width="514" height="175" /></a>[/caption]</p>
+<p>Now you just need to put the following in your Global.asax.cs to get started...</p>
+<p>[sourcecode language="csharp"]<br />
+protected void Application_Start() {<br />
+  InitializeDependencyInjection();<br />
+  AreaRegistration.RegisterAllAreas();<br />
+  RegisterGlobalFilters(GlobalFilters.Filters);<br />
+  RegisterRoutes(RouteTable.Routes);<br />
+}<br />
+private static void InitializeDependencyInjection() {<br />
+  IKernel kernel = new StandardKernel();<br />
+  //custom bindings go here<br />
+  kernel.Bind&lt;IDataService&gt;().To&lt;DummyDataService&gt;();<br />
+  DependencyResolver.SetResolver(new NinjectServiceLocator(kernel));<br />
+}<br />
+[/sourcecode]</p>
+<p>All done! DI bootstrapped, ninja style. What does this get us? Well the Common</p>
+<ul>
+<li>Controller</li>
+</ul>

@@ -1,0 +1,35 @@
+---
+layout: post
+title: 'Resharper live templates: drop down lists'
+date: 2010-02-10 17:34:21.000000000 +10:30
+type: post
+published: true
+status: publish
+categories:
+- .NET
+- Software Development
+tags:
+- Coding
+- CSharp
+- Resharper
+- Tools
+meta:
+  _publicize_pending: '1'
+  original_post_id: '827048'
+  _wp_old_slug: '827048'
+author:
+  login: Jim Burger
+  email: the-burge@outlook.com
+  display_name: Jim Burger
+  first_name: ''
+  last_name: ''
+---
+<p>Just as <a href="http://msdn.microsoft.com/en-us/vstudio/dd582936.aspx">VS2010 has gone RC</a>, I've noticed that R# 5 <a href="http://confluence.jetbrains.net/display/ReSharper/ReSharper+5.0+Nightly+Builds">has released a compatible build</a>. Today I thought I'd highlight a simple, yet useful feature that doesn't currently receive much press: Custom <a href="http://www.jetbrains.com/resharper/features/codeTemplate.html">Live templates</a> can now use drop down lists.</p>
+<p>As an example of how to take advantage of this feature, I'm going to cleanup my collection of unit testing templates. I have to write tests for MbUnit, NUnit, xUnit.NET and MSTest for various projects, and until now, I've used a separate template for each of them.</p>
+<p>[caption id="attachment_827052" align="alignnone" width="274" caption="Remembering different shortcuts is a pain."]<a href="http://cultivatingcode.files.wordpress.com/2010/02/myorginalsetofuttemplates1.png"><img class="size-full wp-image-827052" title="MyOrginalSetOfUTTemplates" src="{{ site.baseurl }}/assets/myorginalsetofuttemplates1.png" alt="" width="274" height="274" /></a>[/caption]</p>
+<p>With R# 5 I can have one template <em>to rule them all</em>, by using the 'Comma-delimited list of values' macro, we can supply... er... a comma-delimited list of values:</p>
+<p><a href="http://cultivatingcode.files.wordpress.com/2010/02/frameworkagnostictesttemplate1.png"><img class="alignnone size-full wp-image-827050" title="Framework Agnostic Test Template" src="{{ site.baseurl }}/assets/frameworkagnostictesttemplate1.png" alt="" width="500" height="329" /></a></p>
+<p>In the code editor, we now get a nice drop down to choose what value we want to use and viola!</p>
+<p><a href="http://cultivatingcode.files.wordpress.com/2010/02/rsdropdownlist.png"><img class="alignnone size-full wp-image-827053" title="RSDropDownList" src="{{ site.baseurl }}/assets/rsdropdownlist.png" alt="Viola!" width="284" height="209" /></a></p>
+<p>Finally, a word about using this feature in VB - it doesn't seem to work as advertised - so hopefully that will get rectified before release!</p>
+<p><a href="http://www.dotnetkicks.com/kick/?url=http%3a%2f%2fcultivatingcode.com%2f2010%2f02%2f10%2fresharper-live-templates-drop-down-lists%2f"><img src="{{ site.baseurl }}/assets/KickItImageGenerator.ashx?url=http%3a%2f%2fcultivatingcode.com%2f2010%2f02%2f10%2fresharper-live-templates-drop-down-lists%2f" border="0" alt="kick it on DotNetKicks.com" /></a></p>

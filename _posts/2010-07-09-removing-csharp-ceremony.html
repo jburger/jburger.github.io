@@ -1,0 +1,77 @@
+---
+layout: post
+title: Removing the Ceremony from C#
+date: 2010-07-09 00:41:10.000000000 +09:30
+type: post
+published: true
+status: publish
+categories:
+- .NET
+- Software Development
+tags:
+- Coding
+- CSharp
+- FSharp
+- functional programming
+meta:
+  _publicize_pending: '1'
+  original_post_id: '827166'
+  _wp_old_slug: '827166'
+author:
+  login: Jim Burger
+  email: the-burge@outlook.com
+  display_name: Jim Burger
+  first_name: ''
+  last_name: ''
+excerpt: While some people are asking what can we add to C#, some are asking 'maybe
+  we should take stuff out'? Well, perhaps we could do both...
+---
+<p>Ceremony. <a href="http://www.google.com.au/search?q=+c%23+ceremony">More and more </a>I see comments about there being too much ceremony in C#. That is, it isn't terse enough and that we should be spending less time worrying about typing brackets and parenthesis and more time worrying about the customer's problem. Yanno, like them dynamic, skivvy wearin, <a href="http://blog.wekeroad.com/2010/06/28/ruby-and-csharp-walk-into-a-bar">popular-with-the-girls</a> Ruby folk are doing, with <a href="http://www.engineyard.com/blog/2010/rails-and-merb-merge-rack-part-6-of-6/">Merb on Rack</a> or whatever its called now.</p>
+<p>I'm inclined to agree; it's why code templating <a href="http://www.jetbrains.com/resharper/">plugins</a> exist for C#, yet there is not really a Ruby equivalent (though TextMate comes close). <a href="http://www.kodefuguru.com/post/2010/01/07/Null-Coalescing-Assignment-Operator-for-CSharp-5.aspx">Some people</a> are asking what can we add to the language, <a href="http://davesbox.com/archive/2009/02/22/do-we-need-both-visual-basic-and-c.aspx">some wonder if we need it</a>, and some are asking 'maybe we should take stuff out'?</p>
+<p>Allow me to join in, get all misty and say...</p>
+<div><span style="font-size:medium;"><strong><span style="font-size:small;"><span style="font-weight:normal;"><a href="http://www.flickr.com/photos/libraryman/3708545743/"><img class="alignnone" title="What if?" src="{{ site.baseurl }}/assets/3708545743_028b315f3e.jpg" alt="What if?" width="500" height="356" /></a></span></span></strong></span></div>
+<p>So at the moment we can easily write in a functional style like this:</p>
+<div id="_mcePaste">[sourcecode language="csharp"]<br />
+var foo = SomeList.Select(c =&gt; c.ToString());<br />
+[/sourcecode]</p>
+</div>
+<p>In this case, foo is inferred as being an IEnumerable. I was thrilled when var became available, it was a massive code cleanup.</p>
+<p>Well, what if the inferencing engine could <em>go deeper</em>? You might write code like this:</p>
+<div>[sourcecode language="csharp"]<br />
+var result =<br />
+    if (someBoolean)<br />
+      return &quot;Jim&quot;;<br />
+    else<br />
+      return &quot;Jam&quot;;<br />
+[/sourcecode]</p>
+</div>
+<p>Assuming we could put an if statement on the RHS like this, the typed variable result can be inferred as returning string, since both outcomes return this type.</p>
+<p>So what if we might want to return different types? Perhaps we could return a common base class instead...</p>
+<div id="_mcePaste">[sourcecode language="csharp"]<br />
+var conn =<br />
+  if (isFooDb)<br />
+    return new FooDbConnection();<br />
+  else<br />
+    return new SqlDbConnection();<br />
+[/sourcecode]</p>
+</div>
+<p>Our var conn is typed as IDbConnection, a common base type between the two potential return types. But why stop there? We could have our functions infer their return types and parameter types as well:</p>
+<div id="_mcePaste">[sourcecode language="csharp"]<br />
+public SomeFunction(someInt)<br />
+{<br />
+    return &quot;Hello world&quot;.ElementAt(someInt);<br />
+}<br />
+[/sourcecode]</p>
+</div>
+<p>Here, someInt is inferred as Int32, since that is what the extension method ElementAt takes as a parameter. Since ElementAt returns char in this case, that would be the return type of the function.</p>
+<div id="_mcePaste">This all leads up to a concept known as automatic generalization:</div>
+<div id="_mcePaste">[sourcecode language="csharp"]<br />
+public IsGreater(first, second)<br />
+{<br />
+    return first &gt; second;<br />
+}<br />
+[/sourcecode]</p>
+</div>
+<p>The parameters first and second become inferred as being generic types, that have the generic constraint of implementing IComparable etc. Obviously, the return type is boolean.</p>
+<p>Of course, this is all <strong>pie in the sky</strong> for C# right now, and I would be astounded if it made the <a href="http://www.infoq.com/news/2009/03/CSharp-4-5">next version</a>. To be honest, I think we would need to give up certain other freedoms in order for this to be a reality. However, if you can't wait for C# X and want to use this kind of type inference now, with full IDE, compiler, debugger and intellisense support, <a href="http://msdn.microsoft.com/en-us/fsharp/default.aspx">start coding in F# today!</a></p>
+<p>PS. Kind of looks JavaScripty in retrospect.</p>
