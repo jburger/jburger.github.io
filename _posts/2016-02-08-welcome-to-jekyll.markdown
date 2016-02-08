@@ -12,4 +12,4 @@ I have been continually disappointed with the major blog platforms for quite som
 
 [Medium](https://medium.com) was tempting, but ultimately I guess I'm a little bit old fashioned. I _already have_ a versioning backing store in github. Why be untidy and spin up yet another?
 
-I'll attempt to move my existing content from [The Maintenance Coder](maintenancecoder.wordpress.com) over the coming month. Will see how that pans out.
+I'll attempt to move my existing content from [The Maintenance Coder](http://maintenancecoder.wordpress.com) over the coming month. Will see how that pans out.
