@@ -18,7 +18,7 @@ tags:
 
 I guess the pull to use markdown and github as a blogging platform was too great - [github pages](http://pages.github.com) have that elusive _it just works_ factor.
 
-Originally, I had grand visions of making it a DIY project, but between working in the game and helping out on a startup, as well as keeping up with study on Azure and other tech, this was starting to feel like a fools errand. Blogging was more important than learning to use [angular 2](https://angular.io) & [nodejs to integrate with Github](https://github.com/ajaxorg/node-github). So while [Medium](https://medium.com) was tempting, this setup proved to be closer to my original intent. And I'm pleased with the result.
+Originally, I had grand visions of making it a DIY project, but between working and helping out on a startup, as well as keeping up with study on Azure and other tech, this was starting to feel like a fools errand. Blogging was more important than learning to use [angular 2](https://angular.io) & [nodejs to integrate with Github](https://github.com/ajaxorg/node-github). So while [Medium](https://medium.com) was tempting, this setup proved to be closer to my original intent. And I'm pleased with the result.
 
 ### Stack share
 
