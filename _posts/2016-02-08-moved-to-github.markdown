@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Blog.Moved(); //again"
+title:  "Blog.Moved();"
 date:   2016-02-08 20:47:18 +1030
 categories: meta
 author: Jim Burger
