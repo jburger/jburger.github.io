@@ -9,7 +9,7 @@
 title: THE BURGE
 email: the-burge@outlook.com
 description: > # this means to ignore newlines until "baseurl:"
-  Jim Burger is an experienced software developer developing solutions for business since 2004, and has led multiple teams to deliver high quality software for local businesses in Adelaide, South Australia. He is a father of three, husband, musician and avid gamer, who believes that fun is a measure of success.
+  Jim Burger is an experienced software developer who has been developing .NET based solutions for business since 2004, and has led multiple teams to deliver high quality software for businesses and government around Australia. He is a father of three, husband, musician and avid gamer, who believes that fun is a measure of success.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://blog.theburge.co" # the base hostname & protocol for your site
 twitter_username: burgomg
