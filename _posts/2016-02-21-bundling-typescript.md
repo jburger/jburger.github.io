@@ -21,11 +21,18 @@ You can view the entire solution (on github)[http://github.com/jburger/examples/
 
 ## A word on namespaces and modules
 
-There is a lot of unfounded & emotional criticism of tsc --out and namespaces (nee internal modules) out there to read. Take it all with a pinch of salt. It is not bad or evil. They will not hurt you if you don't expect magic from them.
+There is a lot of unfounded & emotional criticism of tsc --out and namespaces (nee internal modules) out there to read. Take it all with a pinch of salt. They are not bad or evil. They will not hurt you if you don't expect magic from them.
 
-In short - *[you should only choose one approach](https://www.stevefenton.co.uk/2015/05/Stop-Mixing-TypeScript-Internal-And-External-Modules/).*
+In terms of internal vs external modules - *[you should only choose one approach](https://www.stevefenton.co.uk/2015/05/Stop-Mixing-TypeScript-Internal-And-External-Modules/).*
 
-The reality is that internal namespaces are just the old module pattern with the same list of use cases and caveats. Being aware of those caveats is essential to understanding how to achieve your goals.
+At time of writing the compiler will produce errors if you attempt something like:
+
+```javascript
+import Alias = My.Namespace;
+import thing = require('./module');
+```
+
+Internal namespaces are simply our old friend the [module pattern](http://blog.alexanderdickson.com/javascript-revealing-module-pattern) with the same list of use cases and caveats. Being aware of those caveats is essential to understanding how to achieve your goals.
 
 One such caveat is that while it solves the 'don't dirty the global namespace' issue, it leaves you with a bunch of new problems, like 'what order should I load my script files in?'
 
