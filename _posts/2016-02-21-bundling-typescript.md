@@ -171,7 +171,7 @@ export class DevelopmentConfig implements IConfiguration {
 
 ```
 
-> Use of explicit 'export module' calls are up to you. You end up aliasing a bit more in practice, but the global namespace pollution seems less to me. Again, a design decision to ponder up front. In essance, we dont want to [over use the module keyword unecessarily](http://www.typescriptlang.org/Handbook#modules-pitfalls-of-modules) to avoid syntax like:
+> Use of explicit 'export module' calls are up to you. You end up aliasing a bit more in practice, but the global namespace pollution seems less to me. Again, a design decision to ponder up front. In essence, we dont want to [over use the module keyword unecessarily](http://www.typescriptlang.org/Handbook#modules-pitfalls-of-modules) to avoid syntax like:
 
 ```javascript
 import shapes = require('./shapes');
