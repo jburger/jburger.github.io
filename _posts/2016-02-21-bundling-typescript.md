@@ -12,15 +12,18 @@ tags:
 - TypeScript
 ---
 ## TL;DR
-A working example of client side bundling TypeScript with webpack. The aim is not to bundle everything, but to keep minimise the risk of mistakes when self managing script dependencies. It is widely recognised now that bundling large sites slows performance, and with HTTP/2 becoming more and more common, we should take advantage of its multiple script loading. That said, we'd rather not self manage script dependency order!
+- A working example of client side bundling TypeScript with webpack.
+- The aim is not to bundle everything, but to minimise the risk of mistakes when self managing script dependencies.
+- It is widely recognised now that bundling large sites slows performance, and with HTTP/2 becoming more and more common, we should take advantage of its multiple script loading.
+- With that said, we'd rather keep managing script order to minimum =)
 
-You can view the entire solution here: http://github.com/jburger/examples/typescript_webpack
+You can view the entire solution (on github)[http://github.com/jburger/examples/typescript_webpack]
 
 ## A word on namespaces and modules
 
 There is a lot of unfounded & emotional criticism of tsc --out and namespaces (nee internal modules) out there to read. Take it all with a pinch of salt. It is not bad or evil. They will not hurt you if you don't expect magic from them.
 
-In short - [you should only choose one approach](https://www.stevefenton.co.uk/2015/05/Stop-Mixing-TypeScript-Internal-And-External-Modules/)
+In short - *[you should only choose one approach](https://www.stevefenton.co.uk/2015/05/Stop-Mixing-TypeScript-Internal-And-External-Modules/).*
 
 The reality is that internal namespaces are just the old module pattern with the same list of use cases and caveats. Being aware of those caveats is essential to understanding how to achieve your goals.
 
@@ -44,12 +47,13 @@ To demonstrate how to take advantage of external modules to clean up a large cod
 - Each category will map to an external module, and there will be several class exports in each module.
 - For ease of development and code reuse, the desired bundled output is two javascript files: main.js & services.js
 
-![TypeScript dependencies](~/assets/example.architecture.png)
+![TypeScript dependencies](/assets/example-architecture.png)
 
-### The TypeScript+Webpack Recipe
+### A TypeScript+Webpack Recipe
 #### Node Module Ingredients
 
-The following dependencies were used to achieve this
+The following dependencies were used to achieve this:
+
 ```JSON
 "devDependencies": {
   "del": "^2.2.0",
@@ -61,6 +65,7 @@ The following dependencies were used to achieve this
   "jquery": "^2.2.0"
 }
 ```
+
 For those playing along at home, here are some handy snippets to get you going:
 
 ```bash
@@ -74,7 +79,7 @@ npm install --save jquery
 typings install jquery --save --ambient
 ```
 
-*NOTE: DefinitelyTyped has recently deprecated tsd in favour of typings, which does a better job at keeping typing mgmt overhead lower on large projects and is worth reading up on.*
+*NOTE: DefinitelyTyped has recently deprecated tsd in favour of [typings](https://github.com/typings/typings), which does a better job at keeping typing mgmt overhead lower on large projects and is worth reading up on.*
 
 #### Splitting up into modules
 As specified I'm aiming to reduce the number of scripts I need to manually manage ordering for. You could choose to bundle into one file if you wanted to with the same approach.
@@ -89,6 +94,7 @@ As specified I'm aiming to reduce the number of scripts I need to manually manag
 As you can see we'll be bundling 3 TypeScript files into two javascript files. Here is the source files (snipped for brevity)
 
 **main.ts**
+
 ```javascript
 ///<reference path="../typings/main.d.ts"/>
 import $ = require('jquery');
@@ -119,6 +125,7 @@ $(() => app.Run());
 > Note that we bring in the typing reference for jquery as well as require it directly. The first is to give tsc a hint, the second is for webpack / commonjs hinting. The subsequent lines use named module loading.
 
 **services.ts**
+
 ```javascript
 import { IConfiguration,  DevelopmentConfig } from './Configuration';
 
@@ -144,6 +151,7 @@ export class EndpointService implements IService {
 ```
 
 **configuration.ts**
+
 ```javascript
 export interface IConfiguration {
     serviceUrl: string;
@@ -237,6 +245,7 @@ gulp.task('default', ['clean', 'build-main', 'build-services']);
 Using nodejs means having a node_modules folder inevitably, so you'll likely need to exclude it from your tsconfig.json.
 
 **tsconfig.json**
+
 ```JSON
 {
 	"compilerOptions": {
@@ -254,6 +263,7 @@ Using nodejs means having a node_modules folder inevitably, so you'll likely nee
 The final piece to a good dev experience is hooking simple commands to make everything work nicely. You can use a gulp watch if you like, although not everyone is into those. Here is how I added some scripts to my package.json file for this purpose:
 
 **package.json**
+
 ```JSON
 {
     .
@@ -271,12 +281,11 @@ The final piece to a good dev experience is hooking simple commands to make ever
 
 The idea here is to enable a simple set of commands to do the typical things:
 
-|Command|Action|
-|---|---|
-|npm install|install packages|
-|npm run build|transpile and pack scripts and content|
-|npm start|Run the web server|
-
+```bash
+npm install   # Install packages
+npm run build # Transpile and pack scripts and content
+npm start     # Run the web server
+```
 
 ### What have we achieved?
 
