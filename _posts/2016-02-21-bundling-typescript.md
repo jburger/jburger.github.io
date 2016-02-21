@@ -185,6 +185,7 @@ var t = new Shapes.Triangle();
 A massive part of this approach is the build scripting itself.
 
 The theory is the same regardless of build tool choice (I'm using gulp here):
+
 1. Determine appropriate 'entry points' into your TypeScript code base.
 2. Pipe your TypeScript along with the entry point information to webpack and let it figure out your dependency graph based on the import statements in the code.
 
