@@ -209,16 +209,18 @@ var webpackOptions = {
 }
 ```
 First I start by loading the dependencies:
+
 - gulp: build tool
 - del: delete files from a pipe
 - webpack-stream: run webpack from within gulp and pipe files to it
 
 I then configure an options object for use with webpack.
+
 - **devtool:** optionally set source mapping on for live debugging
 - **resolve:** teaches webpack which files to inspect and resolve
 - **module.loaders:** this is important; ts-loader understands TypeScript and its module syntax and allows you to pipe TypeScript directly into webpack without compilation first. This decoupling allows you to use your IDE to do whatever it likes to do to tell you about compilation warnings, which doesn't effect what goes on in the build script. Webpack will still fail if there is a compilation issue.
 
-I then create a reusable function in to make targeting entry points easier:
+Sprinkle in a reusable function in to make targeting entry points easier:
 
 ```javascript
 function builder(files, dest, entrypoint, outfile) {
