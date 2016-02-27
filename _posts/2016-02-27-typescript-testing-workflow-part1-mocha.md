@@ -14,7 +14,7 @@ tags:
 
 ## if(!simple) { //ignore }
 
-I like simple test workflows. Mainly because as testing is often the first guy up against the wall when the time pressure revolution comes.
+I like simple test workflows. Mainly because testing is often the first guy up against the wall when the time pressure revolution comes.
 
 ![deadlines](/assets/test-passing.PNG)
 
