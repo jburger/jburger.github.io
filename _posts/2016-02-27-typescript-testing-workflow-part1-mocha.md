@@ -63,8 +63,8 @@ describe('My context', () => {
     it('should result in something', () => {
       const sut = new SystemUnderTest();
       expect(sut.result).to.eq('something'); //aside: chai is not type checked :()
-    })
-  })
+    });
+  });
 });
 ```
 ### Mmm, mocha .... *gulp*
