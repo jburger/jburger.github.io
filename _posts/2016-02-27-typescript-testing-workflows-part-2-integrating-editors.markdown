@@ -2,9 +2,17 @@
 layout: "post"
 title: "Typescript testing workflows - part 2: Integrating editors"
 date: "2016-02-27 23:39"
+categories: web
+published: false
+author: Jim Burger
+tags:
+- testing
+- blog
+- mocha
+- TypeScript
 ---
 
-## Recap(uccino)
+## Re-cap(uccino)
 In my [previous post]('2016-02-27-typescript-testing-workflow-part1-mocha.html') previous post, I walked through some basics with gulp, typescript and mocha.
 
 In this post I'll cover the following popular editor integrations for gulp:
@@ -60,9 +68,13 @@ Once Installed open the command pallette and type gulp then select the task you 
 
 #### Brackets
 
-THe brackets community also enjoys a huge variety of packages.
+The brackets community also enjoys a huge variety of packages.
 There is a brackets-gulp package that is no longer maintained, and the owners advice appears to be 'use brackets-shell'
 
 1. File -> Extensions Manager -> Search -> 'brackets-shell'
 2. install brackets-shell
-3. There will now be a shell icon right of screen, just type 'gulp' and you're off.
+3. There will now be a shell icon right of screen, click it and  type 'gulp' in the console bottom screen.
+
+![brackets-shell]('assets/brackets-shell.png')
+
+#### Vim
