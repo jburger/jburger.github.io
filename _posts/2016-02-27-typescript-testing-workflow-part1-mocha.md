@@ -16,7 +16,7 @@ tags:
 
 I like simple test workflows. Mainly because as testing is often the first guy up against the wall when the time pressure revolution comes.
 
-![deadlines](../assets/test-passing.png)
+![deadlines](assets/test-passing.png)
 
 If testing is simple, up to date and relevant, it doesn't won't need defense when the going gets tough.
 
@@ -110,7 +110,7 @@ gulp.task('default', ['build','test']);
 #### Report all the things!
 [Mocha's test reporters reporters are extensible](https://github.com/mochajs/mocha/tree/master/lib/reporters), and predictably range from simple progress bars (as is in my example) to a [nyan cat](https://www.youtube.com/watch?v=wZZ7oFKsKzY)
 
-![nyan mocha reporter](../assets/ascii-nyan.png)
+![nyan mocha reporter](assets/ascii-nyan.png)
 
 Writing build and test automations has never been simpler, mocha's syntax for testing is immediately recognizable, and gulp's syntax will make you feel instantly productive with a minimal learning curve.
 
