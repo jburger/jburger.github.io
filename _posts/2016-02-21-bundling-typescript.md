@@ -17,7 +17,7 @@ tags:
 - It is widely recognised now that bundling large sites slows performance, and with HTTP/2 becoming more and more common, we should take advantage of its multiple script loading.
 - With that said, we'd rather keep managing script order to minimum =)
 
-You can view the entire solution [on github](http://github.com/jburger/examples/typescript_webpack)
+You can view the entire solution [on github](https://github.com/jburger/examples/tree/master/typescript_webpack)
 
 ## A word on namespaces and modules
 
