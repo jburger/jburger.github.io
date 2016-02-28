@@ -39,7 +39,7 @@ That said, I don't know of any serious programming text editors that don't have 
     "version": "0.1.0",
     "command": "gulp.cmd",
     "isShellOutput": true,
-    "showOutput": "silent",
+    "showOutput": "always",
     "tasks": [
         { "taskName": "default", "isBuildCommand": true, "isTestCommand": true, "problemMatcher": "$gulp-tsc" },
     ]
