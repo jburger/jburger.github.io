@@ -15,7 +15,10 @@ tags:
 ## Re-cap(uccino)
 In my [previous post]('2016-02-27-typescript-testing-workflow-part1-mocha.html'), I walked through some basics with gulp, typescript and mocha.
 
-In this post I'll cover the following popular editor integrations for gulp:
+### Integrate with $env:UsersFavouriteEditor
+Because gulp is just another node application, we can integrate it to any number of editors, to use key bindings or buttons mashing mash when building.
+
+Lets go through some now:
 
 - [VS Code](#vscode)
 - [Atom](#atom)
@@ -23,11 +26,6 @@ In this post I'll cover the following popular editor integrations for gulp:
 - [Brackets](#brackets)
 - [Vim](#vim)
 - [Visual Studio](#vs)
-
-### Integrate with $env:UsersFavouriteEditor
-Over the years I've used plenty of editors and continue to chop and change as each leapfrogs the other in terms of quality & community support. What I choose to use is largely irrelevant though - they are all great in their own way and it should be up to each developer how they choose to code.
-
-That said, I don't know of any serious programming text editors that don't have a way to execute a shell command, so as a last resort, you can lean on that. However, there are usually extensions that give you buttons to mash or keyboard shortcuts to hit when its time to build. Let's go through some!
 
 #### <a href="vscode"></a>Visual Studio Code
 [VS Code](https://www.visualstudio.com/en-us/products/code-vs.aspx) uses its own [task runner](https://code.visualstudio.com/docs/editor/tasks) and a tasks.json file to integrate your projects chosen runner. If you hit Ctrl+Shift+B without this file, VS Code will create a sample for you. Below is an example that utilizes gulp and uses the gulp-tsc 'problemMatcher' (think: output formatter) to yield any problems to the IDE.
