@@ -133,4 +133,4 @@ Writing build and test automations has never been simpler, mocha's syntax for te
 #### Other recipes
 Gulp provides a tonne of simple recipes - [try some out](https://github.com/gulpjs/gulp/tree/master/docs/recipes)
 
-In my next post, I'll round out the solution with integration of gulp into commonly used editors.
+In my [next post](http://blog.theburge.co/web/2016/02/27/typescript-testing-workflows-part-2-integrating-editors.html), I'll round out the solution with integration of gulp into commonly used editors.
