@@ -27,6 +27,7 @@ The following is a simplification based on [tried and true](https://github.com/M
 ## Hot 'n tasty [TypeScript](http://www.typescriptlang.org/) testing
 
 This recipe comprises four main ingredients:
+
 - A clear folder structure
 - [gulp](http://gulpjs.com/) tasks
 - the [mocha](https://mochajs.org/) test framework
