@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Typescript testing workflows - part 1: Using Mocha"
+title:  "Typescript testing workflows - part 1: Using Gulp-Mocha"
 date:   2016-02-27 21:47:18 +1030
 categories: web
 published: true
