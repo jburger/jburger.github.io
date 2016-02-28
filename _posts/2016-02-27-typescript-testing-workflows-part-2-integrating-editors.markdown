@@ -24,7 +24,7 @@ In this post I'll cover the following popular editor integrations for gulp:
 - [Vim](#vim)
 - [Visual Studio](#vs)
 
-### Integrate with $env:USR_FAVOURITE_EDITOR
+### Integrate with $env:UsersFavouriteEditor
 Over the years I've used plenty of editors and continue to chop and change as each leapfrogs the other in terms of quality & community support. What I choose to use is largely irrelevant though - they are all great in their own way and it should be up to each developer how they choose to code.
 
 That said, I don't know of any serious programming text editors that don't have a way to execute a shell command, so as a last resort, you can lean on that. However, there are usually extensions that give you buttons to mash or keyboard shortcuts to hit when its time to build. Let's go through some!
