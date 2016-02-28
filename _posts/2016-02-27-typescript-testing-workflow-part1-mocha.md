@@ -82,7 +82,7 @@ The basic steps for a repeatable test task are as follows:
   - ``` gulp ```
 6. **Taste the glory**
 
-E.g.
+**gulpfile.js**
 
 ```javascript
 var gulp = require('gulp');
@@ -105,6 +105,16 @@ gulp.task('test', function() {
 });
 /* single command to hook into VS Code */
 gulp.task('default', ['build','test']);
+```
+
+**tsconfig.json**
+```javascript
+{
+    "compilerOptions": {
+        "target": "es3",
+        "module": "commonjs"
+    }
+}
 ```
 
 #### Report all the things!
