@@ -27,7 +27,7 @@ Lets go through some now:
 - [Vim](#vim)
 - [Visual Studio](#vs)
 
-#### <a href="vscode"></a>Visual Studio Code
+#### <a name="vscode"></a>Visual Studio Code
 [VS Code](https://www.visualstudio.com/en-us/products/code-vs.aspx) uses its own [task runner](https://code.visualstudio.com/docs/editor/tasks) and a tasks.json file to integrate your projects chosen runner. If you hit Ctrl+Shift+B without this file, VS Code will create a sample for you. Below is an example that utilizes gulp and uses the gulp-tsc 'problemMatcher' (think: output formatter) to yield any problems to the IDE.
 
 **./.vscode/tasks.json**
@@ -48,7 +48,7 @@ Once saved, isBuildCommand and isTestCommand bind to Ctrl+Shift+B and Ctrl+Shift
 
 ![VS Code & gulp-tsc problemMatcher](/assets/vs-code-gulp.PNG)
 
-#### <a href="atom"></a>Atom
+#### <a name="atom"></a>Atom
 [Atom](https://atom.io/) has a diverse range of packages that you can add. You can even automate this with apm. Here I'll use apm to install [gulp-control](https://atom.io/packages/gulp-control) for a graphical gulp experience.
 
 ```bash
@@ -59,7 +59,7 @@ Once installed just open gulp-control with Ctrl+Alt+O. This gives you large butt
 
 ![atom gulp control](/assets/atom-gulp-control.PNG)
 
-#### <a href="sublime3"></a>Sublime Text 3
+#### <a name="sublime3"></a>Sublime Text 3
 
 [Sublime Text 3](https://www.sublimetext.com/3) has a great site for common packages: https://packagecontrol.io/
 I've found the Sublime Gulp package to work well: https://packagecontrol.io/packages/Gulp
@@ -74,7 +74,7 @@ Once Installed open the command palette (Ctrl+Shift+P), type gulp, then select t
 
 ![Sublime Text 3 and Gulp](/assets/sublime-gulp.PNG)
 
-#### <a href="#brackets"></a>Brackets
+#### <a name="#brackets"></a>Brackets
 
 The [Brackets](http://brackets.io/) community also enjoys a huge variety of packages.
 There is a [brackets-gulp](https://github.com/dalcib/brackets-gulp) package that is no longer maintained, and the owners advice appears to be 'use [brackets-shell](https://github.com/adobe/brackets-shell)'
@@ -87,7 +87,7 @@ There is a [brackets-gulp](https://github.com/dalcib/brackets-gulp) package that
 
 type 'gulp' to run your build
 
-#### <a href="vim"></a>Vim
+#### <a name="vim"></a>Vim
 [Vim](http://www.vim.org/) has a nice little gulp wrapper plugin available: [gulp-vim](https://github.com/KabbAmine/gulp-vim) which is easy to install and use:
 I highly recommend using vim-plug for managing /automating plugin installation over the traditional method of self management.
 
@@ -116,7 +116,7 @@ call plug#end
 
 ![Using gulp with vim](/assets/gulp-vim.PNG)
 
-#### <a href="vs"></a>Visual Studio
+#### <a name="vs"></a>Visual Studio
 [Visual Studio](https://www.visualstudio.com/) now has an in built, grunt/gulp aware [Task Runner Explorer](http://www.hanselman.com/blog/IntroducingGulpGruntBowerAndNpmSupportForVisualStudio.aspx) that requires no steps to configure.  
 Open the explorer with Ctrl+Alt+Bkspce and it will inspect available gulpfiles for tasks to run.
 IMO this works best in conjunction with [Node Tools for Visual Studio](https://www.visualstudio.com/en-us/features/node-js-vs.aspx) to provide nodejs debugging where required.
