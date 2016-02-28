@@ -28,7 +28,9 @@ Lets go through some now:
 - [Visual Studio](#vs)
 
 #### <a name="vscode"></a>Visual Studio Code
-[VS Code](https://www.visualstudio.com/en-us/products/code-vs.aspx) uses its own [task runner](https://code.visualstudio.com/docs/editor/tasks) and a tasks.json file to integrate your projects chosen runner. If you hit Ctrl+Shift+B without this file, VS Code will create a sample for you. Below is an example that utilizes gulp and uses the gulp-tsc 'problemMatcher' (think: output formatter) to yield any problems to the IDE.
+>[VS Code](https://www.visualstudio.com/en-us/products/code-vs.aspx) uses its own [task runner](https://code.visualstudio.com/docs/editor/tasks) and a tasks.json file to integrate your projects chosen runner. If you hit Ctrl+Shift+B without this file, VS Code will create a sample for you.
+
+Below is an example that utilizes gulp and uses the gulp-tsc 'problemMatcher' (think: output formatter) to yield any problems to the IDE.
 
 **./.vscode/tasks.json**
 
@@ -49,7 +51,7 @@ Once saved, isBuildCommand and isTestCommand bind to Ctrl+Shift+B and Ctrl+Shift
 ![VS Code & gulp-tsc problemMatcher](/assets/vs-code-gulp.PNG)
 
 #### <a name="atom"></a>Atom
-[Atom](https://atom.io/) has a diverse range of packages that you can add. You can even automate this with apm. Here I'll use apm to install [gulp-control](https://atom.io/packages/gulp-control) for a graphical gulp experience.
+>[Atom](https://atom.io/) has a diverse range of packages that you can add. You can even automate this with apm. Here I'll use apm to install [gulp-control](https://atom.io/packages/gulp-control) for a graphical gulp experience.
 
 ```bash
 apm install gulp-control
@@ -61,8 +63,9 @@ Once installed just open gulp-control with Ctrl+Alt+O. This gives you large butt
 
 #### <a name="sublime3"></a>Sublime Text 3
 
-[Sublime Text 3](https://www.sublimetext.com/3) has a great site for common packages: https://packagecontrol.io/
+>[Sublime Text 3](https://www.sublimetext.com/3) has a [great site](https://packagecontrol.io/) for package management that integrates with the editor.
 I've found the Sublime Gulp package to work well: https://packagecontrol.io/packages/Gulp
+
 1. Install package control https://packagecontrol.io/installation
 2. Ctrl+Shift+P (Ctrl+Command+P) to open the command pallette
 3. Type 'install package' wait for the repo to index
@@ -76,20 +79,23 @@ Once Installed open the command palette (Ctrl+Shift+P), type gulp, then select t
 
 #### <a name="#brackets"></a>Brackets
 
-The [Brackets](http://brackets.io/) community also enjoys a huge variety of packages.
+>The [Brackets](http://brackets.io/) community also enjoys a huge variety of packages.
 There is a [brackets-gulp](https://github.com/dalcib/brackets-gulp) package that is no longer maintained, and the owners advice appears to be 'use [brackets-shell](https://github.com/adobe/brackets-shell)'
 
 1. File -> Extensions Manager -> Search -> 'brackets-shell'
 2. install brackets-shell
 3. There will now be a shell icon right of screen, click it and  type 'gulp' in the console bottom screen.
 
-![brackets-shell](/assets/brackets-shell.png)
+![brackets-shell](/assets/brackets-shell.PNG)
 
 type 'gulp' to run your build
 
 #### <a name="vim"></a>Vim
-[Vim](http://www.vim.org/) has a nice little gulp wrapper plugin available: [gulp-vim](https://github.com/KabbAmine/gulp-vim) which is easy to install and use:
-I highly recommend using vim-plug for managing /automating plugin installation over the traditional method of self management.
+> I highly recommend using [vim-plug](https://github.com/junegunn/vim-plug) for automating plugin installation over the traditional method of self management.
+
+
+[Vim](http://www.vim.org/) has a nice little gulp wrapper plugin called  [gulp-vim](https://github.com/KabbAmine/gulp-vim) which is easy to install and use.
+
 
 1. Install vim-plug ([instructions](https://github.com/junegunn/vim-plug))
 2. Configure to use gulp-vim
