@@ -75,7 +75,7 @@ The basic steps for a repeatable test task are as follows:
 
 1. Find your test code
   - ```gulp.src('glob')```
-2. Transpile to javascript
+2. Transpile to javascript, write to disk
   - ```gulp.pipe(transpiler())```
 3. Run tests with mocha  
   - ```gulp.pipe(mocha(options))```
@@ -101,6 +101,8 @@ gulp.task('test', function() {
     return gulp.src('./test/**/*.ts', { base: '.' })
     /*transpile*/
     .pipe(ts(tsProject))
+    /*flush to disk*/
+    .pipe(gulp.dest('.'))
     /*execute tests*/
     .pipe(mocha({
         reporter: 'progress'

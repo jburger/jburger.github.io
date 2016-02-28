@@ -16,18 +16,21 @@ tags:
 In my [previous post]('2016-02-27-typescript-testing-workflow-part1-mocha.html') previous post, I walked through some basics with gulp, typescript and mocha.
 
 In this post I'll cover the following popular editor integrations for gulp:
-    - VS Code
-    - Atom
-    - Sublime Text 3
-    - Brackets
-    - Vim
-    - Visual Studio
 
+- [VS Code](https://www.visualstudio.com/en-us/products/code-vs.aspx)
+- [Atom](https://atom.io/)
+- [Sublime Text 3](https://www.sublimetext.com/3)
+- [Brackets](http://brackets.io/)
+- [Vim](http://www.vim.org/)
+- [Visual Studio]( https://www.visualstudio.com/)
+-
 ### Integrate with $env:USR_FAVOURITE_EDITOR
-I don't know of any serious programming text editors that don't have a way to execute a shell command.
+Over the years I've used plenty of editors and continue to chop and change as each leapfrogs the other in terms of quality & community support. What I choose to use is largely irrelevant though - they are all great in their own way and it should be up to each developer how they choose to code.
+
+That said, I don't know of any serious programming text editors that don't have a way to execute a shell command, so as a last resort, you can lean on that. However, there are usually extensions that give you buttons to mash or keyboard shortcuts to hit when its time to build. Let's go through some!
 
 #### Visual Studio Code
-VS Code uses its own task runner and a tasks.json file to integrate your projects chosen runner:
+VS Code uses its own task runner and a tasks.json file to integrate your projects chosen runner. If you hit Ctrl+Shift+B without this file, VS Code will create a sample for you. Below is an example that utilizes gulp and uses the gulp-tsc 'problemMatcher' (think: output formatter) to yield any problems to the IDE.
 
 **./.vscode/tasks.json**
 
@@ -42,6 +45,10 @@ VS Code uses its own task runner and a tasks.json file to integrate your project
     ]
 }
 ```
+
+Once saved, isBuildCommand and isTestCommand bind to Ctrl+Shift+B and Ctrl+Shift+T respectively.
+
+![VS Code & gulp-tsc problemMatcher](/assets/)
 #### Atom
 Atom has a diverse range of packages that you can add. You can even automate this with apm. Here I'll use apm to install gulp-control for a great graphical gulp experience.
 
