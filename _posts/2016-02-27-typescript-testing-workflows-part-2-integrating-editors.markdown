@@ -18,7 +18,7 @@ In my [previous post]('2016-02-27-typescript-testing-workflow-part1-mocha.html')
 ### Integrate with $env:UsersFavouriteEditor
 Because gulp is just another node application, we can integrate it to any number of editors, to use key bindings or buttons to mash when building.
 
-Lets go through some now:
+I've provided some examples of popular editors:
 
 - [VS Code](#vscode)
 - [Atom](#atom)
