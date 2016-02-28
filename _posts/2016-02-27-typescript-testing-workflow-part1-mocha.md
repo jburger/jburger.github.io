@@ -18,7 +18,7 @@ I like simple test workflows. Mainly because testing is often the first guy up a
 
 ![deadlines](/assets/test-passing.PNG)
 
-If testing is simple, up to date and relevant, it doesn't won't need defense when the going gets tough.
+If testing is simple, up to date and relevant, it won't need defense when the going gets tough.
 
 Throw in the need for cross platform development and it really pays off to have a write once, execute many, workflow.
 
