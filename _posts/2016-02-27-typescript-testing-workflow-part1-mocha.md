@@ -111,6 +111,7 @@ gulp.task('default', ['build','test']);
 ```
 
 **tsconfig.json**
+
 ```javascript
 {
   "compilerOptions": {
