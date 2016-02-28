@@ -51,7 +51,7 @@ Once saved, isBuildCommand and isTestCommand bind to Ctrl+Shift+B and Ctrl+Shift
 ![VS Code & gulp-tsc problemMatcher](/assets/vs-code-gulp.PNG)
 
 #### <a href="atom"></a>Atom
-[Atom](https://atom.io/) has a diverse range of packages that you can add. You can even automate this with apm. Here I'll use apm to install [gulp-control](https://atom.io/packages/gulp-control) for a great graphical gulp experience.
+[Atom](https://atom.io/) has a diverse range of packages that you can add. You can even automate this with apm. Here I'll use apm to install [gulp-control](https://atom.io/packages/gulp-control) for a graphical gulp experience.
 
 ```bash
 apm install gulp-control
