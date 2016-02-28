@@ -47,6 +47,8 @@ This recipe comprises four main ingredients:
 npm install -g gulp typescript typings mocha
 #locals
 npm install --save-dev gulp gulp-typescript mocha gulp-mocha chai
+#typings
+typings install --save --ambient mocha chai orchestrator Q
 ```
 ### TS-afying mocha tests
 Mocha's test framework uses familiar syntax and plays nicely with common assertion packages like [chai](http://chaijs.com/), [should](https://shouldjs.github.io/) and assert. Using typescript makes for some minor stylistic changes:
