@@ -113,10 +113,10 @@ gulp.task('default', ['build','test']);
 **tsconfig.json**
 ```javascript
 {
-    "compilerOptions": {
-        "target": "es3",
-        "module": "commonjs"
-    }
+  "compilerOptions": {
+    "target": "es3",
+    "module": "commonjs"
+  }
 }
 ```
 
