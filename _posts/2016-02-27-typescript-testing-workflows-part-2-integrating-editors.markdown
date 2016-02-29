@@ -42,11 +42,23 @@ Below is an example that utilizes gulp and uses the gulp-tsc 'problemMatcher' (t
     "showOutput": "always",
     "tasks": [
         { "taskName": "default", "isBuildCommand": true, "isTestCommand": true, "problemMatcher": "$gulp-tsc" },
+        { "taskName": "some:other" }
     ]
 }
 ```
+You can also create a key bindings easily, by choosing File -> Preferences -> Keyboard Shortcuts.
+> HINT: If you use the Ctrl+K, Ctrl+K key chord while the shortcut editor window is focused, you get some neat assistance for making the entries. Also, the list of unused, available commands are listed at the bottom of the global file in the left pane.
 
-Once saved, isBuildCommand and isTestCommand bind to Ctrl+Shift+B and Ctrl+Shift+T respectively.
+Here's mine (I've bound Run Task to Shift+Alt+T)
+
+```javascript
+[
+    { "key": "shift+alt+t", "command": "workbench.action.tasks.runTask", "when": "editorFocus" }
+]
+```
+
+
+Once saved, isBuildCommand and isTestCommand bind to Ctrl+Shift+B and Ctrl+Shift+T respectively as well.
 
 ![VS Code & gulp-tsc problemMatcher](/assets/vs-code-gulp.PNG)
 
