@@ -1,7 +1,7 @@
 ---
 layout: "post"
 title: "Typescript testing workflows Part 3 - Code Coverage"
-date: "2016-05-19 22:04"
+date: "2016-05-18"
 categories: web
 published: true
 author: Jim Burger
