@@ -23,12 +23,15 @@ This post is part of a series of build chain automation examples. Previous posts
 
 In this post we'll cover off adding source maps and code coverage in to the mix.  
 
+[Source for this example is available here](https://github.com/jburger/examples/tree/master/typescript_coverage)
+
 ### Source maps FTW
 There aren't too many (if any) downsides to outputting source maps and as a dear friend and colleague pointed out - this can be done in production too, behind auth if necessary.
 
 Among other awesome outcomes, doing so will allow us to leverage some tooling to provide high quality code coverage metrics for your typescript code. Who wouldn't want that?
 
-Step 1: generate javascript with source maps
+So hence our first step: generate our javascript files with source maps
+
 ```javascript
 //other dependencies
 //.
