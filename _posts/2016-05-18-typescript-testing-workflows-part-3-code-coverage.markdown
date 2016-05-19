@@ -1,6 +1,6 @@
 ---
 layout: "post"
-title: "Typescript testing workflows Part 3 - Code Coverage"
+title: "Typescript testing workflows - part 3: Code Coverage"
 date: "2016-05-18"
 categories: web
 published: true
@@ -18,8 +18,8 @@ tags:
 
 This post is part of a series of build chain automation examples. Previous posts include:
 
-- [Part 1: Using Mocha and Gulp]()
-- [Part 2: Editor integration]()
+- [Part 1: Using Mocha and Gulp](http://blog.theburge.co/web/2016/02/27/typescript-testing-workflow-part1-mocha.html)
+- [Part 2: Editor integration](http://blog.theburge.co/web/2016/02/27/typescript-testing-workflows-part-2-integrating-editors.html)
 
 In this post we'll cover off adding source maps and code coverage in to the mix.  
 
