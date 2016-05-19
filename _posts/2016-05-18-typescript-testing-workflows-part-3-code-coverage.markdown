@@ -86,7 +86,7 @@ describe('`sum` method', () => {
 ```
 
 #### Remap to source
-The solution here is to use remap-istanbul to *rewrite the coverage data*. This is done via the source maps we generated earlier, to map back to the original source. It remains a clever idea in my opinion: http://stackoverflow.com/a/17028570
+The solution here is to use remap-istanbul to *rewrite the coverage data*. This is done via the source maps we generated earlier, to map back to the original source. [It remains a clever idea in my opinion](http://stackoverflow.com/a/17028570)
 
 Alas, our gulpfile complexity increases to accomodate:
 
