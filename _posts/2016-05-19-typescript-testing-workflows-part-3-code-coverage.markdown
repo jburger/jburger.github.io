@@ -1,6 +1,6 @@
 ---
 layout: "post"
-title: "Typescript testing workflows Part 3 - Source maps & Code Coverage"
+title: "Typescript testing workflows Part 3 - Code Coverage"
 date: "2016-05-19 22:04"
 categories: web
 published: true
