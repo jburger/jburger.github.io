@@ -36,7 +36,9 @@ So hence our first step: generate our javascript files with source maps
 //other dependencies
 //.
 //.
+var gulp = require('gulp');
 var sourcemaps = require('gulp-sourcemaps');
+var ts = require('gulp-typescript');
 
 gulp.task('build', function() {
    return gulp.src('./src/**/*.ts', { base: '.' })
@@ -91,6 +93,10 @@ The solution here is to use remap-istanbul to *rewrite the coverage data*. This 
 Alas, our gulpfile complexity increases to accomodate:
 
 ```javascript
+var gulp = require('gulp');
+var mocha = require('gulp-mocha');
+var istanbul = require('gulp-istanbul');
+var remapIstanbul = require('remap-istanbul/lib/gulpRemapIstanbul');
 
 gulp.task('test:cover', ['test:instrument'], function() {
     return gulp.src('./transpiled/**/*Tests.js') //take our transpiled test source
