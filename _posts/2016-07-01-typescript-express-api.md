@@ -1,6 +1,6 @@
 ---
 layout: "post"
-title: "Express.js REST API using typescript"
+title: "Server side typescript: express API example"
 date: "2016-07-01"
 categories: web
 published: true
@@ -11,18 +11,21 @@ tags:
 - TypeScript
 ---
 
-Here lies a simple(ish) pattern to build express API's with typescript. It mixes Object-Oriented and functional approaches a little, but not too much I feel.
-
-I hope to revisit this post with some updates on bringing in authentication, swagger and other goodies.
+Here lies a simple(ish) pattern to build express API's with typescript.
 
 ### Why typescript for the server?
 For the same reason people end up using other transpiled languages! Because I get an early warning system - for very little upfront effort. Also, it allows me use a language that reminds me of the best parts of C#, F# and javascript.
 
-### [clone it](https://github.com/jburger/examples/typescript_express)
+#### So I don't need to write unit tests anymore?
+Sorry but even though this example doesn't come packing with tests, you should probably write tests for your production code. Not all issues are picked up by type checking.
+
+### [take a look on github](https://github.com/jburger/examples/tree/master/typescript_express)
 
 ### What next?
 
 You could easily extend this example to include [authentication](http://passportjs.org/docs), produce dynamic [api documentation](https://www.npmjs.com/package/swagger-ui), add a [database](https://www.npmjs.com/package/documentdb) and many other types of middleware.
+
+### Break it down...
 
 ### tsconfig.json
 _For configuring the behaviour of the typescript compiler_
@@ -79,7 +82,7 @@ export class WebApi {
 ```
 
 ### routes/customerRouter.ts
-_Example express Router implementation_
+_Example express Router usage_
 ```javascript
 import express = require("express");
 
@@ -97,7 +100,7 @@ customerRouter.get('/', (request: express.Request, response: express.Response) =
 export = customerRouter;
 ```
 ### middleware/requestLogger.ts
-_Example custom middleware_
+_Example custom middleware implementation_
 ```javascript
 import express = require("express");
 
