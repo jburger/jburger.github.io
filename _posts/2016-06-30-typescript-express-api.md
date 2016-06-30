@@ -14,7 +14,7 @@ tags:
 Here lies a simple(ish) pattern to build express API's with typescript.
 
 ## Why typescript for the server?
-For the same reason people end up using other transpiled languages! Because I get an early warning system - for very little upfront effort. Also, it allows me use a language that reminds me of the best parts of C#, F# and javascript.
+For the same reason people end up using other transpiled languages! Because I get an early warning system - for very little upfront effort. Also, it allows me use a language that reminds me of the best parts of [C#](https://www.typescriptlang.org/docs/handbook/generics.html), [F#](https://www.typescriptlang.org/docs/handbook/type-inference.html) and [javascript](http://shop.oreilly.com/product/9780596517748.do).
 
 ### So I don't need to write unit tests anymore?
 Sorry but even though this example doesn't come packing with tests, you should probably write tests for your production code. Not all issues are picked up by type checking.
