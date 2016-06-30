@@ -13,13 +13,13 @@ tags:
 
 Here lies a simple(ish) pattern to build express API's with typescript.
 
-### Why typescript for the server?
+## Why typescript for the server?
 For the same reason people end up using other transpiled languages! Because I get an early warning system - for very little upfront effort. Also, it allows me use a language that reminds me of the best parts of C#, F# and javascript.
 
-#### So I don't need to write unit tests anymore?
+### So I don't need to write unit tests anymore?
 Sorry but even though this example doesn't come packing with tests, you should probably write tests for your production code. Not all issues are picked up by type checking.
 
-### [take a look on github](https://github.com/jburger/examples/tree/master/typescript_express)
+### [Take a look on github](https://github.com/jburger/examples/tree/master/typescript_express)
 
 ### What next?
 
@@ -30,7 +30,7 @@ You could easily extend this example to include [authentication](http://passport
 ### tsconfig.json
 _For configuring the behaviour of the typescript compiler_
 
-```javascript
+```
 {
     "compilerOptions": {
         "module":"umd",
@@ -49,7 +49,7 @@ _For configuring the behaviour of the typescript compiler_
 ### application.ts
 _Application Class_
 
-```javascript
+```
 ///<reference path="./typings/main.d.ts"/>
 import express = require("express");
 import customerRouter = require("./routes/customerRouter");
@@ -87,7 +87,7 @@ export class WebApi {
 ### routes/customerRouter.ts
 _Example express Router usage_
 
-```javascript
+```
 import express = require("express");
 
 let customerRouter = express.Router();
@@ -107,7 +107,7 @@ export = customerRouter;
 ### middleware/requestLogger.ts
 _Example custom middleware implementation_
 
-```javascript
+```
 import express = require("express");
 
 let requestLogger: express.RequestHandler = (
