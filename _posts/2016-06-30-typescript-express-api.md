@@ -29,6 +29,7 @@ You could easily extend this example to include [authentication](http://passport
 
 ### tsconfig.json
 _For configuring the behaviour of the typescript compiler_
+
 ```javascript
 {
     "compilerOptions": {
@@ -42,10 +43,12 @@ _For configuring the behaviour of the typescript compiler_
     ]
 }
 ```
+
 **NOTE** You'll want to use [typings](https://npmjs.org/typings) to bring in nodejs & express definitions.
 
 ### application.ts
 _Application Class_
+
 ```javascript
 ///<reference path="./typings/main.d.ts"/>
 import express = require("express");
@@ -83,6 +86,7 @@ export class WebApi {
 
 ### routes/customerRouter.ts
 _Example express Router usage_
+
 ```javascript
 import express = require("express");
 
@@ -99,8 +103,10 @@ customerRouter.get('/', (request: express.Request, response: express.Response) =
 // e.g. customerRouter.post('/', (req,res,next)=> {/*...*/})
 export = customerRouter;
 ```
+
 ### middleware/requestLogger.ts
 _Example custom middleware implementation_
+
 ```javascript
 import express = require("express");
 
@@ -115,8 +121,10 @@ let requestLogger: express.RequestHandler = (
 
 export = requestLogger;
 ```
+
 ### index.ts
 _Program entry point_
+
 ```javascript
 import express = require('express');
 import { WebApi } from './application';
