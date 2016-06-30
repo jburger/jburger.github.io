@@ -125,7 +125,7 @@ export = requestLogger;
 ### index.ts
 _Program entry point_
 
-```javascript
+```
 import express = require('express');
 import { WebApi } from './application';
 
