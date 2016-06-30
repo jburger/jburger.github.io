@@ -1,7 +1,7 @@
 ---
 layout: "post"
 title: "Server side typescript: express API example"
-date: "2016-07-01"
+date: "2016-06-31"
 categories: web
 published: true
 author: Jim Burger
