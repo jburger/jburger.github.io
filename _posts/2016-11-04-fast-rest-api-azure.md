@@ -17,7 +17,7 @@ tags:
 
 ![Fast and Furious](/assets/nissan-sx.jpg)
 
-Not every application has to take a team of 10 developers 3 months and a team building trip to the local adventure park. Maybe its a throwaway thing. Maybe you're in a hackathon. [Maybe its a prototype](/_posts/2009-10-01-throw-away-your-code.html). Maybe you're not sure how successful this will be. 
+Not every application has to take a team of 10 developers 3 months and a team building trip to the local adventure park. Maybe its a throwaway thing. Maybe you're in a hackathon. Maybe its a prototype. Maybe you're not sure how successful this will be. 
 
 So with that in mind, here's 3 fast, pragmatic ways to get it done. Each has their own cost model and feature set to consider, so choose your weapon!
 
