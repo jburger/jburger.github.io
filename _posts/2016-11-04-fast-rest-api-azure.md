@@ -80,14 +80,14 @@ Use the code snippets and add them into your application.
 Once boostrapped, you can do all the things you'd expect, simple snapshot reads, to realtime event stream subscriptions. Here's a basic example
 
 ```javascript
- firebase
-  		.database()
-  		.ref('/Cheeses/')
-  		.once('value')
-  		.then(function(snapshot) {
- 			var cheeses = snapshot.val();
-				console.log(cheeses);
-		});
+firebase
+    .database()
+    .ref('/Cheeses/')
+    .once('value')
+    .then(function(snapshot) {
+        var cheeses = snapshot.val();
+        console.log(cheeses);
+    });
 ```
 [Reading and writing in firebase](https://firebase.google.com/docs/database/web/read-and-write)
 
