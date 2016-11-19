@@ -46,16 +46,16 @@ This tool has a lot of features, but you can create something useful in minutes.
 
 #### How to use Firebase
 
-1. Choose an authentication strategy:
+Choose an authentication strategy:
 
 ![Firebase Authentication Choices](/assets/fb-auth-choices.png)
 
-2. Design your data as JSON in your favourite editor and then import it into firebase.
+Design your data as JSON in your favourite editor and then import it into firebase.
 
 ![cheeses.json](/assets/cheeses-json.png)
 ![Firebase imported data](/assets/fb-data.png)
 
-3. Use the code snippets and add them into your application.
+Use the code snippets and add them into your application.
 
 ![Firebase web snippet](/assets/fb-add-web.png)
 
@@ -81,7 +81,7 @@ Once boostrapped, you can do all the things you'd expect, simple snapshot reads,
 |*Good*|Extremely easy to use. Fast provisioning|
 |*Not so good*|Features seem geared towards mobile applications, primarily Android. Limited feature set.|
 
-### Azure Document DB
+### 3. Azure Document DB
 
 Microsoft's Azure Document DB allows you to use their internal NoSQL database, or a hosted mongo DB instance to stand up some data - and then provides convenient javascript API access the data in your application.
 
@@ -93,7 +93,7 @@ Microsoft's Azure Document DB allows you to use their internal NoSQL database, o
 
 #### How to use Azure Document DB
 
-1. Follow the quickstart guide most relevant to your target platform
+Follow the quickstart guide most relevant to your target platform
     - ASP.NET
     - ASP.NET Core
     - Node.js
@@ -105,23 +105,23 @@ Microsoft's Azure Document DB allows you to use their internal NoSQL database, o
 
 ![Quick start](/assets/adb-quick-start.png)
 
-2. Provision your document DB instance
+Provision your document DB instance
 
 ![Provisioning Azure Document DB](/assets/adb-create.png)
 
-3. Create a collection and database
+Create a collection and database
 
 ![Create a collection](/assets/adb-add-collection.png)
 
-4. Upload your JSON documents into the database you created
+Upload your JSON documents into the database you created
 
 ![Upload your JSON Data](/assets/adb-cheese-doc-upload.png)
 
-5. Experiment with some queries in the query explorer to determine their cost
+Experiment with some queries in the query explorer to determine their cost
 
 ![Experiment with some queries](/assets/adb-query-explorer.png)
 
-6. Start modifying your boilerplate to suit 
+Start modifying your boilerplate to suit 
 
 ||Breakdown|
 |---|---|
@@ -131,7 +131,7 @@ Microsoft's Azure Document DB allows you to use their internal NoSQL database, o
 
 ### JSON => API in 60 Seconds
 
-Ok, maybe a little longer than 60 seconds, but not much!
+Ok, maybe a little longer than 60 seconds, but not by much!
 
 Clearly, there is a correlation between cost and features - so the choice is yours.
 
