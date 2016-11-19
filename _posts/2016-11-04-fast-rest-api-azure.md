@@ -97,7 +97,7 @@ Once boostrapped, you can do all the things you'd expect, simple snapshot reads,
 
 ### 3. Azure Document DB
 
-Microsoft's Azure Document DB allows you to use their internal NoSQL database, or a hosted mongo DB instance to stand up some data - and then provides convenient javascript API access the data in your application.
+[Microsoft's Azure Document DB](https://azure.microsoft.com/en-us/services/documentdb/) allows you to use their NoSQL database, or a hosted mongo DB instance to stand up some data - and then provides convenient javascript API access the data in your application. 
 
 - Fully fledged PaaS database with 10GB capacity, can be partitioned for more space
 - Monitoring and metrics
@@ -135,7 +135,7 @@ Experiment with some queries in the query explorer to determine their cost
 
 ![Experiment with some queries](/assets/adb-query-explorer.png)
 
-Start modifying your boilerplate to suit 
+Start modifying your boilerplate to sui. [Documentation portal here](https://docs.microsoft.com/en-us/azure/documentdb/)
 
 ||Breakdown|
 |---|---|
