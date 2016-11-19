@@ -23,10 +23,9 @@ Not every application has to take a team of 10 developers 3 months and a team bu
 3. Download a working boilerplate for server and or client
 4. Profit
 
+||Breakdown|
 |*Price*|Free|
-|---|---|
 |*Good*|Just design, download & run|
-|---|---|
 |*Not so good*|You're on your own when it comes to hosting. This is just a starter kit for a deployable REST API.|
 
 ![swagger editor](/assets/swagger-editor.png)
