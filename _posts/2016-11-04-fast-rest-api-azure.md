@@ -9,7 +9,7 @@ Not every application has to take a team of 10 developers 3 months and a team bu
 - Google Firebase
 - Azure Document DB
 
-### 1. Swagger Editor - great for quick and dirty code to run
+### 1. Swagger Editor
 
 [Swagger editor](http://swagger.io/swagger-editor/) allows you to edit a swagger definition file in convenient editor, and then auto-generate a server or a client application in a variety of languages. Its best feature is that it is hosted on github. 
 
@@ -31,7 +31,7 @@ Not every application has to take a team of 10 developers 3 months and a team bu
 
 ![swagger editor](/assets/swagger-editor.png)
 
-### 2. Firebase - cross media database and storage
+### 2. Google Firebase
 
 If you already have a website or mobile phone mockup that is devoid of data, and want to hydrate it with something you could lean on for a while, [firebase is worth a look](https://firebase.google.com). Heck, it might even be enough for production.
 
@@ -91,6 +91,8 @@ Microsoft's Azure Document DB allows you to use their internal NoSQL database, o
 - Excellent query explorer to help you determine resource utilization and costs
 - Geo-replication out of the box
 
+#### How to use Azure Document DB
+
 1. Follow the quickstart guide most relevant to your target platform
     - ASP.NET
     - ASP.NET Core
@@ -127,7 +129,9 @@ Microsoft's Azure Document DB allows you to use their internal NoSQL database, o
 |*Good*|Dial features up to 11, you can build serious software around this|
 |*Not so good*| No client side boilerplate OOTB, but could be done with node.js and browserify. Could get pricey, fast.|
 
-### Just add JSON
+### JSON => API in 60 Seconds
+
+Ok, maybe a little longer than 60 seconds, but not much!
 
 Clearly, there is a correlation between cost and features - so the choice is yours.
 
