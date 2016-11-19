@@ -17,7 +17,7 @@ tags:
 
 ![Fast and Furious](/assets/nissan-sx.jpg)
 
-Not every application has to take a team of 10 developers 3 months and a team building trip to the local adventure park. Maybe its a throwaway thing. [Maybe its a prototype](/_posts/2009-10-01-throw-away-your-code.html). So with that in mind, here's 3 fast, pragmatic ways to just get data into your application from an API of some description - just add JSON.
+Not every application has to take a team of 10 developers 3 months and a team building trip to the local adventure park. Maybe its a throwaway thing. [Maybe its a prototype](/_posts/2009-10-01-throw-away-your-code.html). Maybe you're not sure how successful this will be. So with that in mind, here's 3 fast, pragmatic waysto just get data into your application from an API of some description. Each has their own cost model and feature set to consider, so choose your weapon!
 
 - Swagger Editor
 - Google Firebase
@@ -25,7 +25,7 @@ Not every application has to take a team of 10 developers 3 months and a team bu
 
 ### 1. Swagger Editor
 
-[Swagger editor](http://swagger.io/swagger-editor/) allows you to edit a swagger definition file in convenient editor, and then auto-generate a server or a client application in a variety of languages. Its best feature is that it is hosted on github. 
+[Swagger editor](http://swagger.io/swagger-editor/) allows you to edit a swagger definition file in convenient editor, and then auto-generate a server or a client application in a variety of languages. BYO hosting solution, so the cost is as cheap or as expensive as you want it to be.
 
 - Seriously, try the demo - it will yield a working code sample for you to look at.
 - You have complete control, clone this repo and add your own generators.
@@ -47,7 +47,7 @@ Not every application has to take a team of 10 developers 3 months and a team bu
 
 ### 2. Google Firebase
 
-If you already have a website or mobile phone mockup that is devoid of data, and want to hydrate it with something you could lean on for a while, [firebase is worth a look](https://firebase.google.com). Heck, it might even be enough for production.
+If you already have a website or mobile phone mockup that is devoid of data, and want to hydrate it with something you could lean on for a while, [firebase is worth a look](https://firebase.google.com). Heck, it might even be enough for production, and you can scale this service up as required. 
 
 - Realtime data events
 - SaaS solution
@@ -91,7 +91,8 @@ Once boostrapped, you can do all the things you'd expect, simple snapshot reads,
 
 ||Breakdown|
 |---|---|
-|*Price*|Free to start, paid plans start at $25 per month|
+|*[Price](https://firebase.google.com/pricing/)*|Free to start, AUD$25 per month cap plan or PAYG|
+|*Free Database Storage*|1GB stored, 10GB downloaded|
 |*Good*|Extremely easy to use. Fast provisioning|
 |*Not so good*|Features seem geared towards mobile applications, primarily Android. Limited feature set.|
 
@@ -140,9 +141,10 @@ Start modifying your boilerplate to sui. [Documentation portal here](https://doc
 
 ||Breakdown|
 |---|---|
-|*Price*|Minimum $24 a month on standard tier, depends on usage|
+|*[Price](https://azure.microsoft.com/en-us/pricing/calculator/)*|PAYG only: S1 ~ AUD$30 a month|
+|*Storage*|S1: 10GB SSD or ~30cents / GB |
 |*Good*|Dial features up to 11, you can build serious software around this|
-|*Not so good*| No client side boilerplate OOTB, but could be done with node.js and browserify. Could get pricey, fast.|
+|*Not so good*| No free tier, No client side boilerplate OOTB, but could be done with node.js and browserify. Could get pricey, fast.|
 
 ### JSON => API in 60 Seconds
 
