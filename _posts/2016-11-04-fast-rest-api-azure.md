@@ -75,9 +75,11 @@ Once boostrapped, you can do all the things you'd expect, simple snapshot reads,
 ```
 [Reading and writing in firebase](https://firebase.google.com/docs/database/web/read-and-write)
 
-*Price:* Free to start, paid plans start at $25 per month*
-*Good:* extremely easy to use. Fast provisioning
-*Not so good:* features seem geared towards mobile applications, primarily Android. Limited feature set.
+||Breakdown|
+|---|---|
+|*Price*|Free to start, paid plans start at $25 per month|
+|*Good*|Extremely easy to use. Fast provisioning|
+|*Not so good*|Features seem geared towards mobile applications, primarily Android. Limited feature set.|
 
 ### Azure Document DB
 
@@ -119,9 +121,11 @@ Microsoft's Azure Document DB allows you to use their internal NoSQL database, o
 
 6. Start modifying your boilerplate to suit 
 
-*Price:* Minimum $24 a month on standard tier, depends on usage
-*Good:* Dial features up to 11, you can build serious software around this
-*Not so good:* No client side boilerplate OOTB, but could be done with node.js and browserify. Could get pricey, fast.
+||Breakdown|
+|---|---|
+|*Price*|Minimum $24 a month on standard tier, depends on usage|
+|*Good*|Dial features up to 11, you can build serious software around this|
+|*Not so good*| No client side boilerplate OOTB, but could be done with node.js and browserify. Could get pricey, fast.|
 
 ### Just add JSON
 
