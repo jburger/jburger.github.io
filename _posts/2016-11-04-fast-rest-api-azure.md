@@ -93,7 +93,7 @@ Once boostrapped, you can do all the things you'd expect, simple snapshot reads,
 
 ||Breakdown|
 |---|---|
-|*[Price](https://firebase.google.com/pricing/)*|Free to start, AUD$25 per month cap plan or PAYG|
+|*[Price](https://firebase.google.com/pricing/)*|Free to start, $25 per month cap plan or PAYG|
 |*Free Database Storage*|1GB stored, 10GB downloaded|
 |*Good*|Extremely easy to use. Fast provisioning|
 |*Not so good*|Features seem geared towards mobile applications, primarily Android. Limited feature set.|
@@ -143,7 +143,7 @@ Start modifying your boilerplate to sui. [Documentation portal here](https://doc
 
 ||Breakdown|
 |---|---|
-|*[Price](https://azure.microsoft.com/en-us/pricing/calculator/)*|PAYG only: S1 ~ AUD$30 a month|
+|*[Price](https://azure.microsoft.com/en-us/pricing/calculator/)*|PAYG only: S1 ~ $30 a month|
 |*Storage*|S1: 10GB SSD or ~30cents / GB |
 |*Good*|Dial features up to 11, you can build serious software around this|
 |*Not so good*| No free tier, No client side boilerplate OOTB, but could be done with node.js and browserify. Could get pricey, fast.|
