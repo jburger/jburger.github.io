@@ -23,9 +23,11 @@ Not every application has to take a team of 10 developers 3 months and a team bu
 3. Download a working boilerplate for server and or client
 4. Profit
 
-*Price:* Free
-*Good:* just design, download & run.
-*Not so good:* your on your own when it comes to hosting. This is just a starter kit for a deployable REST API.
+|*Price*|Free|
+|---|---|
+|*Good*|Just design, download & run|
+|---|---|
+|*Not so good*|You're on your own when it comes to hosting. This is just a starter kit for a deployable REST API.|
 
 ![swagger editor](/assets/swagger-editor.png)
 
@@ -81,6 +83,12 @@ Once boostrapped, you can do all the things you'd expect, simple snapshot reads,
 
 Microsoft's Azure Document DB allows you to use their internal NoSQL database, or a hosted mongo DB instance to stand up some data - and then provides convenient javascript API access the data in your application.
 
+- Fully fledged PaaS database with 10GB capacity, can be partitioned for more space
+- Monitoring and metrics
+- Plug and play with other Azure resources
+- Excellent query explorer to help you determine resource utilization and costs
+- Geo-replication out of the box
+
 1. Follow the quickstart guide most relevant to your target platform
     - ASP.NET
     - ASP.NET Core
@@ -89,25 +97,39 @@ Microsoft's Azure Document DB allows you to use their internal NoSQL database, o
     - Java
 
     Doing so will give you a test instance and sample code to connect your backend to it.
-    Once your done seeing how it hangs together, get started on the real thing.
+    Once your done seeing how it hangs together, get started on the real thing. I personally would not roll this code into production as it makes use of a static, generic repository pattern, but that is just my opinion. 
 
 ![Quick start](/assets/adb-quick-start.png)
 
 2. Provision your document DB instance
+
+![Provisioning Azure Document DB](/assets/adb-create.png)
+
 3. Create a collection and database
+
+![Create a collection](/assets/adb-add-collection.png)
+
 4. Upload your JSON documents into the database you created
-5. Experiment with some queries in the query explorer
-6. Load the following scr 
 
+![Upload your JSON Data](/assets/adb-cheese-doc-upload.png)
 
+5. Experiment with some queries in the query explorer to determine their cost
+
+![Experiment with some queries](/assets/adb-query-explorer.png)
+
+6. Start modifying your boilerplate to suit 
+
+*Price:* Minimum $24 a month on standard tier, depends on usage
+*Good:* Dial features up to 11, you can build serious software around this
+*Not so good:* No client side boilerplate OOTB, but could be done with node.js and browserify. Could get pricey, fast.
 
 ### Just add JSON
 
-Clearly, there is a correlation between cost and convenience - so the choice is yours.
+Clearly, there is a correlation between cost and features - so the choice is yours.
 
-These tools are the developers equivalent of a chainsaws, highly effective, and capable of carving off your own limbs. Put these techniques in your 'quick and dirty' toolbox, not your 'imma build me a business' toolbox.
+With one of the tools used above, all you need is an idea of the data structure you would like to host, some knowledge of your target environment and an open mind.
 
-With one of the tools used above, all you need is an idea of the data structure you would like to host, some knowledge of your target environment and some exploration. Those ingredients can get you working against something real in no time, and each can scale in complexity with you as you go forward.
+Those ingredients can get you working against something real in no time, and each can scale in complexity with you as you go forward.
 
 
 
