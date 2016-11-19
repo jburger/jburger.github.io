@@ -1,6 +1,6 @@
 ---
 layout: "post"
-title: "Fast REST API Development: Azure API Management"
+title: "Fast & Furious API Delivery"
 date: "2016-11-04"
 categories: web
 published: false
@@ -11,32 +11,122 @@ tags:
 - Swagger
 - dotnetcore
 ---
-## Recipe: REST API in 30 minutes
-This basic recipe aims to get you from 0 to REST in under 30 minutes. By the end of this blog post, assuming you follow along, you should be staring at the following achievements:
+## Shipping is a feature
 
-- A cheap REST .NET based service deployed to Azure
-- OAuth authentication against one of the major OAuth providers
-- A git repo for maintaining the source code
-- A simple continuous delivery pipeline triggered by your commits
+Im not going to pretend this is good advice. We all know there are right ways to build high quality APIs and there are wrong ways.
 
-## I'm new to development, so I'm not sure what some of those things mean
-I'm making some assumptions about the readers skill level here:
-1. You're OK with reading and writing code in a popular systems programming language, but perhaps haven't written a REST service before
-2. JSON is not [just] the name of some guy you used to work with. 
-3. You can operate git and github
-4. You're comfortable with scripting to automate things
+But sometimes you dont care about quality. Mock services for testing, POCs and sales demos. Sometimes shipping is the feature. You know it will bite you later. Hopefully this article might buy you time (or money) for better solutions down the track.
 
-If this doesn't describe you very well, but you'd like to continue, you may struggle - but if you do your homework, this shouldn't be too hard really.
+Not every job has to take a team of 10 developers 3 months and a team building trip to the local adventure park. So here's 3 fast, pragmatic ways to just get data into your application from an API of some description - just add JSON.
 
-## Ingredients:
-- An [Azure](https://windowsazure.com) or [AWS](https://aws.amazon.com/) account
-- A [Github](https://github.com) account
-- A [Wercker](https://wercker.com) account (or equivalent)
+- Swagger Editor
+- Firebase
+- Azure API Management
 
-## API's won't happen in a vacuum
-Typically, you'll want to serve up some data - so having some datastore will help you follow this recipe such that something meaningful comes of it.
+### 1. Swagger Editor - great for quick and dirty code to run
 
-To that end, I'll be serving up some test data from a free firebase.com instance.
+[Swagger editor](http://swagger.io/swagger-editor/) allows you to edit a swagger definition file in convenient editor, and then auto-generate a server or a client application in a variety of languages. Its best feature is that it is hosted on github. 
+
+- Seriously, try the demo - it will yield a working code sample for you to look at.
+- You have complete control, clone this repo and add your own generators.
+
+#### How to use swagger editor
+
+1. Define your schema in YML 
+2. Choose a language 
+3. Download a working boilerplate for server and or client
+4. Profit
+
+*Price:* Free
+*Good:* just design, download & run.
+*Not so good:* your on your own when it comes to hosting. This is just a starter kit for a deployable REST API.
+
+![swagger editor](/assets/swagger-editor.png)
+
+### 2. Firebase - cross media database and storage
+
+If you already have a website or mobile phone mockup that is devoid of data, and want to hydrate it with something you could lean on for a while, [firebase is worth a look](https://firebase.google.com). Heck, it might even be enough for production.
+
+- Realtime data events
+- SaaS solution
+- Good selection of authentication providers
+- Easy to configure authorisation
+- Assumes you have an app to host data from
+- You can run a local server using the firebase CLI
+
+This tool has a lot of features, but you can create something useful in minutes.
+
+#### How to use Firebase
+
+1. Choose an authentication strategy:
+
+![Firebase Authentication Choices](/assets/fb-auth-choices.png)
+
+2. Design your data as JSON in your favourite editor and then import it into firebase.
+
+![cheeses.json](/assets/cheeses-json.png)
+![Firebase imported data](/assets/fb-data.png)
+
+3. Use the code snippets and add them into your application.
+
+![Firebase web snippet](/assets/fb-add-web.png)
+
+[Full guide here](https://firebase.google.com/docs/web/setup)
+
+Once boostrapped, you can do all the things you'd expect, simple snapshot reads, to realtime event stream subscriptions. Here's a basic example
+
+```javascript
+ firebase
+  		.database()
+  		.ref('/Cheeses/')
+  		.once('value')
+  		.then(function(snapshot) {
+ 			var cheeses = snapshot.val();
+				console.log(cheeses);
+		});
+```
+[Reading and writing in firebase](https://firebase.google.com/docs/database/web/read-and-write)
+
+*Price:* Free to start, paid plans start at $25 per month*
+*Good:* extremely easy to use. Fast provisioning
+*Not so good:* features seem geared towards mobile applications, primarily Android. Limited feature set.
+
+### 3. Azure API Management - 
+
+The big daddy: this service is currently in preview but already has an impressive array of features. It looks to be geared towards quickly serving up a suite of APIs for your organisation. 
+
+
+You may not need all of its community oriented features initially, but if you've put your POC in front of the right people, who knows?
+
+- Manage API consumer usage restrictions
+- Can import swagger.json files
+- Web UI for managing Operations
+- Autogenned documentation and test runner for you API (similar to swagger UI)
+- Rate limiting
+- In built caching options
+- Customizable portal for your API consumers
+- SOAP / WSDL support
+
+1. Goto the publisher portal and import your API definition file (accepts swagger or WSDL files). 
+
+![Import your swagger definition](/assets/aam-import-swagger.png)
+
+2. Adjust various settings in the publisher portal to your liking
+3. You can even add new operation via the user interface.
+
+![Add an operation](/assets/aam-add-operation.png)
+
+
+[Azure API Management Documentation](https://docs.microsoft.com/en-us/azure/api-management/api-management-key-concepts)
+
+
+*Price:* Currently starts at $50 per month
+*Good:* Loads of features
+*Not so good:* Bigger learning curve, takes a while to provision, its up to you to create a client side API and datasources.
+
+
+
+
 
 
 
