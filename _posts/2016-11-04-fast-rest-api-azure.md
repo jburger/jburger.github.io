@@ -108,14 +108,15 @@ Once boostrapped, you can do all the things you'd expect, simple snapshot reads,
 #### How to use Azure Document DB
 
 Follow the quickstart guide most relevant to your target platform
-    - ASP.NET
-    - ASP.NET Core
-    - Node.js
-    - Python
-    - Java
+    
+- ASP.NET
+- ASP.NET Core
+- Node.js
+- Python
+- Java
 
-    Doing so will give you a test instance and sample code to connect your backend to it.
-    Once your done seeing how it hangs together, get started on the real thing. I personally would not roll this code into production as it makes use of a static, generic repository pattern, but that is just my opinion. 
+Doing so will give you a test instance and sample code to connect your backend to it.
+Once your done seeing how it hangs together, get started on the real thing. I personally would not roll this code into production as it makes use of a static, generic repository pattern, but that is just my opinion. 
 
 ![Quick start](/assets/adb-quick-start.png)
 
