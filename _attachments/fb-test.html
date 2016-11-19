@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://www.gstatic.com/firebasejs/3.6.1/firebase.js"></script>
+	<script>
+	  // Initialize Firebase
+	  var config = {
+	    apiKey: "AIzaSyDNUWGVBx6cGMPI6uhq2usLE28-CDe_Srw",
+	    authDomain: "api-test-c0743.firebaseapp.com",
+	    databaseURL: "https://api-test-c0743.firebaseio.com",
+	    storageBucket: "api-test-c0743.appspot.com",
+	    messagingSenderId: "558864387159"
+	  };
+	  firebase.initializeApp(config);
+
+	  var database = firebase.database();
+
+      firebase
+  		.database()
+  		.ref('/Cheeses/')
+  		.once('value')
+  		.then(function(snapshot) {
+ 			var cheeses = snapshot.val();
+				console.log(cheeses);
+		});
+	</script>
+</head>
+<body>
+
+</body>
+</html>

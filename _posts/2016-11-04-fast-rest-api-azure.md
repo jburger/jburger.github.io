@@ -1,27 +1,13 @@
----
-layout: "post"
-title: "Fast & Furious API Delivery"
-date: "2016-11-04"
-categories: web
-published: false
-author: Jim Burger
-tags:
-- REST
-- Azure
-- Swagger
-- dotnetcore
----
+
 ## Shipping is a feature
 
-Im not going to pretend this is good advice. We all know there are right ways to build high quality APIs and there are wrong ways.
+![Fast and Furious](/assets/nissan-sx.jpg)
 
-But sometimes you dont care about quality. Mock services for testing, POCs and sales demos. Sometimes shipping is the feature. You know it will bite you later. Hopefully this article might buy you time (or money) for better solutions down the track.
-
-Not every job has to take a team of 10 developers 3 months and a team building trip to the local adventure park. So here's 3 fast, pragmatic ways to just get data into your application from an API of some description - just add JSON.
+Not every application has to take a team of 10 developers 3 months and a team building trip to the local adventure park. Maybe its a throwaway thing. [Maybe its a prototype](/_posts/2009-10-01-throw-away-your-code.html). So with that in mind, here's 3 fast, pragmatic ways to just get data into your application from an API of some description - just add JSON.
 
 - Swagger Editor
-- Firebase
-- Azure API Management
+- Google Firebase
+- Azure Document DB
 
 ### 1. Swagger Editor - great for quick and dirty code to run
 
@@ -91,38 +77,38 @@ Once boostrapped, you can do all the things you'd expect, simple snapshot reads,
 *Good:* extremely easy to use. Fast provisioning
 *Not so good:* features seem geared towards mobile applications, primarily Android. Limited feature set.
 
-### 3. Azure API Management - 
+### Azure Document DB
 
-The big daddy: this service is currently in preview but already has an impressive array of features. It looks to be geared towards quickly serving up a suite of APIs for your organisation. 
+Microsoft's Azure Document DB allows you to use their internal NoSQL database, or a hosted mongo DB instance to stand up some data - and then provides convenient javascript API access the data in your application.
 
+1. Follow the quickstart guide most relevant to your target platform
+    - ASP.NET
+    - ASP.NET Core
+    - Node.js
+    - Python
+    - Java
 
-You may not need all of its community oriented features initially, but if you've put your POC in front of the right people, who knows?
+    Doing so will give you a test instance and sample code to connect your backend to it.
+    Once your done seeing how it hangs together, get started on the real thing.
 
-- Manage API consumer usage restrictions
-- Can import swagger.json files
-- Web UI for managing Operations
-- Autogenned documentation and test runner for you API (similar to swagger UI)
-- Rate limiting
-- In built caching options
-- Customizable portal for your API consumers
-- SOAP / WSDL support
+![Quick start](/assets/adb-quick-start.png)
 
-1. Goto the publisher portal and import your API definition file (accepts swagger or WSDL files). 
-
-![Import your swagger definition](/assets/aam-import-swagger.png)
-
-2. Adjust various settings in the publisher portal to your liking
-3. You can even add new operation via the user interface.
-
-![Add an operation](/assets/aam-add-operation.png)
+2. Provision your document DB instance
+3. Create a collection and database
+4. Upload your JSON documents into the database you created
+5. Experiment with some queries in the query explorer
+6. Load the following scr 
 
 
-[Azure API Management Documentation](https://docs.microsoft.com/en-us/azure/api-management/api-management-key-concepts)
 
+### Just add JSON
 
-*Price:* Currently starts at $50 per month
-*Good:* Loads of features
-*Not so good:* Bigger learning curve, takes a while to provision, its up to you to create a client side API and datasources.
+Clearly, there is a correlation between cost and convenience - so the choice is yours.
+
+These tools are the developers equivalent of a chainsaws, highly effective, and capable of carving off your own limbs. Put these techniques in your 'quick and dirty' toolbox, not your 'imma build me a business' toolbox.
+
+With one of the tools used above, all you need is an idea of the data structure you would like to host, some knowledge of your target environment and some exploration. Those ingredients can get you working against something real in no time, and each can scale in complexity with you as you go forward.
+
 
 
 
