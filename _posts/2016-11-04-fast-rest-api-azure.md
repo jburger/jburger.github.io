@@ -156,6 +156,8 @@ With one of the tools used above, all you need is an idea of the data structure 
 
 Those ingredients can get you working against something real in no time, and each can scale in complexity with you as you go forward.
 
+*Please note all prices were based on estimates provided from the links I've provided at time of writing, and may be out of date, please refer to the company pricing guides for up to date information*
+
 
 
 
