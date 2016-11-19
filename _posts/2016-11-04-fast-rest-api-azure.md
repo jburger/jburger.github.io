@@ -1,3 +1,17 @@
+---
+layout: "post"
+title: "Fast & Furious REST APIs"
+date: "2016-11-19"
+categories: web
+published: true
+author: Jim Burger
+tags:
+- REST API
+- Firebase
+- Azure
+- DocumentDB
+- Swagger
+---
 
 ## Shipping is a feature
 
