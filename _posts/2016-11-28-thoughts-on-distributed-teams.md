@@ -23,7 +23,7 @@ The reason for going down this road was that we tried to 'in house' some work, o
 
 The hold up wasn't so much as software, as it was wrestling with operating systems and platforms that none of us had used in anger before. And then there is the danger of [not knowing what you don't know.](https://en.wikipedia.org/wiki/Experience)
 
-This re-iterated a lesson I have seen play out over several jobs now - that software is only a small part of the delivery skill. 
+This re-iterated a lesson I have seen play out over several jobs now - that software is only a small part of the delivery skill.  
 
 ## Infrastructure will need to scale to meet distributed demands
 
