@@ -41,7 +41,11 @@ Things were blissful until an internal team member wanted to deploy to our testi
 
 ![Our duck was cooked](/assets/cooked-duck.png)
 
-So this pain encouraged us to further automate our build pipeline such that subsequent test environments could be created to keep up with in increase in demand for testing (thankyou again, Octopus Deploy). It made us rethink our versioning and branch policies. *A whole lot of growth came from the simple realization that people outside the building were depending on us to get those things right.* A customer will push you to better UX, but an API consumer will push your platform quality in other directions.
+So this pain encouraged us to further automate our build pipeline such that subsequent test environments could be created to keep up with in increase in demand for testing (thankyou again, Octopus Deploy). 
+
+It made us rethink our versioning and branch policies. *A whole lot of growth came from the simple realization that developers outside the building were depending on us to get those things right.* 
+
+> A customer will push you to better UX, better performance, but a new team member will push your process quality forward.
 
 ## Benefits
 
