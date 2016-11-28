@@ -19,7 +19,7 @@ tags:
 
 Something new for me over the last 6 months has been to take part in the selection and management of distributed, outsourced talent being involved in our development process. It has become fashionable to beat up on outsourcing of late, so I met this task with a level of skepticism while keen to find some truth out for myself.
 
-The reason for going down this road was that we tried to 'in house' some work, on a foreign technology stack (to us) - and it took more than double the time we expected it to, even when dishing out kid gloves. Not great, especially since this was not our core business, but still vital for our product to be viable in the market. _Time to market_ is also a big problem, so we needed deliverables fast.
+The reason for going down this road was that we tried to 'in house' some work, on a foreign technology stack (to us) - and it took more than double the time we expected it to, even when dishing out kid gloves. Not great, *especially since this was not our core business*, but still vital for our product to be viable in the market. _Time to market_ is also a big problem, so we needed deliverables fast.
 
 The hold up wasn't so much as software, as it was wrestling with operating systems and platforms that none of us had used in anger before. And then there is the danger of [not knowing what you don't know.](https://en.wikipedia.org/wiki/Experience)
 
@@ -31,7 +31,7 @@ After spending a significant amount of energy ensuring we had _some_ ducks, and 
 
 ![ducks in a row...kinda](/assets/ducks-row.png)
 
-Since our department had tales of previously failed outsourcing attempts, we had to tread carefully lest we be the subject of the dreaded 'I told you so' and the inevitable cries of 'outsourcing never works, and cannot work and you are bad for even thinking that it could'. That said, we received excellent management support for what we were undertaking.
+Since our department had tales of previously failed outsourcing attempts, we had to tread carefully lest we be the subject of the dreaded *'I told you so'* and the inevitable cries of *'outsourcing never works, and cannot work and you are bad for even thinking that it could'.* That said, we received excellent management support for what we were undertaking.
 
 > Things were blissful until...
  
@@ -41,7 +41,7 @@ Things were blissful until an internal team member wanted to deploy to our testi
 
 ![Our duck was cooked](/assets/cooked-duck.png)
 
-So this pain encouraged us to further automate our build pipeline such that subsequent test environments could be created to keep up with in increase in demand for testing (thankyou again, Octopus Deploy). It made us rethink our versioning and branch policies. A whole lot of growth came from the simple realization that people outside the building were depending on us to get those things right. A customer will push you to better UX, but an API consumer will push your documentation quality.
+So this pain encouraged us to further automate our build pipeline such that subsequent test environments could be created to keep up with in increase in demand for testing (thankyou again, Octopus Deploy). It made us rethink our versioning and branch policies. *A whole lot of growth came from the simple realization that people outside the building were depending on us to get those things right.* A customer will push you to better UX, but an API consumer will push your platform quality in other directions.
 
 ## Benefits
 
