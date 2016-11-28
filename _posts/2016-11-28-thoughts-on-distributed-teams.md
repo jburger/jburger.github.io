@@ -13,17 +13,19 @@ tags:
 
 > TLDR; I learned that outsourcing small tasks to complement your teams skills can work really, really well, and that it can cause good growth within your own team at the same time. There are some challenges though, and its not all roses...
 
-## New experiences: Outsourcing
+## Delivery as a skill
 
-> Software is the easy part. Delivery takes focus.
+> Software is only a small part of the delivery 
 
-Something new for me over the last 6 months has been to take part in the selection and management of distributed, outsourced talent being involved in our development process. It has become [fashionable to beat up on outsourcing](http://www.onlinemba.com/blog/video-why-outsourcing-is-bad-for-business/) of late, so I met this task with a level of skepticism.
+Something new for me over the last 6 months has been to take part in the selection and management of distributed, outsourced talent being involved in our development process. It has become fashionable to beat up on outsourcing of late, so I met this task with a level of skepticism while keen to find some truth out for myself.
 
 The reason for going down this road was that we tried to 'in house' some work, on a foreign technology stack (to us) - and it took more than double the time we expected it to, even when dishing out kid gloves. Not great, especially since this was not our core business, but still vital for our product to be viable in the market. _Time to market_ is also a big problem, so we needed deliverables fast.
 
 The hold up wasn't so much as software, as it was wrestling with operating systems and platforms that none of us had used in anger before. And then there is the danger of [not knowing what you don't know.](https://en.wikipedia.org/wiki/Experience)
 
-This drummed home a lesson I have witnessed play out over several jobs now - software is the easy part. Delivery takes focus. It also re-iterated another common truth - getting the right team together is more important than getting the right tools together.
+This re-iterated a lesson I have seen play out over several jobs now - that software is only a small part of the delivery skill. 
+
+## Infrastructure will need to scale to meet distributed demands
 
 After spending a significant amount of energy ensuring we had _some_ ducks, and that they _resembled_ a row, we proceeded to use a popular online talent recruitment service to quickly find developers from all over the globe that had a particular background useful for our project.
 
@@ -55,6 +57,7 @@ So this pain encouraged us to further automate our build pipeline such that subs
 - You may find new sources of distraction from your main tasks - especially if your process has flaws
 - Expect to do lots of vetting. Put up a good size piece of work and the whole site will crawl all over it. 
 - You can overdo outsourcing. [Don't outsource your brain.](https://blackpepper.co.uk/blog/dont-outsource-your-brain)
+- You will need to be culturally aware, or at least aware that all people communicate discomfort/uncertainty in different ways when faced with authoritarian figures. School up on these subleties if you want to succeed. [EXCELLENT dissection of the impact of PDI on your management of outsourced talent](http://www.lessonsoffailure.com/developers/real-reason-outsourcing-fails/) - I believe this phenomenon is more prevalent that the article suggests and certainly isn't limited to countries IMO.
 
 ## Observations
 
@@ -63,7 +66,8 @@ So this pain encouraged us to further automate our build pipeline such that subs
 - Allow those you've hired to estimate the work and allow them that time to complete. For one thing it is a sign of simple respect, but also, you are getting help at a great rate, so no need to squeeze this unless people stop meeting their own targets.
 - Use a project management service that allows for setting up payment milestones. Very useful to ensure quality and that everybody is happy to continue. Use those milestones to keep track of progress.
 - Do homework on the applicants, in terms of their overall statistics for delivery as provided by the project management platform. It took us a while to find an applicant who was interested at the right price, but had a demonstrated 'habit of delivery on time'. However, some skepticism is required when selecting, as the systems in place appear to be easily flaunted, given enough time and energy - something a bored developer may well possess.
-- Staying on top of comms takes a new dimension, as its easy for either side of the equation to go dark, so appointing somebody responsible for contractor communications, who is on your development team is recommended.
+- Staying on top of comms takes on new dimensions, as its easy for either side of the equation to go dark, so appointing somebody responsible for contractor communications, who is on your development team is recommended. 
+- You cannot over communicate.
 - You'll want to ensure you have infrastructure & policies set up such that externals can safely and securely step in and out of work with your organization. Before you get hiring :)
 - The people who live from these headhunting sites are real, talented people, who a very hungry for work. Moral of that story, is don't get complacent in a cushy coding job - either become [hyperproductive](http://blog.aha.io/5-tips-of-hyper-productive-developers/) or start learning skills your business industry won't/can't outsource.
 - There is something very satisfying seeing another team of developers whom you've never met, deliver quickly based on the quality of code and documentation you've already provided.
