@@ -17,13 +17,14 @@ tags:
 - [New Terms](#terms)
 - [Differences to virtual machines](#differences)
 - [Collaborative infrastructure](#collab)
-- [Example: dotnet core running on linux](#dotnetcore)
+- [Example: dotnet core container](#dotnetcore)
 - [Common commands](#commands)
 - [Example: networking containers with compose](#compose)
 - [Example: scaling out a service](#scale-out)
 - [Scaling Teamwork](#scaling-teamwork)
 
 <a name="docker"></a>
+
 ## Docker is everywhere
 
 > I noticed the other day that Docker is now a first class citizen amongst the big three cloud providers.
