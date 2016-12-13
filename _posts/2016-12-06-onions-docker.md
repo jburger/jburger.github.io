@@ -229,13 +229,13 @@ Among many other features - docker-compose allows you to create more instances o
 Let's imagine that marketing have just had a successful campaign to generate loads of interest and you are expecting a rush of registration notifications to get sent.
 
 ```bash
-# scale out our notification service with 5 instances total
-docker-compose scale notification=5
+# scale out our notification service with 100 instances total
+docker-compose scale notification=100
 ``` 
 
 ![too much scale](/assets/100-containers.gif)
 
-_probably a few too many containers_
+_PRO(AM) TIP: 100 is probably a few too many containers for a single host. You might want to consider using [swarm mode!](https://docs.docker.com/engine/swarm/)_
 
 **Trap for new players** 
 For instance, doing this to a service that maps port 5000 externally - will fail because new copies of the service will try to use a port that is already in use.
