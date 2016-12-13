@@ -61,13 +61,13 @@ Docker has a great [glossary available here](https://docs.docker.com/engine/refe
 
 Essentially, a registry holds a bunch of images from different publishers, who can store many images, which in turn have many different 'flavours' known as tags.
 
-> A tag is version of an image that you'll use to create a running container. 
+> A tag is a version of an image that you'll use to create a running container. 
 >
 > Form: [publisher]/[image-name]:[tag]
 >
-> E.g microsoft/dotnet:1.0.1-runtime, rabbitmq:latest
+> E.g microsoft/dotnet:1.0.1-runtime
 
-_Note: if you omit the publisher, Docker will assume you mean its official set of images. If you omit the tag, it will assume you mean the latest_
+_Note: if you omit the publisher, Docker will assume you mean its official set of images. If you omit the tag, it will assume you mean the latest. E.g. image name 'rabbitmq' uses the official, latest rabbitmq image_
 
 [Back to Contents](#TOC)
 
@@ -95,13 +95,14 @@ Something that I think makes Docker easy to learn, is that it treats the problem
 
 [Docker hub](https://hub.docker.com) is effectively a meeting place where people all over the world are collaboratively building 'fit for purpose' environments, layer by layer, rating their quality and following their progress. The built-in integration with Github allows consumers an avenue for contributing and lodging issues.
 
+![docker hub](/assets/docker-hub.png)
+
 This means:
+
 - We don't need to store a whole repository full of bash or powershell script files to reproduce an environment
 - Resultant images *only have what is required for your software to run*
 - Images are typically small enough to proliferate over the web. E.g. Microsoft's dotnet image is ~250MB compressed. The official debian base images start at around ~50MB. _No that is not a typo. Megabytes._ 
 - Ability to build from commonly shared, 'known good' images, making the ecosystem **accessible, social and self-correcting.**
-
----
 
 [Back to Contents](#TOC)
 
@@ -120,7 +121,7 @@ dotnet publish -c Release
 
 *Then I'll create an image definition file - or 'Dockerfile'*
 
-```
+```Docker
 # Use the official container
 FROM Microsoft/dotnet:latest
 
@@ -229,8 +230,23 @@ cd /path/to/docker-compose.yml
 docker-compose up -d 
 # -d starts these containers as background services, omit if you want to console log output 
 ```
+A few things to note:
 
-Notice how I used labels for those services? We'll use these to start scaling out.
+- If our backbone dies, it is configured to automatically restart
+- I used labels to name my services, I'll use these as references in scaling commands later
+- Dependencies determine startup order, but services wont wait for a dependency to finish loading. 
+
+> **A word on the subject of controlling startup order** 
+>
+> [TFM states...](https://docs.docker.com/compose/startup-order/) 
+> 
+>
+> 'The problem of waiting for a database (for example) to be ready is really just a subset of a larger problem of distributed systems. In production, your database could become unavailable or move hosts at any time. Your application needs to be resilient to these types of failures.'  
+>
+>
+> ^^
+> **My tip: Substitute the word 'database' for anything you consider to be 'central'**  
+
 
 [Back to Contents](#TOC)
 
@@ -249,26 +265,12 @@ docker-compose scale notification=100
 
 ![too much scale](/assets/100-containers.gif)
 
-_PRO(AM) TIP: 100 is probably a few too many containers for a single host. You might want to consider using [swarm mode!](https://docs.docker.com/engine/swarm/)_
+_TIP: 100 is might be too many containers for a single host. In that case, you might want to consider using [swarm mode!](https://docs.docker.com/engine/swarm/)_
 
 **Trap for new players** 
-For instance, doing this to a service that maps port 5000 externally - will fail because new copies of the service will try to use a port that is already in use.
+For instance, scaling a service that uses a port mapping (e.g 5000-> 5000 externally) - will fail because new copies of the service will try to use a port that is already in use!
 
 Unfortunately, docker-compose is not quite smart enough to handle this ([yet](https://github.com/docker/compose/issues/722)).
-
-> **A word on the subject of controlling startup order** 
->
-> _Oh the epiphany I had when I learned this lesson! Bittersweet moments :)_ 
-> 
->
-> 'The problem of waiting for a database (for example) to be ready is really just a subset of a larger problem of distributed systems. In production, your database could become unavailable or move hosts at any time. Your application needs to be resilient to these types of failures.'  
->
-> [This advice right here](https://docs.docker.com/compose/startup-order/) 
->
-> ^^
-> **My tip: Substitute the word 'database' for anything you consider to be 'central' or 'cross cutting'**  
-
-All you are bound by is the performance profile of the system you deploy this to, and as I hinted to above - you can host containers on cloud providers to give you scale **up** as well as **out**.
 
 [Back to Contents](#TOC)
 
@@ -278,7 +280,7 @@ All you are bound by is the performance profile of the system you deploy this to
 
 As a parting thought, there is scope for not only scaling out and up, but scaling your team. Docker could be used as part of a microservices architecture to good effect, and done well, could yield some less tangible - yet equally profound gains.
 
-So much [well](damianm.com/articles/human-benefits-of-a-microservice-architecture) [researched](https://en.wikipedia.org/wiki/Conway%27s_law) [content](https://blog.bufferapp.com/small-teams-why-startups-often-win-against-google-and-facebook-the-science-behind-why-smaller-teams-get-more-done) [exists](http://martinfowler.com/articles/microservices.html) on the subject of [team structure and its impact on your architecture](https://www.thoughtworks.com/radar/techniques/inverse-conway-maneuver). I've enjoyed reading these articles and have similar experience, I hope they inspire you to enact change in your team!
+So much [well](http://damianm.com/articles/human-benefits-of-a-microservice-architecture) [researched](https://en.wikipedia.org/wiki/Conway%27s_law) [content](https://blog.bufferapp.com/small-teams-why-startups-often-win-against-google-and-facebook-the-science-behind-why-smaller-teams-get-more-done) [exists](http://martinfowler.com/articles/microservices.html) on the subject of [team structure and its impact on your architecture](https://www.thoughtworks.com/radar/techniques/inverse-conway-maneuver). I've enjoyed reading these articles and have similar experience, I hope they inspire you to enact change in your team!
 
 ## In Summary
 
