@@ -26,27 +26,32 @@ tags:
 <a name="docker"></a>
 ## Docker is everywhere
 
-> I noticed the other day that Docker is now a first class citizen amongst the big three cloud providers. 
+> I noticed the other day that Docker is now a first class citizen amongst the big three cloud providers.
+> 
 > - [Azure Container Service](https://azure.microsoft.com/en-us/services/container-service/)
 > - [Amazon Container Service](https://aws.amazon.com/ecs/)
 > - [Google Container Engine](https://cloud.google.com/container-engine/)
 >
 > [Windows server 2016](https://msdn.microsoft.com/en-us/virtualization/windowscontainers/quick_start/quick_start_windows_server) and [windows 10](https://msdn.microsoft.com/en-us/virtualization/windowscontainers/quick_start/quick_start_windows_10) both support [windows nano containers](https://channel9.msdn.com/Series/Nano-Server-Team) too! 
 
-We use [Vagrant](https://www.vagrantup.com) at work for our 'infrastructure as code' a lot and I do love their tool set, but I've been using Docker for personal projects for a good year now. We have used it for development environments at work, but I am keen to see it form part of our production infrastructure at some point. So I thought I'd brain dump what I've picked up over the last 12 months to share with others.
+We use [Vagrant](https://www.vagrantup.com) at work for our development virtual machines a lot and I love their tool set. We have also started using docker for more complex scenarios development environments. I've also been using Docker for personal projects for a good year now.
 
-Hopefully this article will help navigate this area of knowledge. If you spot something that I have wrong, or is out of date, please let me know!
+Docker has some great features that set it apart from other virtualization technologies that I'll try to explain.
+
+The following is brain dump of learnings I've picked up over the last 12 months of casual use.
+
+Hopefully this article will help someone else navigate this area of knowledge. If you spot something that I have wrong, or is out of date, please let me know!
 
 <a name="terms"></a>
 ## New Terms
 
-There are some terms that didn't immediately make sense to me when I got started, and I found that getting over the terminology is required when introducing people to the tech. 
+There are some terms that didn't immediately make sense to me when I got started, and I've found that getting others over the terminology hump is required when introducing people to the tech. 
 
 Docker has a great [glossary available here](https://docs.docker.com/engine/reference/glossary/) if you are interested in the formal definitions. 
 
 *Not everyone likes reading glossaries... so here is my unofficial guide to Docker 'things'...*
 
-![Docker image registries](assets/docker-things.png)
+![Docker image registries](/assets/docker-things.png)
 
 Essentially, a registry holds a bunch of images from different publishers, who can store many images, which in turn have many different 'flavours' known as tags.
 
@@ -149,7 +154,7 @@ Networking in Docker is equally declarative, with its suite of other CLI tools t
 
 For [a really oversimplified] example, consider a website, where notifications to users have been decoupled from the web application, and these two components need to communicate with each other, via a queue.
 
-![system design](assets/partytime-design.png)
+![system design](/assets/partytime-design.png)
 
 While we can expose ports in Dockerfiles, we could also use [docker-compose](https://docs.docker.com/compose/overview/) (part of the docker toolbox) and feed it a configuration template in YAML:
 
@@ -215,7 +220,7 @@ Let's imagine that marketing have just had a successful campaign to generate loa
 docker-compose scale notification=5
 ``` 
 
-![too much scale](assets/100-containers.gif)
+![too much scale](/assets/100-containers.gif)
 
 _probably a few too many containers_
 
@@ -243,7 +248,7 @@ All you are bound by is the performance profile of the system you deploy this to
 <a name="scaling-teamwork"></a>
 As a parting thought, there is scope for not only scaling out and up, but scaling your team. Docker could be used as part of a microservices architecture to good effect, and done well, could yield some less tangible - yet equally profound gains.
 
-So much [well](damianm.com/articles/human-benefits-of-a-microservice-architecture), [researched](https://en.wikipedia.org/wiki/Conway%27s_law) [content](https://blog.bufferapp.com/small-teams-why-startups-often-win-against-google-and-facebook-the-science-behind-why-smaller-teams-get-more-done) [exists](http://martinfowler.com/articles/microservices.html) on the subject of [team structure and its impact on your architecture](https://www.thoughtworks.com/radar/techniques/inverse-conway-maneuver). I've enjoyed reading these articles and have similar experience, I hope they inspire you to enact change in your team!
+So much [well](damianm.com/articles/human-benefits-of-a-microservice-architecture) [researched](https://en.wikipedia.org/wiki/Conway%27s_law) [content](https://blog.bufferapp.com/small-teams-why-startups-often-win-against-google-and-facebook-the-science-behind-why-smaller-teams-get-more-done) [exists](http://martinfowler.com/articles/microservices.html) on the subject of [team structure and its impact on your architecture](https://www.thoughtworks.com/radar/techniques/inverse-conway-maneuver). I've enjoyed reading these articles and have similar experience, I hope they inspire you to enact change in your team!
 
 ## In Summary
 
