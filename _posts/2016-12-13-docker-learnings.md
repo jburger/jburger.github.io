@@ -124,7 +124,7 @@ dotnet publish -c Release
 *Then I'll create an image definition file - or 'Dockerfile'*
 
 ```Docker
-# Use the official container
+# Use the Microsoft's latest dotnet container
 FROM Microsoft/dotnet:latest
 
 # bring some binaries into this container 
