@@ -140,6 +140,8 @@ That's it.
 
 [Microsoft's Dockerfile](https://hub.docker.com/r/microsoft/dotnet/~/dockerfile/) has already done the dotnet installation for us, and is in turn based on another image for a popular linux distribution - [Debian version 8.x aka 'Jesse'](https://hub.docker.com/_/buildpack-deps/)
 
+[Back to Contents](#TOC)
+
 <a name="commands"></a>
 
 ## Common commands
@@ -267,10 +269,9 @@ docker-compose scale notification=100
 
 ![too much scale](/assets/100-containers.gif)
 
-_TIP: 100 is might be too many containers for a single host. In that case, you might want to consider using [swarm mode!](https://docs.docker.com/engine/swarm/)_
+_TIP: Depending on memory footrpint, 100 might be too many containers for a single host. In that case, you might want to consider using [swarm mode!](https://docs.docker.com/engine/swarm/)_
 
-**Trap for new players** 
-For instance, scaling a service that uses a port mapping (e.g 5000-> 5000 externally) - will fail because new copies of the service will try to use a port that is already in use!
+**Trap for new players** Scaling a service that uses a port mapping (e.g 5000-> 5000 externally) - will fail because new copies of the service will try to use a port that is already in use!
 
 Unfortunately, docker-compose is not quite smart enough to handle this ([yet](https://github.com/docker/compose/issues/722)).
 
