@@ -13,8 +13,8 @@ tags:
 
 ### Contents
 
-- [Docker is officially a thing](#thing)
-- [Terms](#terms)
+- [Docker is everywhere](#thing)
+- [New Terms](#terms)
 - [Differences to virtual machines](#differences)
 - [Collaborative infrastructure](#collab)
 - [Example: dotnet core running on linux](#dotnetcore)
@@ -23,8 +23,9 @@ tags:
 - [Example: scaling out a service](#scale-out)
 - [Scaling Teamwork](#scaling-teamwork)
 
-## Docker is officially a 'thing'
 <a name="docker"></a>
+## Docker is everywhere
+
 > I noticed the other day that Docker is now a first class citizen amongst the big three cloud providers. 
 > - [Azure Container Service](https://azure.microsoft.com/en-us/services/container-service/)
 > - [Amazon Container Service](https://aws.amazon.com/ecs/)
@@ -32,19 +33,20 @@ tags:
 >
 > [Windows server 2016](https://msdn.microsoft.com/en-us/virtualization/windowscontainers/quick_start/quick_start_windows_server) and [windows 10](https://msdn.microsoft.com/en-us/virtualization/windowscontainers/quick_start/quick_start_windows_10) both support [windows nano containers](https://channel9.msdn.com/Series/Nano-Server-Team) too! 
 
-We use [Vagrant](https://www.vagrantup.com) at work for our 'infrastructure as code' a lot and I do love their toolset, but I've been using Docker for personal projects for a good year now. So I thought I'd brain dump what I've picked up in that time. 
+We use [Vagrant](https://www.vagrantup.com) at work for our 'infrastructure as code' a lot and I do love their tool set, but I've been using Docker for personal projects for a good year now. So I thought I'd brain dump what I've picked up in that time. 
 
 Hopefully this article will help others navigate this area of knowledge. If you spot something that I have wrong, or is out of date, please let me know!
 
-## So many new words
 <a name="terms"></a>
+## New Terms
+
 There are some terms that didn't immediately make sense to me when I got started, and I found that getting over the terminology is required when introducing people to the tech. 
 
-There is an excellent [glossary available here](https://docs.docker.com/engine/reference/glossary/) and its required reading. 
+Docker has a great [glossary available here](https://docs.docker.com/engine/reference/glossary/) if you are interested in the formal definitions. 
 
-*Not eveyone likes reading glossaries... so here is my unofficial guide to Docker 'things'...*
+*Not everyone likes reading glossaries... so here is my unofficial guide to Docker 'things'...*
 
-![Docker image registries](../assets/docker-things.png)
+![Docker image registries](assets/docker-things.png)
 
 Essentially, a registry holds a bunch of images from different publishers, who can store many images, which in turn have many different 'flavours' known as tags.
 
@@ -58,11 +60,11 @@ _Note: if you omit the publisher, Docker will assume you mean its official set o
 
 ## Containers are not virtual machines
 <a name="differences"></a>
-Containers are the running instances of an image/tag. These [are different to virtual machines](http://stackoverflow.com/a/16048358) in a number of ways, primarily in terms of security. 
+Containers are the running instances of an image/tag. These [are different to virtual machines](http://stackoverflow.com/a/16048358) in some ways, primarily in terms of security. 
 
 > Unlike a virtual machine, an elevated application running in a docker container can access the underlying host.
 >
-> So treat your containers as you would a server application: _use least priveledge as much as possible, and drop priveledge when no longer required._
+> So treat your containers as you would a server application: _use least privilege as much as possible, and drop privilege when no longer required._
 
 ## Containers are onions
 <a name="collab"></a>
@@ -72,30 +74,31 @@ _Probably not as edible as this container_
 
 Something that I think makes Docker easy to learn, is that it treats the problem of machine configuration as a series of layers, each adding a small amount of functionality required by its consumers and no more. Like an onion. Or a cake.
 
-[Docker hub](https://hub.docker.com) is effectively a meeting place where people all over the world are collaboratively building 'fit for purpose' environments, layer by layer, rating their quality and following their progress. The built in integration with Github allows consumers an avenue for contributing and lodging issues.
+[Docker hub](https://hub.docker.com) is effectively a meeting place where people all over the world are collaboratively building 'fit for purpose' environments, layer by layer, rating their quality and following their progress. The built-in integration with Github allows consumers an avenue for contributing and lodging issues.
 
 This means:
-- We dont need to store a whole repository full of bash or powershell script files to reproduce an environment
+- We don't need to store a whole repository full of bash or powershell script files to reproduce an environment
 - Resultant images *only have what is required for your software to run*
 - Images are typically small enough to proliferate over the web. E.g. Microsoft's dotnet image is ~250MB compressed. The official debian base images start at around ~50MB. _No that is not a typo. Megabytes._ 
-- Ability to build from commonly shared, 'known good' images, making the whole ecosystem **accessible, social and self-correcting.**
+- Ability to build from commonly shared, 'known good' images, making the ecosystem **accessible, social and self-correcting.**
 
 ---
 
+<a name="dotnetcore"></a>
 ## Talk is cheap, show me the code
 
-<text>-</text> Linus Torvalds
-<a name="dotnetcore"></a>
-For example, if I want to build a .net application and deploy it onto a useful image, I can use [Microsoft's latest 'dotnet' image](https://hub.docker.com/r/microsoft/dotnet/) as a base to build my own: 
+For example, if I want to build a .net application and deploy it to a useful image, I can use [Microsoft's latest 'dotnet' image](https://hub.docker.com/r/microsoft/dotnet/) as a base to build my own: 
 
 *First, I publish my app*
+
 ```bash
 cd /path/to/project.json # soon to be csproj
 dotnet publish -c Release
 ```
 
 *Then I'll create an image definition file - or 'Dockerfile'*
-```Docker
+
+```
 # Use the official container
 FROM Microsoft/dotnet:latest
 
@@ -146,11 +149,12 @@ Networking in Docker is equally declarative, with its suite of other CLI tools t
 
 For [a really oversimplified] example, consider a website, where notifications to users have been decoupled from the web application, and these two components need to communicate with each other, via a queue.
 
-![system design](../assets/partytime-design.png)
+![system design](assets/partytime-design.png)
 
 While we can expose ports in Dockerfiles, we could also use [docker-compose](https://docs.docker.com/compose/overview/) (part of the docker toolbox) and feed it a configuration template in YAML:
 
 _a docker-compose.yml configuration_
+
 ```yaml
 # define some services
 services:
@@ -188,7 +192,6 @@ services:
       - notifications.env
     depends_on: 
         - backbone
-
 ```
 
 This whole environment is brought up with a single call to compose like this:
@@ -196,16 +199,14 @@ This whole environment is brought up with a single call to compose like this:
 ```bash
 cd /path/to/docker-compose.yml
 docker-compose up -d 
-# -d starts this all as background services, omit if you want to console log output 
+# -d starts these containers as background services, omit if you want to console log output 
 ```
 
-This is not a lot of 'code'.
-
-By the way, and take note of the labels I've used in the file, they are important...
+Notice how I used labels for those services? We'll use these to start scaling out.
 
 ### Scaling services sideways
 <a name="scale-out"></a>
-Amongst many other features - docker-compose allows you to create more instances of your named services:
+Among many other features - docker-compose allows you to create more instances of your named services:
 
 Let's imagine that marketing have just had a successful campaign to generate loads of interest and you are expecting a rush of registration notifications to get sent.
 
@@ -214,10 +215,11 @@ Let's imagine that marketing have just had a successful campaign to generate loa
 docker-compose scale notification=5
 ``` 
 
-![too much scale](../assets/100-containers.gif)
+![too much scale](assets/100-containers.gif)
+
 _probably a few too many containers_
 
-**Now, not everything is that simple.** 
+**Trap for new players** 
 For instance, doing this to a service that maps port 5000 externally - will fail because new copies of the service will try to use a port that is already in use.
 
 Unfortunately, docker-compose is not quite smart enough to handle this ([yet](https://github.com/docker/compose/issues/722)).
@@ -227,7 +229,7 @@ Unfortunately, docker-compose is not quite smart enough to handle this ([yet](ht
 > _Oh the epiphany I had when I learned this lesson! Bittersweet moments :)_ 
 > 
 >
-> 'The problem of waiting for a database (for example) to be ready is really just a subset of a much larger problem of distributed systems. In production, your database could become unavailable or move hosts at any time. Your application needs to be resilient to these types of failures.'  
+> 'The problem of waiting for a database (for example) to be ready is really just a subset of a larger problem of distributed systems. In production, your database could become unavailable or move hosts at any time. Your application needs to be resilient to these types of failures.'  
 >
 > [This advice right here](https://docs.docker.com/compose/startup-order/) 
 >
@@ -239,12 +241,18 @@ All you are bound by is the performance profile of the system you deploy this to
 ## Scaling teamwork
 
 <a name="scaling-teamwork"></a>
-Yes its possible to scale out with docker-compose, and possible to scale up with Azure, but have you considered _scaling your depth?_
+So now we can see that it is possible to scale out with docker-compose, and it is possible to scale up with Azure/AWS/Google.
 
-So much [great](damianm.com/articles/human-benefits-of-a-microservice-architecture), [well researched](https://en.wikipedia.org/wiki/Conway%27s_law) [content](https://blog.bufferapp.com/small-teams-why-startups-often-win-against-google-and-facebook-the-science-behind-why-smaller-teams-get-more-done) [exists](http://martinfowler.com/articles/microservices.html) on the subject of scaling architecture and teamwork, but rather than regurgitate it all I'll just leave you with some of my favourite pictures, collected on my own journey of learning.
+There is is a deeper purpose here though: what about _scaling your team better?_
+
+So much [great](damianm.com/articles/human-benefits-of-a-microservice-architecture), [well researched](https://en.wikipedia.org/wiki/Conway%27s_law) [content](https://blog.bufferapp.com/small-teams-why-startups-often-win-against-google-and-facebook-the-science-behind-why-smaller-teams-get-more-done) [exists](http://martinfowler.com/articles/microservices.html) on the subject of the impact of team design and its impact on your architecture.
+
+You can leverage these observations in the field: here are two of my favourite images that sum this up (credit goes to Sam Newman @ martinfowler.com)
 
 ![Siloed functional teams](http://martinfowler.com/articles/microservices/images/conways-law.png)
+
 *Siloed functional teams produce siloed application architectures with capabilities that nobody owns from end to end.*
 
 ![](http://martinfowler.com/articles/microservices/images/PreferFunctionalStaffOrganization.png)
+
 *Cross functional teams produce code they can own from end to end, that fits in with other code that other teams own.*
