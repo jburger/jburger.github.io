@@ -258,7 +258,7 @@ A few things to note:
 
 ### Scaling services sideways
 
-Among many other features - docker-compose allows you to create more instances of your named services:
+Among other features, docker-compose allows you to create more instances of your named services:
 
 Let's imagine that marketing have just had a successful campaign to generate loads of interest and you are expecting a rush of registration notifications to get sent.
 
@@ -269,7 +269,7 @@ docker-compose scale notification=100
 
 ![too much scale](/assets/100-containers.gif)
 
-_TIP: Depending on memory footrpint, 100 might be too many containers for a single host. In that case, you might want to consider using [swarm mode!](https://docs.docker.com/engine/swarm/)_
+_TIP: Depending on memory footprint, 100 might be too many containers for a single host. In that case, you might want to consider using [swarm mode!](https://docs.docker.com/engine/swarm/)_
 
 **Trap for new players** Scaling a service that uses a port mapping (e.g 5000-> 5000 externally) - will fail because new copies of the service will try to use a port that is already in use!
 
