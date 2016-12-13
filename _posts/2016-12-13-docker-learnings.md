@@ -1,6 +1,6 @@
 ---
 layout: "post"
-title: "Onions, Docker and Infrastructure Composition"
+title: "Docker, Compose and Infrastructure As Code"
 date: "2016-12-13"
 categories: web
 published: true
@@ -96,6 +96,8 @@ Something that I think makes Docker easy to learn, is that it treats the problem
 [Docker hub](https://hub.docker.com) is effectively a meeting place where people all over the world are collaboratively building 'fit for purpose' environments, layer by layer, rating their quality and following their progress. The built-in integration with Github allows consumers an avenue for contributing and lodging issues.
 
 ![docker hub](/assets/docker-hub.png)
+
+_Microsoft's docker hub account_
 
 This means:
 
