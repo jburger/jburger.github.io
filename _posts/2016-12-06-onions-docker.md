@@ -43,6 +43,7 @@ The following is brain dump of learnings I've picked up over the last 12 months 
 Hopefully this article will help someone else navigate this area of knowledge. If you spot something that I have wrong, or is out of date, please let me know!
 
 <a name="terms"></a>
+
 ## New Terms
 
 There are some terms that didn't immediately make sense to me when I got started, and I've found that getting others over the terminology hump is required when introducing people to the tech. 
@@ -63,16 +64,20 @@ Essentially, a registry holds a bunch of images from different publishers, who c
 
 _Note: if you omit the publisher, Docker will assume you mean its official set of images. If you omit the tag, it will assume you mean the latest_
 
-## Containers are not virtual machines
 <a name="differences"></a>
+
+## Containers are not virtual machines
+
 Containers are the running instances of an image/tag. These [are different to virtual machines](http://stackoverflow.com/a/16048358) in some ways, primarily in terms of security. 
 
 > Unlike a virtual machine, an elevated application running in a docker container can access the underlying host.
 >
 > So treat your containers as you would a server application: _use least privilege as much as possible, and drop privilege when no longer required._
 
-## Containers are onions
 <a name="collab"></a>
+
+## Containers are onions
+
 ![Proof of edible containers](https://seagreentelecaster.files.wordpress.com/2011/09/daffodilteacup21.jpg)
 
 _Probably not as edible as this container_
@@ -90,6 +95,7 @@ This means:
 ---
 
 <a name="dotnetcore"></a>
+
 ## Talk is cheap, show me the code
 
 For example, if I want to build a .net application and deploy it to a useful image, I can use [Microsoft's latest 'dotnet' image](https://hub.docker.com/r/microsoft/dotnet/) as a base to build my own: 
@@ -120,8 +126,10 @@ That's it.
 
 [Microsoft's Dockerfile](https://hub.docker.com/r/microsoft/dotnet/~/dockerfile/) has already done the dotnet installation for us, and is in turn based on another image for a popular linux distribution - [Debian version 8.x aka 'Jesse'](https://hub.docker.com/_/buildpack-deps/)
 
-## Common commands
 <a name="commands"></a>
+
+## Common commands
+
 We can now perform a bunch of operations on our new container, here's some of the more common ones.
 
 To build this [image](https://docs.docker.com/engine/reference/glossary/#image), so that I can use it later, I invoke:
@@ -148,8 +156,10 @@ Of course, I can stamp out as many [containers](https://docs.docker.com/engine/r
 docker run myimage:latest
 ```
 
-## Networking is configuration too
 <a name="compose"></a>
+
+## Networking is configuration too
+
 Networking in Docker is equally declarative, with its suite of other CLI tools that allow us to define things like port numbers and volume mappings, and to define dependencies between the containers themselves. 
 
 For [a really oversimplified] example, consider a website, where notifications to users have been decoupled from the web application, and these two components need to communicate with each other, via a queue.
@@ -209,8 +219,10 @@ docker-compose up -d
 
 Notice how I used labels for those services? We'll use these to start scaling out.
 
-### Scaling services sideways
 <a name="scale-out"></a>
+
+### Scaling services sideways
+
 Among many other features - docker-compose allows you to create more instances of your named services:
 
 Let's imagine that marketing have just had a successful campaign to generate loads of interest and you are expecting a rush of registration notifications to get sent.
@@ -243,9 +255,10 @@ Unfortunately, docker-compose is not quite smart enough to handle this ([yet](ht
 
 All you are bound by is the performance profile of the system you deploy this to, and as I hinted to above - you can host containers on cloud providers to give you scale **up** as well as **out**.
 
+<a name="scaling-teamwork"></a>
+
 ## Scaling teamwork
 
-<a name="scaling-teamwork"></a>
 As a parting thought, there is scope for not only scaling out and up, but scaling your team. Docker could be used as part of a microservices architecture to good effect, and done well, could yield some less tangible - yet equally profound gains.
 
 So much [well](damianm.com/articles/human-benefits-of-a-microservice-architecture) [researched](https://en.wikipedia.org/wiki/Conway%27s_law) [content](https://blog.bufferapp.com/small-teams-why-startups-often-win-against-google-and-facebook-the-science-behind-why-smaller-teams-get-more-done) [exists](http://martinfowler.com/articles/microservices.html) on the subject of [team structure and its impact on your architecture](https://www.thoughtworks.com/radar/techniques/inverse-conway-maneuver). I've enjoyed reading these articles and have similar experience, I hope they inspire you to enact change in your team!
