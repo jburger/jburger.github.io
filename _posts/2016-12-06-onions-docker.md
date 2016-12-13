@@ -33,9 +33,9 @@ tags:
 >
 > [Windows server 2016](https://msdn.microsoft.com/en-us/virtualization/windowscontainers/quick_start/quick_start_windows_server) and [windows 10](https://msdn.microsoft.com/en-us/virtualization/windowscontainers/quick_start/quick_start_windows_10) both support [windows nano containers](https://channel9.msdn.com/Series/Nano-Server-Team) too! 
 
-We use [Vagrant](https://www.vagrantup.com) at work for our 'infrastructure as code' a lot and I do love their tool set, but I've been using Docker for personal projects for a good year now. So I thought I'd brain dump what I've picked up in that time. 
+We use [Vagrant](https://www.vagrantup.com) at work for our 'infrastructure as code' a lot and I do love their tool set, but I've been using Docker for personal projects for a good year now. We have used it for development environments at work, but I am keen to see it form part of our production infrastructure at some point. So I thought I'd brain dump what I've picked up over the last 12 months to share with others.
 
-Hopefully this article will help others navigate this area of knowledge. If you spot something that I have wrong, or is out of date, please let me know!
+Hopefully this article will help navigate this area of knowledge. If you spot something that I have wrong, or is out of date, please let me know!
 
 <a name="terms"></a>
 ## New Terms
@@ -243,11 +243,11 @@ All you are bound by is the performance profile of the system you deploy this to
 <a name="scaling-teamwork"></a>
 So now we can see that it is possible to scale out with docker-compose, and it is possible to scale up with Azure/AWS/Google.
 
-There is is a deeper purpose here though: what about _scaling your team better?_
+There is a deeper purpose here though: what about _scaling your team?_
 
-So much [great](damianm.com/articles/human-benefits-of-a-microservice-architecture), [well researched](https://en.wikipedia.org/wiki/Conway%27s_law) [content](https://blog.bufferapp.com/small-teams-why-startups-often-win-against-google-and-facebook-the-science-behind-why-smaller-teams-get-more-done) [exists](http://martinfowler.com/articles/microservices.html) on the subject of the impact of team design and its impact on your architecture.
+So much [great](damianm.com/articles/human-benefits-of-a-microservice-architecture), [well researched](https://en.wikipedia.org/wiki/Conway%27s_law) [content](https://blog.bufferapp.com/small-teams-why-startups-often-win-against-google-and-facebook-the-science-behind-why-smaller-teams-get-more-done) [exists](http://martinfowler.com/articles/microservices.html) on the subject of [team structure and its impact on your architecture](https://www.thoughtworks.com/radar/techniques/inverse-conway-maneuver).
 
-You can leverage these observations in the field: here are two of my favourite images that sum this up (credit goes to Sam Newman @ martinfowler.com)
+The observation that the structure of your team, impacts the structure of your code is a profound one, and can be leveraged to good effect: here are two of my favourite images that sum this up (credit goes to Martin Fowler)
 
 ![Siloed functional teams](http://martinfowler.com/articles/microservices/images/conways-law.png)
 
@@ -256,3 +256,7 @@ You can leverage these observations in the field: here are two of my favourite i
 ![](http://martinfowler.com/articles/microservices/images/PreferFunctionalStaffOrganization.png)
 
 *Cross functional teams produce code they can own from end to end, that fits in with other code that other teams own.*
+
+## In summary
+
+I've scratched the surface here, this a huge topic with many possibilities. Over my next few posts I'll look at the peripheral parts of the Docker ecosystem and how you can bring it into your team.
