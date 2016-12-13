@@ -37,7 +37,7 @@ tags:
 >
 > [Windows server 2016](https://msdn.microsoft.com/en-us/virtualization/windowscontainers/quick_start/quick_start_windows_server) and [windows 10](https://msdn.microsoft.com/en-us/virtualization/windowscontainers/quick_start/quick_start_windows_10) both support [windows nano containers](https://channel9.msdn.com/Series/Nano-Server-Team) too! 
 
-We use [Vagrant](https://www.vagrantup.com) at work for our development virtual machines a lot and I love their tool set. We have also started using docker for more complex scenarios development environments. I've also been using Docker for personal projects for a good year now.
+We use [Vagrant](https://www.vagrantup.com) at work for our development virtual machines a lot and I love their tool set. We have also started using docker for more complex development environments. I've also been using Docker for personal projects for a good year now.
 
 Docker has some great features that set it apart from other virtualization technologies that I'll try to explain.
 
