@@ -11,9 +11,11 @@ tags:
 - docker-compose
 ---
 
+<a name="TOC"></a>
+
 ### Contents
 
-- [Docker is everywhere](#thing)
+- [Docker is everywhere](#docker)
 - [New Terms](#terms)
 - [Differences to virtual machines](#differences)
 - [Collaborative infrastructure](#collab)
@@ -43,6 +45,8 @@ The following is brain dump of learnings I've picked up over the last 12 months 
 
 Hopefully this article will help someone else navigate this area of knowledge. If you spot something that I have wrong, or is out of date, please let me know!
 
+[Back to Contents](#TOC)
+
 <a name="terms"></a>
 
 ## New Terms
@@ -65,6 +69,8 @@ Essentially, a registry holds a bunch of images from different publishers, who c
 
 _Note: if you omit the publisher, Docker will assume you mean its official set of images. If you omit the tag, it will assume you mean the latest_
 
+[Back to Contents](#TOC)
+
 <a name="differences"></a>
 
 ## Containers are not virtual machines
@@ -74,6 +80,8 @@ Containers are the running instances of an image/tag. These [are different to vi
 > Unlike a virtual machine, an elevated application running in a docker container can access the underlying host.
 >
 > So treat your containers as you would a server application: _use least privilege as much as possible, and drop privilege when no longer required._
+
+[Back to Contents](#TOC)
 
 <a name="collab"></a>
 
@@ -94,6 +102,8 @@ This means:
 - Ability to build from commonly shared, 'known good' images, making the ecosystem **accessible, social and self-correcting.**
 
 ---
+
+[Back to Contents](#TOC)
 
 <a name="dotnetcore"></a>
 
@@ -156,6 +166,8 @@ Of course, I can stamp out as many [containers](https://docs.docker.com/engine/r
 ```bash
 docker run myimage:latest
 ```
+
+[Back to Contents](#TOC)
 
 <a name="compose"></a>
 
@@ -220,6 +232,8 @@ docker-compose up -d
 
 Notice how I used labels for those services? We'll use these to start scaling out.
 
+[Back to Contents](#TOC)
+
 <a name="scale-out"></a>
 
 ### Scaling services sideways
@@ -255,6 +269,8 @@ Unfortunately, docker-compose is not quite smart enough to handle this ([yet](ht
 > **My tip: Substitute the word 'database' for anything you consider to be 'central' or 'cross cutting'**  
 
 All you are bound by is the performance profile of the system you deploy this to, and as I hinted to above - you can host containers on cloud providers to give you scale **up** as well as **out**.
+
+[Back to Contents](#TOC)
 
 <a name="scaling-teamwork"></a>
 
