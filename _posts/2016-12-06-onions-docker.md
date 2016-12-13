@@ -241,22 +241,11 @@ All you are bound by is the performance profile of the system you deploy this to
 ## Scaling teamwork
 
 <a name="scaling-teamwork"></a>
-So now we can see that it is possible to scale out with docker-compose, and it is possible to scale up with Azure/AWS/Google.
+As a parting thought, there is scope for not only scaling out and up, but scaling your team. Docker could be used as part of a microservices architecture to good effect, and done well, could yield some less tangible - yet equally profound gains.
 
-There is a deeper purpose here though: what about _scaling your team?_
+So much [well](damianm.com/articles/human-benefits-of-a-microservice-architecture), [researched](https://en.wikipedia.org/wiki/Conway%27s_law) [content](https://blog.bufferapp.com/small-teams-why-startups-often-win-against-google-and-facebook-the-science-behind-why-smaller-teams-get-more-done) [exists](http://martinfowler.com/articles/microservices.html) on the subject of [team structure and its impact on your architecture](https://www.thoughtworks.com/radar/techniques/inverse-conway-maneuver). I've enjoyed reading these articles and have similar experience, I hope they inspire you to enact change in your team!
 
-So much [great](damianm.com/articles/human-benefits-of-a-microservice-architecture), [well researched](https://en.wikipedia.org/wiki/Conway%27s_law) [content](https://blog.bufferapp.com/small-teams-why-startups-often-win-against-google-and-facebook-the-science-behind-why-smaller-teams-get-more-done) [exists](http://martinfowler.com/articles/microservices.html) on the subject of [team structure and its impact on your architecture](https://www.thoughtworks.com/radar/techniques/inverse-conway-maneuver).
+## In Summary
 
-The observation that the structure of your team, impacts the structure of your code is a profound one, and can be leveraged to good effect: here are two of my favourite images that sum this up (credit goes to Martin Fowler)
+There is a huge body of knowledge forming around containerization and its applications. I'm very new to the ecosystem, even after a year of trying things out and making use of the more obvious parts. I'm keen to hear from others using Docker or other container technologies, so please share your experiences.
 
-![Siloed functional teams](http://martinfowler.com/articles/microservices/images/conways-law.png)
-
-*Siloed functional teams produce siloed application architectures with capabilities that nobody owns from end to end.*
-
-![](http://martinfowler.com/articles/microservices/images/PreferFunctionalStaffOrganization.png)
-
-*Cross functional teams produce code they can own from end to end, that fits in with other code that other teams own.*
-
-## In summary
-
-I've scratched the surface here, this a huge topic with many possibilities. Over my next few posts I'll look at the peripheral parts of the Docker ecosystem and how you can bring it into your team.
