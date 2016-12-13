@@ -279,11 +279,13 @@ Unfortunately, docker-compose is not quite smart enough to handle this ([yet](ht
 
 <a name="scaling-teamwork"></a>
 
-## Scaling teamwork
+## Scaling teamwork and delivery
 
-As a parting thought, there is scope for not only scaling out and up, but scaling your team. Docker could be used as part of a microservices architecture to good effect, and done well, could yield some less tangible - yet equally profound gains.
+As a parting thought, there is scope for not only scaling services out and up, but changing the structure of your team to enable gains in their delivery. 
 
-So much [well](http://damianm.com/articles/human-benefits-of-a-microservice-architecture) [researched](https://en.wikipedia.org/wiki/Conway%27s_law) [content](https://blog.bufferapp.com/small-teams-why-startups-often-win-against-google-and-facebook-the-science-behind-why-smaller-teams-get-more-done) [exists](http://martinfowler.com/articles/microservices.html) on the subject of [team structure and its impact on your architecture](https://www.thoughtworks.com/radar/techniques/inverse-conway-maneuver). I've enjoyed reading these articles and have similar experience, I hope they inspire you to enact change in your team!
+So much [well](http://damianm.com/articles/human-benefits-of-a-microservice-architecture) [researched](https://en.wikipedia.org/wiki/Conway%27s_law) [content](https://blog.bufferapp.com/small-teams-why-startups-often-win-against-google-and-facebook-the-science-behind-why-smaller-teams-get-more-done) [exists](http://martinfowler.com/articles/microservices.html) on the subject of [team structure and its impact on your architecture](https://www.thoughtworks.com/radar/techniques/inverse-conway-maneuver). 
+
+Docker could easily be used as part of a distributed architecture to achieve some of these goals. I've enjoyed reading these articles and have similar experiences, I hope they inspire you to enact change in your team!
 
 ## In Summary
 
