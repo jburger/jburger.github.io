@@ -29,7 +29,7 @@ tags:
 
 ## Docker is everywhere
 
-> I noticed the other day that Docker is now a first class citizen amongst the big three cloud providers.
+> I noticed the other day that Docker is now a first class citizen among the big three cloud providers.
 > 
 > - [Azure Container Service](https://azure.microsoft.com/en-us/services/container-service/)
 > - [Amazon Container Service](https://aws.amazon.com/ecs/)
