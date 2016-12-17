@@ -13,7 +13,7 @@ tags:
 - devops
 ---
 
-So you've decided to use containers. It'll be fun they said.
+So you've decided to use containers. _It'll be fun they said._
 
 Once committed to using a container service, an overhead becomes apparent: image storage. 
 
@@ -31,7 +31,7 @@ I've been assessing SaaS solutions, so I thought I'd write about a few different
 
 
 ## Comparison 
-Each option has packaged up a registry server for you such that you don't need to manage the hardware side of things. However they do differ on features, capacity and cost.
+Each option has packaged up a registry server for you such that you don't need to manage the hardware side of things. **However they do differ on features, capacity and cost.**
 
 ### Pricing 
 
@@ -62,7 +62,7 @@ _This is a simplistic comparison, your own team will want to extrapolate their r
 ### Why Docker Hub?
 Docker Hub may appear expensive at the big end; if you anticipate usage of up to 250 repositories, you'll be paying $250 a month. 
 
-However it has some compelling features:
+**However it has some compelling features:**
 
 - Vulnerability scanning
 - Github integration (e.g git push triggers a build)
@@ -75,7 +75,7 @@ For most teams, Docker hub is an excellent fixed cost solution with the most com
 
 Since I work primarily with Microsoft tech, I'm drawn to a solution that integrates with Active Directory.
 
-Also, the Azure CR seems to strike a good balance on price of storage and bandwidth usage.
+Also, the Azure CR seems to strike a **good balance on price of storage and bandwidth usage.**
 
 ### Integration with other Azure resources
 
