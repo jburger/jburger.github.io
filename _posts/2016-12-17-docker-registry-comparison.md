@@ -87,7 +87,7 @@ Azure does align itself in terms of features fairly well with the AWS EC2 based 
 
 As with other Azure resources it is [really easy to setup](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-get-started-docker-cli)
 
-![Setup a private container registry](/assets/acs-create.gif)
+![Setup a private container registry](/assets/ACS-create.gif)
 
 Before you push your first image - you need to grab your connection details from the portal
 
