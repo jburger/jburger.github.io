@@ -40,13 +40,13 @@ _NB: prices in US dollars_
 |---------|---------------|-----------------|
 | Azure   |$0.024 per GM/mo*|$0 (first 5GB/mo, $0.138 per Gb/mo upto 10TB )|
 | Google  |$0.02 per GB/mo|$0.19 per GB/mo**|
-|Amazon***|$0.1 per GB/mo| $0 < 1TB ($0.09 per GB < 10TB per month)|
-|Docker****|$0 - $250 month||
+|Amazon§|$0.1 per GB/mo| $0 < 1TB ($0.09 per GB < 10TB per month)|
+|Docker†|$0 - $250 month||
 
     * prices fall after first TB uploaded (based on East US price, not avail. in Australia region)
     ** prices fall after first TB egressed (based on Australia price)
-    *** first 500MB per month for the first year free
-    **** Depending on plan (max. 250 containers / builds)
+    § first 500MB per month for the first year free
+    † Depending on plan (max. 250 containers / builds)
 
 #### Worst case scenarios
 
