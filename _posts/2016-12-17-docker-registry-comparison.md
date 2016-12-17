@@ -41,9 +41,6 @@ _NB: prices in US dollars, charge rates as at Dec 2016_
 |Amazon§|$0.1 per GB/mo| $0 < 1TB ($0.09 per GB < 10TB per month)|
 |Docker†|$0 - $250 month||
 
-
-#### Variably priced provider scenario
-
 As a scenario to compare the variably priced providers with, let's assume storage of 1TB and that much again each month in egress costs:
 
 | Service | Storage | Egress | Total |
