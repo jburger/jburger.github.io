@@ -65,6 +65,7 @@ As an extreme example, assuming you need to store 1TB of images and you download
 Docker Hub may appear expensive at the big end; if you anticipate usage of up to 250 repositories, you'll be paying $250 a month. 
 
 However it has some compelling features:
+
 - Vulnerability scanning
 - Github integration (e.g git push triggers a build)
 - Web front end to show readme files and tags etc.
@@ -77,6 +78,7 @@ For most teams, Docker hub is an excellent fixed cost solution with the most com
 ### Integration with other Azure resources
 
 Azure does set align itself in terms of features fairly well with AWS EC2 based solution, focusing on Microsoft stack integration:
+
 - Azure Active Directory Integration
 - Role based registry access
 - Azure Container Service integration
