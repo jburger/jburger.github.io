@@ -32,9 +32,7 @@ Each option has packaged up a registry server for you such that you don't need t
 
 ### Pricing 
 
-_NB: prices in US dollars_
-
-#### Charge rates as at Dec 2016
+_NB: prices in US dollars, charge rates as at Dec 2016_
 
 | Service | Storage Price | Egress Price |
 |---------|---------------|-----------------|
@@ -43,10 +41,6 @@ _NB: prices in US dollars_
 |Amazon§|$0.1 per GB/mo| $0 < 1TB ($0.09 per GB < 10TB per month)|
 |Docker†|$0 - $250 month||
 
-    * prices fall after first TB uploaded (based on East US price, not avail. in Australia region)
-    ** prices fall after first TB egressed (based on Australia price)
-    § first 500MB per month for the first year free
-    † Depending on plan (max. 250 containers / builds)
 
 #### Variably priced provider scenario
 
@@ -115,3 +109,11 @@ docker tag hello-world fubar786123-on.azurecr.io/samples/hello-world
 ```bash
 docker tag fubar786123-on.azurecr.io/samples/hello-world
 ```
+
+><text>*</text> prices fall after first TB uploaded (based on East US price, not avail. in Australia region)
+>
+>** prices fall after first TB egressed (based on Australia price)
+>
+>§ First 500MB per month for the first year free
+>
+>† Depending on plan (max. 250 containers / builds)
