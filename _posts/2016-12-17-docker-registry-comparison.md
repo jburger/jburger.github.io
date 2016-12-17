@@ -118,7 +118,7 @@ docker tag hello-world fubar786123-on.azurecr.io/samples/hello-world
 ```bash
 docker push fubar786123-on.azurecr.io/samples/hello-world
 ```
-
+---
 ><span>*</span> prices fall after first TB uploaded (based on East US price, not avail. in Australia region)
 >
 >** prices fall after first TB egressed (based on Australia price)
