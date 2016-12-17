@@ -100,7 +100,7 @@ Before you push your first image - you need to grab your connection details from
 
 **1.** With your credentials in tow, you can login to your registry with the docker CLI
 
-> Azure Container Registry also integrates with Azure Active Directory service principals instead if so desired.
+> [Instructions here](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-get-started-azure-cli#assign-a-service-principal) for setting up ACR to use AD principals
 
 ```bash
 docker login fubar786123-on.azurecr.io -u fubar786123 -p xxxxxxx
@@ -108,11 +108,13 @@ docker login fubar786123-on.azurecr.io -u fubar786123 -p xxxxxxx
 This credential is then cached by docker, and can be refreshed either with the Azure CLI or on the Azure portal.
 
 **2.** register the image on your registry - using a folder to keep things tidy
+
 ```bash
 docker tag hello-world fubar786123-on.azurecr.io/samples/hello-world
 ```
 
 **3.** now push it up for others to use
+
 ```bash
 docker tag fubar786123-on.azurecr.io/samples/hello-world
 ```
