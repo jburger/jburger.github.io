@@ -17,7 +17,10 @@ So you've decided to use containers. It'll be fun they said.
 
 Once committed to using a container service, an overhead becomes apparent: image storage. 
 
-While not completely necessary for a small, localized team; a distributed team will likely want the convenience of web based access and fine grained access control. If you're going all in, you'll be after a large number of repositories too.
+While not completely necessary for a small, localized team; a distributed team will likely want the convenience of access
+over the Internet and fine grained access control. 
+
+If you're going all in, you'll be after a large number of repositories too.
 
 I've been assessing SaaS solutions, so I thought I'd write about a few different options I've come across.
 
