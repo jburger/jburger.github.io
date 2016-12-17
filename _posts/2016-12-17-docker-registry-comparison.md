@@ -22,8 +22,8 @@ While not completely necessary for a small, localized team; a distributed team w
 I've been assessing SaaS solutions, so I thought I'd write about a few different options I've come across.
 
 - [Azure Container Registry (preview)](https://docs.microsoft.com/en-us/azure/container-registry/)
-- [Google container registry](https://cloud.google.com/container-registry/)
-- [Amazon EC2 Container registry](https://aws.amazon.com/ecr/) 
+- [Google Container Registry](https://cloud.google.com/container-registry/)
+- [Amazon EC2 Container Registry](https://aws.amazon.com/ecr/) 
 - [Docker Hub](https://hub.docker.com)
 
 
@@ -48,18 +48,15 @@ _NB: prices in US dollars_
     § first 500MB per month for the first year free
     † Depending on plan (max. 250 containers / builds)
 
-#### Worst case scenarios
+#### Variably priced provider scenario
 
-As an extreme example, assuming you need to store 1TB of images and you download that much in a month each service would cost.
+As a scenario to compare the variably priced providers with, let's assume storage of 1TB and that much again each month in egress costs:
 
 | Service | Storage | Egress | Total |
 |---------|---------|--------|-------|
 |Azure    |$24      |$138    |$162   | 
-|Google   |$20      |$190    |$210   |
 |Amazon   |$100     |$90     |$190   |
-|Docker   |$250     |$0      |$250   |
-
-**Based on this, if you are anticipating a lot of container usage, the Azure offering is very competitive on cost.**
+|Google   |$20      |$190    |$210   |
 
 ### Why Docker Hub?
 Docker Hub may appear expensive at the big end; if you anticipate usage of up to 250 repositories, you'll be paying $250 a month. 
@@ -75,9 +72,13 @@ For most teams, Docker hub is an excellent fixed cost solution with the most com
 
 ## Azure Container Service 
 
+Since I work primarily with Microsoft tech, I'm drawn to a solution that integrates with Active Directory.
+
+Also, the Azure CR seems to strike a good balance on price of storage and bandwidth usage.
+
 ### Integration with other Azure resources
 
-Azure does set align itself in terms of features fairly well with AWS EC2 based solution, focusing on Microsoft stack integration:
+Azure does align itself in terms of features fairly well with the AWS EC2 based solution, focusing on Microsoft stack integration:
 
 - Azure Active Directory Integration
 - Role based registry access
