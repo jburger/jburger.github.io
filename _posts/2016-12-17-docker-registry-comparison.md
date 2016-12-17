@@ -86,6 +86,8 @@ Azure does align itself in terms of features fairly well with the AWS EC2 based 
 - Azure Container Service integration
 - Visual Studio Team Services CI integration
 
+**One feature that sets it apart is a [REST API](https://docs.microsoft.com/en-us/rest/api/containerregistry/registries) - I couldn't find a similar feature on the other providers, and this opens up automation possibilities not possible on other platforms.**
+
 As with other Azure resources it is [really easy to setup](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-get-started-docker-cli)
 
 ![Setup a private container registry](/assets/ACS-create.gif)
@@ -96,7 +98,7 @@ Before you push your first image - you need to grab your connection details from
 
 ![Get your admin credentials for the service](/assets/acs-admin-user.png)
 
-### Pushing up to your new private repository
+### Pushing up to your new private registry
 
 **1.** With your credentials in tow, you can login to your registry with the docker CLI
 
