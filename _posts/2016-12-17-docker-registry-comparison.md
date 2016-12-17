@@ -56,6 +56,9 @@ As a scenario to compare the variably priced providers with, let's assume storag
 |Amazon   |$100     |$90     |$190   |
 |Google   |$20      |$190    |$210   |
 
+
+_This is a simplistic comparison, your own team will want to extrapolate their real world needs in a similar fashion_
+
 ### Why Docker Hub?
 Docker Hub may appear expensive at the big end; if you anticipate usage of up to 250 repositories, you'll be paying $250 a month. 
 
