@@ -107,7 +107,7 @@ docker login fubar786123-on.azurecr.io -u fubar786123 -p xxxxxxx
 ```
 This credential is then cached by docker, and can be refreshed either with the Azure CLI or on the Azure portal.
 
-**2.** register the image on your registry - using a folder to keep things tidy
+**2.** register the image on your registry, using a folder to keep things tidy
 
 ```bash
 docker tag hello-world fubar786123-on.azurecr.io/samples/hello-world
@@ -116,10 +116,10 @@ docker tag hello-world fubar786123-on.azurecr.io/samples/hello-world
 **3.** now push it up for others to use
 
 ```bash
-docker tag fubar786123-on.azurecr.io/samples/hello-world
+docker push fubar786123-on.azurecr.io/samples/hello-world
 ```
 
-><text>*</text> prices fall after first TB uploaded (based on East US price, not avail. in Australia region)
+><span>*</span> prices fall after first TB uploaded (based on East US price, not avail. in Australia region)
 >
 >** prices fall after first TB egressed (based on Australia price)
 >
