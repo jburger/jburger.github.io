@@ -89,6 +89,8 @@ As with other Azure resources it is [really easy to setup](https://docs.microsof
 
 ![Setup a private container registry](/assets/ACS-create.gif)
 
+_please use more sensible names than I did_
+
 Before you push your first image - you need to grab your connection details from the portal
 
 ![Get your admin credentials for the service](/assets/acs-admin-user.png)
